@@ -1,0 +1,19 @@
+body {
+    padding-top: 5%; /* Sesuaikan dengan tinggi header */
+}
+
+.notification-button:hover .default-icon {
+    display: none;
+}
+
+.notification-button:hover .hover-icon {
+    display: inline;
+}
+
+.hover-icon {
+    display: none;
+}
+
+.custom-translate {
+    transform: translateX(50px);
+}
