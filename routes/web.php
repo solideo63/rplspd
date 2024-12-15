@@ -50,11 +50,11 @@ Route::get('/catat-harian', function () {
     return view('catatharian');
 });
 
-/*Route::get('/catat', function () {
-    return view('catat');
-});*/
-
 Route::get('/catat', [CatatController::class, 'showForm']);
+
+Route::get('/catat', function () {
+    return view('catat');
+})->name('catat');
 
 Route::get('/kritik-saran', function () {
     return view('kritiksaran');

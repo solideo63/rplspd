@@ -39,25 +39,24 @@ class OperasiRutinController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'nim' => 'required|regex:/^[0-9]{9}$/', // NIM harus 9 digit angka
-            'name' => 'required|string|max:255',
-            'violation' => 'required|string|max:255',
-            'nas' => 'nullable', // Optional
-        ]);
+{
+    $request->validate([
+        'nim' => 'required|regex:/^[0-9]{9}$/', // NIM harus 9 digit angka
+        'name' => 'required|string|max:255',
+        'violation' => 'required|string|max:255',
+        'nas' => 'nullable', // Optional
+    ]);
 
-        // Buat entri baru di tabel Operasi Rutin
-        $operasiRutin = OperasiRutin::create($request->only(['nim', 'name', 'violation', 'nas']));
+    // Buat entri baru di tabel Operasi Rutin
+    $operasiRutin = OperasiRutin::create($request->only(['nim', 'name', 'violation', 'nas']));
 
-        // Setelah menyimpan data, panggil EmailController untuk mengirim email
-        app(EmailController::class)->sendEmail($request);
+    // Setelah menyimpan data, panggil EmailController untuk mengirim email
+    app(EmailController::class)->sendEmail($request);
 
-        return response()->json([
-            'message' => 'Data berhasil ditambahkan',
-            'data' => $operasiRutin
-        ], 201);
-    }
+    // Redirect ke halaman view catat.blade.php dengan pesan sukses
+    return redirect()->route('catat') // Pastikan Anda sudah mendefinisikan route ini
+                     ->with('success', 'Data berhasil ditambahkan');
+}
 
     /**
      * Display the specified resource.
