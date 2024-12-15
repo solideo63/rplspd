@@ -4,11 +4,6 @@
     <div class="flex justify-center">
         <div
             class="block max-w-sm p-6 bg-yellow-300 border rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-full">
-            <h3 class="text-2xl font-bold dark:text-white">Pencatatan Pelanggaran Operasi Rutin Tingkat 1</h3>
-            <p class="text-gray-800 dark:text-gray-400 italic opacity-50">(Mohon isi data pelanggaran di bawah ini)
-            </p>
-
-            {{-- Notifikasi Sukses --}}
             @if (session('success'))
             <div id="success-message"
                 class="flex items-center p-4 mb-4 text-sm text-green-800 bg-green-50 rounded-lg dark:bg-green-800 dark:text-green-200 border border-green-300 shadow">
@@ -27,6 +22,11 @@
                 }, 3000);
             </script>
             @endif
+            <h3 class="text-2xl font-bold dark:text-white">Pencatatan Pelanggaran Operasi Rutin Tingkat 1</h3>
+            <p class="text-gray-800 dark:text-gray-400 italic opacity-50">(Mohon isi data pelanggaran di bawah ini)
+            </p>
+
+            {{-- Notifikasi Sukses --}}
 
             {{-- Form --}}
             <form class="max-w-sm mx-auto pt-6" action="{{ route('operasi-rutin.store') }}" method="POST">
