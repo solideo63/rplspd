@@ -52,9 +52,9 @@ Route::get('/catat-harian', function () {
 
 Route::get('/catat', [CatatController::class, 'showForm']);
 
-Route::get('/catat', function () {
-    return view('catat');
-})->name('catat');
+// Route::get('/catat', function () {
+//     return view('catat');
+// })->name('catat');
 
 Route::get('/kritik-saran', function () {
     return view('kritiksaran');
