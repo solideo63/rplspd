@@ -40,4 +40,3 @@
 </div>
 
 <x-footer></x-footer>
-//wds
