@@ -1,5 +1,5 @@
 <x-layout></x-layout>
-
+//
 <div class="p-4 sm:ml-64 mt-16">
     <div class="flex justify-center">
         <div
