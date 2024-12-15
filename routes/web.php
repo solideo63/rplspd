@@ -14,7 +14,7 @@ Route::get('/', function () {
     return view('dashboard', ['title' => 'Dashboard']);
 });
 
-Route::post('/dashboard', function () {
+Route::get('/dashboard', function () {
     return view('dashboard', ['title' => 'Dashboard']);
 });
 
