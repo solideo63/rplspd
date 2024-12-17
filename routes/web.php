@@ -7,6 +7,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\OperasiRutinController;
 
+Route::get('/filter-by-date-ajax', [CatatController::class, 'filterByDateAjax'])->name('filter.date.ajax');
+
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 
@@ -79,3 +81,4 @@ Route::post('/operasi-rutin', [OperasiRutinController::class, 'store'])->name('o
 // Route::get('/laporan-rutin', [OperasiRutinController::class, 'index'])->name('laporan-rutin.index');
 
 Route::get('/laporan-rutin', [OperasiRutinController::class, 'index'])->name('laporanrutin');
+Route::get('/operasi-rutin/data', [OperasiRutinController::class, 'fetchData'])->name('operasi-rutin.data');

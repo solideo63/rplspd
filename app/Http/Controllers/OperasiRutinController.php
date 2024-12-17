@@ -127,4 +127,14 @@ class OperasiRutinController extends Controller
 
         return response()->json(['message' => 'Data berhasil dihapus']);
     }
+
+    public function fetchData()
+{
+    // Ambil semua data OperasiRutin
+    $data = OperasiRutin::all();
+
+    // Format data dan kirim sebagai JSON
+    return response()->json($data);
+}
+    
 }
