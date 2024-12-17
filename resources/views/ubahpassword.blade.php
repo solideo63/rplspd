@@ -94,7 +94,7 @@
             <label for="cnewpassword" class="block text-xs font-bold text-white">Konfirmasi Password Baru</label>
             <div class="mt-1 pb-8 pt-1">
               <input
-                type="cnewpassword"
+                type="password"
                 name="cnewpassword"
                 id="cnewpassword"
                 autocomplete="current-password"
