@@ -42,12 +42,23 @@
         <!-- Container Kuning -->
         <div class="bg-yellow-300 w-3/4 lg:w-1/3 rounded-lg shadow-lg -mt-4 z-0">
             <div class="p-6 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form class="space-y-4" action="/dashboard" method="POST">
+                @if($errors->any())
+                <div class="p-4 mt-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                    <ul>
+                        @foreach($errors->all() as $item)
+                        <li>{{$item}}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+
+                <form class="space-y-4" action="" method="POST">
+                    @csrf
                     <!-- Username -->
                     <div>
-                        <label for="email" class="block text-xs font-bold text-white pt-8">Username</label>
+                        <label for="username" class="block text-xs font-bold text-white pt-8">Username</label>
                         <div class="mt-1">
-                            <input type="text" name="email" id="email" autocomplete="email" required
+                            <input type="text" name="username" id="username" autocomplete="username" required
                                 class="block w-full rounded-md bg-slate-100 px-[8px] py-[4px] text-[14px] text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:ring focus:ring-indigo-300 focus:outline-none">
                         </div>
                     </div>

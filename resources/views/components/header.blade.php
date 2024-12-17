@@ -1,5 +1,5 @@
 <nav
-    class="fixed top-0 z-50 w-full "style="background-color: #9F2A32; color: white dark:bg-gray-800 dark:border-gray-700">
+    class="fixed top-0 z-50 w-full dark:bg-gray-800 dark:border-gray-700" style="background-color: #9F2A32; color: white">
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
         <div class="flex items-center justify-between">
             <div class="flex items-center justify-start rtl:justify-end">
@@ -23,6 +23,7 @@
             </div>
 
             <div class="flex items-center ms-3">
+                @if(Auth::user()->role == 'spd')
                 <button id="dropdownFAQButton" data-dropdown-toggle="dropdownFAQ"
                     class="relative inline-flex items-center text-sm font-medium text-center text-gray-500 hover:text-gray-900 focus:outline-none dark:hover:text-white dark:text-gray-400"
                     type="button">
@@ -38,6 +39,7 @@
                         class="absolute block w-3 h-3 bg-red-500 border-2 border-white rounded-full -top-0.5 start-2.5 dark:border-gray-900">
                     </div>
                 </button>
+                @endif
 
                 <!-- Dropdown menu -->
                 <div id="dropdownFAQ" data-dropdown-placement="bottom-end"
@@ -81,6 +83,7 @@
                 </div>
 
                 <div class="flex items-center ms-3">
+                    @if(Auth::user()->role == 'spd' || Auth::user()->role == 'mahasiswa')
                     <button id="dropdownNotificationButton" data-dropdown-toggle="dropdownNotification"
                         class="relative inline-flex items-center text-sm font-medium text-center text-gray-500 hover:text-gray-900 focus:outline-none dark:hover:text-white dark:text-gray-400"
                         type="button">
@@ -102,6 +105,7 @@
                             class="absolute block w-3 h-3 bg-red-500 border-2 border-white rounded-full -top-0.5 start-2.5 dark:border-gray-900">
                         </div>
                     </button>
+                    @endif
 
                     <!-- Dropdown menu -->
                     <div id="dropdownNotification"
@@ -128,9 +132,8 @@
                                 <img class="w-24 h-24 mb-3 rounded-full shadow-lg"
                                     src="https://i.pinimg.com/736x/7b/12/d2/7b12d287221c0adf5b4efcdf326c178f.jpg"
                                     alt="Bonnie image" />
-                                <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Janitra Hayu
-                                    Pramestya</h5>
-                                <span class="text-sm text-gray-500 dark:text-gray-400">222212678</span>
+                                <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{Auth::user()->name}}</h5>
+                                <span class="text-sm text-gray-500 dark:text-gray-400">{{Auth::user()->username}}</span>
                                 <div class="flex mt-4 md:mt-6">
                                     <a href="#"
                                         class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-yellow-300 rounded-lg hover:bg-yellow-400 focus:ring-4 focus:outline-none focus:ring-yellow-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 bold">Ganti
@@ -160,14 +163,13 @@
                                     <img class="w-24 h-24 mb-3 rounded-full shadow-lg"
                                         src="https://i.pinimg.com/736x/7b/12/d2/7b12d287221c0adf5b4efcdf326c178f.jpg"
                                         alt="Bonnie image" />
-                                    <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Janitra Hayu
-                                        Pramestya</h5>
-                                    <span class="text-sm text-gray-500 dark:text-gray-400">222212678</span>
+                                    <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{Auth::user()->name}}</h5>
+                                    <span class="text-sm text-gray-500 dark:text-gray-400">{{Auth::user()->username}}</span>
                                     <div class="flex mt-4 md:mt-6">
-                                        <a href="#"
+                                        <a href="/ubah-password"
                                             class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-yellow-300 rounded-lg hover:bg-yellow-400 focus:ring-4 focus:outline-none focus:ring-yellow-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 bold">Ganti
                                             Password</a>
-                                        <a href="#"
+                                        <a href="/logout"
                                             class="py-2 px-4 ms-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 bold">Log
                                             Out</a>
                                     </div>

@@ -1,7 +1,15 @@
 <x-layout>{{ $title }}</x-layout>
+
+@if(session('success'))
+<script>
+    alert("{{ session('success') }}");
+</script>
+@endif
+
 <div class="p-4 sm:ml-64 mt-4">
-    <h2 class="text-3xl font-bold dark:text-white">Selamat Pagi, Janitra Hayu Pramestya</h2>
+    <h2 class="text-4xl ml-4 mb-4 font-bold dark:text-white">Selamat datang, {{Auth::user()->name}}</h2>
     <br>
+    @if(Auth::user()->role != 'mahasiswa')
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2 p-4">
         <div class="bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6 w-full">
             <div class="flex justify-between border-gray-200 border-b dark:border-gray-700 pb-3">
@@ -88,6 +96,7 @@
             </div>
         </div>
     </div>
+    @endif
 
     <div>
         <div class="flex justify-center">

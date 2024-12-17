@@ -25,6 +25,7 @@
                     Dashboard
                 </x-sidebarlink>
             </li>
+            @if(Auth::user()->role == 'spd')
             <li style="color: white">
                 <button type="button"
                     class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-yellow-300 dark:text-white dark:hover:bg-gray-700"
@@ -98,6 +99,8 @@
                     Klaim Pelanggaran
                 </x-sidebarlink>
             </li>
+            @endif
+            @if(Auth::user()->role == 'mahasiswa')
             <li style="color: white">
                 <x-sidebarlink href="/riwayat" :active="request()->is('')"
                     icon='
@@ -119,6 +122,36 @@
                     Kritik Saran
                 </x-sidebarlink>
             </li>
+            @endif
+            @if(Auth::user()->role == 'pemonitor')
+            <li style="color: white">
+                <button type="button"
+                    class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-yellow-300 dark:text-white dark:hover:bg-gray-700"
+                    aria-controls="dropdown-pelaporan" data-collapse-toggle="dropdown-pelaporan">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                        viewBox="0 0 24 24">
+                        <path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 4h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3m0 3h6m-3 5h3m-6 0h.01M12 16h3m-6 0h.01M10 3v4h4V3h-4Z" />
+                    </svg>
+                    <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Laporan Operasi</span>
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 10 6">
+                        <path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 4 4 4-4" />
+                    </svg>
+                </button>
+                <ul id="dropdown-pelaporan"
+                    class="{{ request()->is('laporan-rutin', 'laporan-umum', 'laporan-harian') ? '' : 'hidden' }} py-2 space-y-2">
+                    <li>
+                        <x-sidebarcomp href="/laporan-rutin" :active="request()->is('laporan-rutin')">Operasi Rutin</x-sidebarcomp>
+                    </li>
+                    <li>
+                        <x-sidebarcomp href="laporan-umum" :active="request()->is('laporan-umum')">Operasi Umum</x-sidebarcomp>
+                    </li>
+                </ul>
+            </li>
+            @endif
         </ul>
     </div>
 </aside>

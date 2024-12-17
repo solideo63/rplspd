@@ -1,22 +1,38 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CatatController;
 use App\Http\Controllers\FaqController;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\OperasiRutinController;
+use App\Http\Controllers\SesiController;
+use App\Http\Controllers\UbahPasswordController;
 
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
-
-Route::get('/', function () {
-    return view('dashboard', ['title' => 'Dashboard']);
+Route::middleware(['guest'])->group(function () {
+    Route::get('/', [SesiController::class, 'index'])->name('login');
+    Route::post('/', [SesiController::class, 'login']);
+});
+Route::get('/home', function () {
+    return redirect('/admin');
+});
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'index']);
+    Route::get('/logout', [SesiController::class, 'logout']);
+    // Ubah Password
+    Route::get('/ubah-password', [UbahPasswordController::class, 'index']);
+    Route::post('/ubah-password', [UbahPasswordController::class, 'ubahPassword']);
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard', ['title' => 'Dashboard']);
-});
+// Route Ubah Password
+
+// Route::get('/', function () {
+//     return view('dashboard', ['title' => 'Dashboard']);
+// });
+
+// Route::get('/dashboard', function () {
+//     return view('dashboard', ['title' => 'Dashboard']);
+// });
 
 Route::get('/laporan-rutin', function () {
     return view('laporanrutin');
@@ -34,13 +50,13 @@ Route::get('/catat-rutin', function () {
     return view('catatrutinpilih');
 });
 
-Route::get('/login', function () {
-    return view('login');
-});
+// Route::get('/login', function () {
+//     return view('login');
+// });
 
-Route::get('/ubah-password', function () {
-    return view('ubahpassword');
-});
+// Route::get('/ubah-password', function () {
+//     return view('ubahpassword');
+// });
 
 Route::get('/catat-umum', function () {
     return view('catatumum');
