@@ -27,7 +27,7 @@
                 <!-- Kolom kiri untuk h2 dan h3 -->
                 <div class="flex flex-col">
                     <h2 class="text-2xl font-bold tracking-tight text-red-800 mb-2">
-                        SIMPPEL
+                        SIMPPEL SPD
                     </h2>
                     <h4 class="text-base text-blue-900 font-bold">
                         Sistem Pencatatan dan Pelaporan Pelanggaran SPD

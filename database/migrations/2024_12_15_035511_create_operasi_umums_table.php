@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('operasi_rutin', function (Blueprint $table) {
+        Schema::create('operasi_umums', function (Blueprint $table) {
             $table->id(); // Primary key dengan auto-increment
             $table->string('nim', 9); // Kolom NIM dengan panjang maksimum 9 karakter
             $table->string('name', 255); // Kolom Nama dengan panjang maksimum 255 karakter

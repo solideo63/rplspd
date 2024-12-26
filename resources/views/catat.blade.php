@@ -4,30 +4,29 @@
     <div class="flex justify-center">
         <div
             class="block max-w-sm p-6 bg-yellow-300 border rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-full">
-            <h3 class="text-2xl font-bold dark:text-white">Pencatatan Pelanggaran Operasi Rutin Tingkat
-                {{ $tingkat ?? 'Tidak Diketahui' }}</h3>
+            <h3 class="text-2xl font-bold dark:text-white">Pencatatan Pelanggaran Operasi Rutin Tingkat 1</h3>
             <p class="text-gray-800 dark:text-gray-400 italic opacity-50">(Mohon isi data pelanggaran di bawah ini)
             </p>
 
             {{-- Notifikasi Sukses --}}
             @if (session('success'))
-                <div id="success-message"
-                    class="flex items-center p-4 mb-4 text-sm text-green-800 bg-green-50 rounded-lg dark:bg-green-800 dark:text-green-200 border border-green-300 shadow">
-                    <svg class="w-5 h-5 mr-3" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd"
-                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707a1 1 0 00-1.414-1.414L9 11.586 7.707 10.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                            clip-rule="evenodd"></path>
-                    </svg>
-                    <span>{{ session('success') }}</span>
-                </div>
-                <script>
-                    // Menghilangkan notifikasi setelah 3 detik
-                    setTimeout(() => {
-                        document.getElementById('success-message').classList.add('opacity-0', 'transition-opacity',
-                            'duration-500');
-                        setTimeout(() => document.getElementById('success-message').remove(), 500);
-                    }, 3000);
-                </script>
+            <div id="success-message"
+                class="flex items-center p-4 mb-4 text-sm text-green-800 bg-green-50 rounded-lg dark:bg-green-800 dark:text-green-200 border border-green-300 shadow">
+                <svg class="w-5 h-5 mr-3" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707a1 1 0 00-1.414-1.414L9 11.586 7.707 10.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clip-rule="evenodd"></path>
+                </svg>
+                <span>{{ session('success') }}</span>
+            </div>
+            <script>
+                // Menghilangkan notifikasi setelah 3 detik
+                setTimeout(() => {
+                    document.getElementById('success-message').classList.add('opacity-0', 'transition-opacity',
+                        'duration-500');
+                    setTimeout(() => document.getElementById('success-message').remove(), 500);
+                }, 3000);
+            </script>
             @endif
 
             {{-- Form --}}

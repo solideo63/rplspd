@@ -25,7 +25,6 @@
                     Dashboard
                 </x-sidebarlink>
             </li>
-            @if(Auth::user()->role == 'spd')
             <li style="color: white">
                 <button type="button"
                     class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-yellow-300 dark:text-white dark:hover:bg-gray-700"
@@ -99,8 +98,6 @@
                     Klaim Pelanggaran
                 </x-sidebarlink>
             </li>
-            @endif
-            @if(Auth::user()->role == 'mahasiswa')
             <li style="color: white">
                 <x-sidebarlink href="/riwayat" :active="request()->is('')"
                     icon='
@@ -112,7 +109,7 @@
                 </x-sidebarlink>
             </li>
             <li style="color: white">
-                <x-sidebarlink href="/kritik-saran" :active="request()->is('')"
+                <x-sidebarlink href="/kirim-kritik-saran" :active="request()->is('')"
                     icon='
                     <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 10.5h.01m-4.01 0h.01M8 10.5h.01M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-6.6a1 1 0 0 0-.69.275l-2.866 2.723A.5.5 0 0 1 8 18.635V17a1 1 0 0 0-1-1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/>
@@ -122,8 +119,6 @@
                     Kritik Saran
                 </x-sidebarlink>
             </li>
-            @endif
-            @if(Auth::user()->role == 'pemonitor')
             <li style="color: white">
                 <button type="button"
                     class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-yellow-300 dark:text-white dark:hover:bg-gray-700"
@@ -151,7 +146,6 @@
                     </li>
                 </ul>
             </li>
-            @endif
         </ul>
     </div>
 </aside>

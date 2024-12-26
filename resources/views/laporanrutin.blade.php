@@ -1,45 +1,63 @@
 <x-layout> </x-layout>
 <script>
     function handleSearch(operasi_rutin) {
-            const query = operasi_rutin.target.value.trim()
-                .toLowerCase(); // Ambil nilai input dan hapus spasi di awal/akhir serta ubah ke huruf kecil
-            const rows = document.querySelectorAll('#kegiatan-table-body tr'); // Ambil semua baris di tabel
+        const query = operasi_rutin.target.value.trim().toLowerCase(); // Input pencarian
+        const rows = document.querySelectorAll('#export-table tbody tr'); // Ambil semua baris tabel di <tbody>
 
-            // Jika query kosong setelah dipangkas (hanya spasi), kembalikan ke tampilan semula dan keluar dari fungsi
-            if (query === '') {
-                rows.forEach((row) => {
-                    row.style.display = ''; // Tampilkan semua baris
-                });
+        rows.forEach((row) => {
+            const nim = row.querySelector('td:nth-child(2)')?.textContent.toLowerCase() || '';
+            const name = row.querySelector('td:nth-child(3)')?.textContent.toLowerCase() || '';
+
+            // Jika input cocok dengan NIM atau NAMA
+            if (nim.includes(query) || name.includes(query)) {
+                row.style.display = ''; // Tampilkan baris
+            } else {
+                row.style.display = 'none'; // Sembunyikan baris
             }
+        });
 
-            let currentNumber = 1; // Inisialisasi nomor urut baru
-            let showNextRow = false; // Penanda untuk menampilkan baris selanjutnya (progres bar)
-            let visibleCount = 0; // Hitung jumlah baris yang ditampilkan
+        applyFilters();
+    }
 
-            rows.forEach((row) => {
-                // Kolom yang diperiksa: Nama Kegiatan dan Tim Kerja
-                const name = row.querySelector('td:nth-child(2)')?.textContent.toLowerCase() || '';
-                const nim = row.querySelector('td:nth-child(3)')?.textContent.toLowerCase() || '';
+    function handleDateFilter(event) {
+        const selectedDate = this.value; // Ambil nilai tanggal
+        const tableBody = document.querySelector('#data-table tbody'); // Target body tabel
 
-                if (showNextRow) {
-                    // Jika baris sebelumnya cocok, tampilkan baris ini (untuk progres bar)
-                    row.style.display = '';
-                    showNextRow = false; // Reset penanda
-                } else if (name.includes(query) || nim.includes(query)) {
-                    // Jika baris utama cocok, tampilkan dan perbarui nomor urut
-                    row.style.display = '';
-                    row.querySelector('td:nth-child(1)').textContent = currentNumber++; // Perbarui nomor urut
-                    showNextRow = true;
-                    visibleCount++; // Tambahkan jumlah baris yang ditampilkan
-                } else {
-                    // Jika tidak cocok, sembunyikan baris ini
-                    row.style.display = 'none';
-                }
-            });
-        }
+        rows.forEach((row) => {
+            const rowDate = row.querySelector('td:nth-child(1)')?.textContent.trim();
+
+            if (selectedDate === '' || rowDate === selectedDate) {
+                row.dataset.matchesDate = 'true';
+            } else {
+                row.dataset.matchesDate = 'false';
+            }
+        });
+
+        applyFilters();
+    }
+
+
+    function applyFilters() {
+        const rows = document.querySelectorAll('#data-table tbody tr');
+
+        rows.forEach((row) => {
+            const matchesSearch = row.dataset.matchesSearch === 'true';
+            const matchesDate = row.dataset.matchesDate === 'true';
+
+            if (matchesSearch && matchesDate) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
+    document.getElementById('search-input').addEventListener('input', handleSearch);
+    document.getElementById('datepicker-actions').addEventListener('change', handleDateFilter);
 </script>
-<div class="p-4 sm:ml-64 mt-4">
-    <h3 class="text-2xl font-bold dark:text-white">Daftar Pelanggaran Operasi Rutin</h3>
+
+<div class="p-4 sm:ml-64 m-4">
+    <h3 class="text-2xl font-bold dark:text-white">Daftar Pelanggaran Penindakan Harian</h3>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-4">
         <div id="exampleWrapper" class="dark:bg-gray-900">
             <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
@@ -174,10 +192,9 @@
                                             d=" M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
                                     </svg>
                                 </div>
-                                <input id="datepicker-actions" datepicker datepicker-buttons
-                                    datepicker-autoselect-today type="text"
+                                <input id="datepicker-actions" type="date"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2 ps-10 w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="Pilih Tanggal">
+                                    placeholder="Pilih Tanggal" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
                             </div>
                         </div>
                         <label for="table-search" class="sr-only">Search</label>
@@ -193,44 +210,43 @@
                             </div>
                             <input type="text" id="table-search"
                                 class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Cari Nama" oninput="handleSearch(event)" />
-                            </div>>
+                                placeholder="Cari Nama" oninput="handleSearch(event)">
                         </div>
                     </div>
                 </div>
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400" id="export-table" class="datatable-table">
-    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-        <tr>
-            <th scope="col" class="px-6 py-3">Hari/Tanggal</th>
-            <th scope="col" class="px-6 py-3">NIM</th>
-            <th scope="col" class="px-6 py-3">Nama</th>
-            <th scope="col" class="px-6 py-3">Jenis Pelanggaran</th>
-            <th scope="col" class="px-6 py-3">Status Badge</th>
-            <th scope="col" class="px-6 py-3">Aksi</th>
-        </tr>
-    </thead>
-    <tbody>
-        @forelse($data as $row)
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {{ $row->created_at->format('d-m-Y') }}
-                </th>
-                <td class="px-6 py-4">{{ $row->nim }}</td>
-                <td class="px-6 py-4">{{ $row->name }}</td>
-                <td class="px-6 py-4">{{ $row->violation }}</td>
-                <td class="px-6 py-4">Aktif</td>
-                <td class="px-6 py-4 flex-row">
-                    <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 ...">Edit</button>
-                    <button type="button" class="text-white bg-red-500 hover:bg-red-800 ...">Hapus</button>
-                </td>
-            </tr>
-        @empty
-            <tr>
-                <td colspan="6" class="px-6 py-4 text-center">No data available</td>
-            </tr>
-        @endforelse
-    </tbody>
-</table>
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">Hari/Tanggal</th>
+                            <th scope="col" class="px-6 py-3">NIM</th>
+                            <th scope="col" class="px-6 py-3">Nama</th>
+                            <th scope="col" class="px-6 py-3">Jenis Pelanggaran</th>
+                            <th scope="col" class="px-6 py-3">Status Badge</th>
+                            <th scope="col" class="px-6 py-3">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($data as $row)
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {{ $row->created_at->format('d-m-Y') }}
+                            </th>
+                            <td class="px-6 py-4">{{ $row->nim }}</td>
+                            <td class="px-6 py-4">{{ $row->name }}</td>
+                            <td class="px-6 py-4">{{ $row->violation }}</td>
+                            <td class="px-6 py-4">Aktif</td>
+                            <td class="px-6 py-4 flex-row">
+                                <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 ...">Edit</button>
+                                <button type="button" class="text-white bg-red-500 hover:bg-red-800 ...">Hapus</button>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="6" class="px-6 py-4 text-center">No data available</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

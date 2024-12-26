@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CatatController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\KritikSaranController;
 use App\Http\Controllers\OperasiRutinController;
 use App\Http\Controllers\SesiController;
 use App\Http\Controllers\UbahPasswordController;
@@ -22,6 +23,9 @@ Route::middleware(['auth'])->group(function () {
     // Ubah Password
     Route::get('/ubah-password', [UbahPasswordController::class, 'index']);
     Route::post('/ubah-password', [UbahPasswordController::class, 'ubahPassword']);
+    // Kritik Saran
+    Route::get('/kirim-kritik-saran', [KritikSaranController::class, 'index']);
+    Route::post('/kirim-kritik-saran', [KritikSaranController::class, 'kirimKritikSaran']);
 });
 
 // Route Ubah Password
@@ -68,13 +72,13 @@ Route::get('/catat-harian', function () {
 
 Route::get('/catat', [CatatController::class, 'showForm']);
 
-// Route::get('/catat', function () {
-//     return view('catat');
-// })->name('catat');
+Route::get('/catat', function () {
+    return view('catat');
+})->name('catat');
 
-Route::get('/kritik-saran', function () {
-    return view('kritiksaran');
-});
+// Route::get('/kritik-saran', function () {
+//     return view('kritiksaran');
+// });
 
 Route::get('/riwayat', function () {
     return view('riwayat');
