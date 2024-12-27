@@ -9,7 +9,10 @@ class KritikSaran extends Model
 {
     use HasFactory;
 
+    // Nama tabel di database
+    protected $table = 'kritiksaran';
+
     protected $fillable = [
-        'isi_kritik_saran', // Kolom yang boleh diisi
+        'kritiksaran', // Kolom yang boleh diisi
     ];
 }

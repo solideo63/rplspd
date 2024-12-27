@@ -12,8 +12,8 @@ use App\Http\Controllers\UbahPasswordController;
 use App\Http\Controllers\PeraturanController;
 
 Route::middleware(['guest'])->group(function () {
-    Route::get('/', [SesiController::class, 'index'])->name('login');
-    Route::post('/', [SesiController::class, 'login']);
+    Route::get('/login', [SesiController::class, 'index'])->name('login');
+    Route::post('/login', [SesiController::class, 'login']);
 });
 Route::get('/home', function () {
     return redirect('/admin');
@@ -25,8 +25,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/ubah-password', [UbahPasswordController::class, 'index']);
     Route::post('/ubah-password', [UbahPasswordController::class, 'ubahPassword']);
     // Kritik Saran
-    Route::get('/kirim-kritik-saran', [KritikSaranController::class, 'index']);
-    Route::post('/kirim-kritik-saran', [KritikSaranController::class, 'kirimKritikSaran']);
+    
 });
 
 // Route Ubah Password
@@ -38,6 +37,13 @@ Route::middleware(['auth'])->group(function () {
 // Route::get('/dashboard', function () {
 //     return view('dashboard', ['title' => 'Dashboard']);
 // });
+
+Route::get('/', function () {
+    return view('landingpage');
+});
+
+Route::get('/kirim-kritik-saran', [KritikSaranController::class, 'index'])->name('kritiksaran');
+Route::post('/kirim-kritik-saran/submit', [KritikSaranController::class, 'submit'])->name('kritiksaran.submit');
 
 Route::get('/laporan-rutin', function () {
     return view('laporanrutin');
@@ -117,3 +123,10 @@ Route::post('/admin-peraturan/submit', [PeraturanController::class, 'admin_submi
 Route::get('/admin-peraturan/edit/{id}', [PeraturanController::class, 'admin_edit'])->name('admin.edit.peraturan');
 Route::post('/admin-peraturan/update/{id}', [PeraturanController::class, 'admin_update'])->name('admin.update.peraturan');
 Route::post('/admin-peraturan/delete/{id}', [PeraturanController::class, 'admin_delete'])->name('admin.delete.peraturan');
+
+Route::get('/peraturan', [PeraturanController::class, 'tampil'])->name('tampil.peraturan');
+
+Route::get('/landing', function () {
+    return view('landingpage');
+});
+

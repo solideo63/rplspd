@@ -22,8 +22,9 @@
                 </a>
             </div>
 
+            
             <div class="flex items-center ms-3">
-
+                @auth
                 <button id="dropdownFAQButton" data-dropdown-toggle="dropdownFAQ"
                     class="relative inline-flex items-center text-sm font-medium text-center text-gray-500 hover:text-gray-900 focus:outline-none dark:hover:text-white dark:text-gray-400"
                     type="button">
@@ -49,22 +50,17 @@
                         Kritik dan Saran
                     </div>
                     <div class="divide-y divide-gray-100 dark:divide-gray-700">
-                        <a href="#" class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700">
+                        
+                            <a href="#" class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700">
                             <div class="w-full ps-3">
                                 <div class="text-gray-500 text-sm mb-1.5 dark:text-gray-400">Kritik dan Saran dari <span
-                                        class="font-semibold text-gray-900 dark:text-white">Anonymous</span>: "Kalau
-                                    bisa apelnya setiap hari"</div>
-                                <div class="text-xs text-blue-600 dark:text-blue-500">a few moments ago</div>
+                                        class="font-semibold text-gray-900 dark:text-white">Anonymous</span>: hehe</div>
+                                <div class="text-xs text-blue-600 dark:text-blue-500">2 menit lalu</div>
                             </div>
-                        </a>
-                        <a href="#" class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700">
-                            <div class="w-full ps-3">
-                                <div class="text-gray-500 text-sm mb-1.5 dark:text-gray-400">Kritik dan Saran dari <span
-                                        class="font-semibold text-gray-900 dark:text-white">Solideo</span>: "Banyakin
-                                    sidaknya dong!"</div>
-                                <div class="text-xs text-blue-600 dark:text-blue-500">10 minutes ago</div>
-                            </div>
-                        </a>
+                            </a>
+                        
+                        
+                        
 
                     </div>
                     <a href="#"
@@ -187,6 +183,17 @@
                         </div>
                     </div>
                 </div>
+                @endauth
+                <div class="flex items-center ms-3">
+                    <!-- Cek apakah pengguna belum login -->
+                    @if(Auth::guest())
+                    <div class="flex items-center lg:order-2">
+                        <a href="/login"style="background-color: #FCBE11;" class="text-white hover:opacity-90 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none"> Log in </a>    
+                    </div>
+                    
+                    @endif
+                </div>
+
             </div>
         </div>
     </div>

@@ -62,4 +62,10 @@ class PeraturanController extends Controller
         $data->delete();
         return redirect()->route('admin.tampil.peraturan');
     }
+
+    public function tampil()
+    {
+        $data = peraturan::all();
+        return view('peraturan', compact('data'));
+    }
 }
