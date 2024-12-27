@@ -100,4 +100,19 @@ Route::post('/operasi-rutin', [OperasiRutinController::class, 'store'])->name('o
 
 Route::get('/laporan-rutin', [OperasiRutinController::class, 'index'])->name('laporanrutin');
 
+// Route manage FAQ admin
+Route::get('/admin-faq', [FaqController::class, 'admin_tampil'])->name('admin.tampil.faq');
+Route::get('/admin-faq/tambah', [FaqController::class, 'admin_tambah'])->name('admin.tambah.faq');
+Route::post('/admin-faq/submit', [FaqController::class, 'admin_submit'])->name('admin.submit.faq');
+Route::get('/admin-faq/edit/{id}', [FaqController::class, 'admin_edit'])->name('admin.edit.faq');
+Route::post('/admin-faq/update/{id}', [FaqController::class, 'admin_update'])->name('admin.update.faq');
+Route::post('/admin-faq/delete/{id}', [FaqController::class, 'admin_delete'])->name('admin.delete.faq');
 
+
+// Route manage peraturan admin
+Route::get('/admin-peraturan', [PeraturanController::class, 'admin_tampil'])->name('admin.tampil.peraturan');
+Route::get('/admin-peraturan/tambah', [PeraturanController::class, 'admin_tambah'])->name('admin.tambah.peraturan');
+Route::post('/admin-peraturan/submit', [PeraturanController::class, 'admin_submit'])->name('admin.submit.peraturan');
+Route::get('/admin-peraturan/edit/{id}', [PeraturanController::class, 'admin_edit'])->name('admin.edit.peraturan');
+Route::post('/admin-peraturan/update/{id}', [PeraturanController::class, 'admin_update'])->name('admin.update.peraturan');
+Route::post('/admin-peraturan/delete/{id}', [PeraturanController::class, 'admin_delete'])->name('admin.delete.peraturan');
