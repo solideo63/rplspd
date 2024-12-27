@@ -99,3 +99,5 @@ Route::post('/operasi-rutin', [OperasiRutinController::class, 'store'])->name('o
 // Route::get('/laporan-rutin', [OperasiRutinController::class, 'index'])->name('laporan-rutin.index');
 
 Route::get('/laporan-rutin', [OperasiRutinController::class, 'index'])->name('laporanrutin');
+
+
