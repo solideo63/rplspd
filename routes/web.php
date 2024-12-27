@@ -9,6 +9,7 @@ use App\Http\Controllers\KritikSaranController;
 use App\Http\Controllers\OperasiRutinController;
 use App\Http\Controllers\SesiController;
 use App\Http\Controllers\UbahPasswordController;
+use App\Http\Controllers\PeraturanController;
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/', [SesiController::class, 'index'])->name('login');
