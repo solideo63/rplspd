@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\OperasiRutin;
+use Illuminate\Support\Facades\Auth;
 
 class OperasiRutinController extends Controller
 {
@@ -42,16 +43,19 @@ class OperasiRutinController extends Controller
     {
         $request->validate([
             'nim' => 'required|regex:/^[0-9]{9}$/', // NIM harus 9 digit angka
-            'name' => 'required|string|max:255',
-            'violation' => 'required|string|max:255',
-            'nas' => 'nullable', // Optional
+            'nama_mahasiswa' => 'required|string|max:255',
+            'pelanggaran' => 'required|string|max:255',
         ]);
 
-        // Buat entri baru di tabel Operasi Rutin
-        $operasiRutin = OperasiRutin::create($request->only(['nim', 'name', 'violation', 'nas']));
+        // Tambahkan nama pencatat dari session login
+        $data = $request->only(['nim', 'nama_mahasiswa', 'pelanggaran']); // Ambil data request
+        $data['nama_pencatat'] = Auth::user()->name; // Tambahkan nama pencatat dari session login
+
+        // Simpan data ke database menggunakan Eloquent
+        $operasiRutin = OperasiRutin::create($data); // Pastikan model OperasiRutin memiliki $fillable yang sesuai
 
         // Setelah menyimpan data, panggil EmailController untuk mengirim email
-        app(EmailController::class)->sendEmail($request);
+        app(EmailController::class)->sendEmail($request); // Pastikan fungsi sendEmail sudah benar
 
         // Redirect ke halaman view catat.blade.php dengan pesan sukses
         return redirect()->route('catat') // Pastikan Anda sudah mendefinisikan route ini

@@ -15,9 +15,9 @@ class OperasiRutin extends Model
     // Kolom yang dapat diisi (mass assignable)
     protected $fillable = [
         'nim',
-        'nas',
-        'name',
-        'violation',
+        'nama_mahasiswa',
+        'pelanggaran',
+        'nama_pencatat', 
     ];
 
     // Format default untuk timestamps (jika diperlukan custom)

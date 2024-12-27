@@ -1,101 +1,105 @@
 <x-layout>{{ $title }}</x-layout>
 
-@if(session('success'))
-<script>
-    alert("{{ session('success') }}");
-</script>
+@if (session('success'))
+    <script>
+        alert("{{ session('success') }}");
+    </script>
 @endif
 
 <div class="p-4 sm:ml-64 mt-4">
-    <h2 class="text-4xl ml-4 mb-4 font-bold dark:text-white">Selamat datang, {{Auth::user()->name}}</h2>
+    <h2 class="text-4xl ml-4 mb-4 font-bold dark:text-white">Selamat datang, {{ Auth::user()->name }}</h2>
     <br>
-    @if(Auth::user()->role != 'mahasiswa')
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 p-4">
-        <div class="bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6 w-full">
-            <div class="flex justify-between border-gray-200 border-b dark:border-gray-700 pb-3">
-                <dl>
-                    <dt class="text-base font-normal text-gray-500 dark:text-gray-400 pb-1">Bar Chart</dt>
-                    <dd class="leading-none text-3xl font-bold text-gray-900 dark:text-white">Laporan Pelanggaran
-                    </dd>
-                </dl>
-            </div>
-            <div id="bar-chart" class="w-full"></div>
-            <div class="border-gray-200 border-t dark:border-gray-700 pt-5 flex justify-between items-center">
-                <button id="dropdownDefaultButton" data-dropdown-toggle="lastDaysdropdown" data-dropdown-placement="top"
-                    class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white inline-flex items-center">
-                    Bulan Ini
-                    <svg class="w-2.5 m-2.5 ms-1.5" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 10 6">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m1 1 4 4 4-4" />
-                    </svg>
-                </button>
-                <div id="lastDaysdropdown"
-                    class="hidden z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
-                        <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Minggu
-                                Ini</a></li>
-                        <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Bulan
-                                Ini</a></li>
-                        <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Tahun
-                                Ini</a></li>
-                    </ul>
+    @if (Auth::user()->role != 'mahasiswa')
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2 p-4">
+            <div class="bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6 w-full">
+                <div class="flex justify-between border-gray-200 border-b dark:border-gray-700 pb-3">
+                    <dl>
+                        <dt class="text-base font-normal text-gray-500 dark:text-gray-400 pb-1">Bar Chart</dt>
+                        <dd class="leading-none text-3xl font-bold text-gray-900 dark:text-white">Laporan Pelanggaran
+                        </dd>
+                    </dl>
                 </div>
-                <a href="#"
-                    class="text-blue-600 hover:text-blue-700 dark:hover:text-blue-500 uppercase text-sm font-semibold inline-flex items-center px-3 py-2">
-                    Laporan Pelanggaran
-                    <svg class="w-2.5 h-2.5 ms-1.5" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 6 10">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m1 9 4-4-4-4" />
-                    </svg>
-                </a>
+                <div id="bar-chart" class="w-full"></div>
+                <div class="border-gray-200 border-t dark:border-gray-700 pt-5 flex justify-between items-center">
+                    <button id="dropdownDefaultButton" data-dropdown-toggle="lastDaysdropdown"
+                        data-dropdown-placement="top"
+                        class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white inline-flex items-center">
+                        Bulan Ini
+                        <svg class="w-2.5 m-2.5 ms-1.5" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 1 4 4 4-4" />
+                        </svg>
+                    </button>
+                    <div id="lastDaysdropdown"
+                        class="hidden z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
+                            <li><a href="#"
+                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Minggu
+                                    Ini</a></li>
+                            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Bulan
+                                    Ini</a></li>
+                            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Tahun
+                                    Ini</a></li>
+                        </ul>
+                    </div>
+                    <a href="#"
+                        class="text-blue-600 hover:text-blue-700 dark:hover:text-blue-500 uppercase text-sm font-semibold inline-flex items-center px-3 py-2">
+                        Laporan Pelanggaran
+                        <svg class="w-2.5 h-2.5 ms-1.5" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 6 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 9 4-4-4-4" />
+                        </svg>
+                    </a>
+                </div>
             </div>
-        </div>
 
-        <div class="bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6 w-full">
-            <div class="flex justify-between border-gray-200 border-b dark:border-gray-700 pb-3">
-                <dl>
-                    <dt class="text-base font-normal text-gray-500 dark:text-gray-400 pb-1">Pie Chart</dt>
-                    <dd class="leading-none text-3xl font-bold text-gray-900 dark:text-white">Laporan
-                        Pelanggaran
-                    </dd>
-                </dl>
-            </div>
-            <div id="pie-chart" class="w-full"></div>
-            <div class="border-gray-200 border-t dark:border-gray-700 pt-5 flex justify-between items-center">
-                <button id="dropdownDefaultButton" data-dropdown-toggle="lastDaysdropdown" data-dropdown-placement="top"
-                    class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white inline-flex items-center">
-                    Bulan Ini
-                    <svg class="w-2.5 m-2.5 ms-1.5" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 10 6">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m1 1 4 4 4-4" />
-                    </svg>
-                </button>
-                <div id="lastDaysdropdown"
-                    class="hidden z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
-                        <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Minggu
-                                Ini</a></li>
-                        <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Bulan
-                                Ini</a></li>
-                        <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Tahun
-                                Ini</a></li>
-                    </ul>
+            <div class="bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6 w-full">
+                <div class="flex justify-between border-gray-200 border-b dark:border-gray-700 pb-3">
+                    <dl>
+                        <dt class="text-base font-normal text-gray-500 dark:text-gray-400 pb-1">Pie Chart</dt>
+                        <dd class="leading-none text-3xl font-bold text-gray-900 dark:text-white">Laporan
+                            Pelanggaran
+                        </dd>
+                    </dl>
                 </div>
-                <a href="#"
-                    class="text-blue-600 hover:text-blue-700 dark:hover:text-blue-500 uppercase text-sm font-semibold inline-flex items-center px-3 py-2">
-                    Laporan Pelanggaran
-                    <svg class="w-2.5 h-2.5 ms-1.5" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 6 10">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m1 9 4-4-4-4" />
-                    </svg>
-                </a>
+                <div id="pie-chart" class="w-full"></div>
+                <div class="border-gray-200 border-t dark:border-gray-700 pt-5 flex justify-between items-center">
+                    <button id="dropdownDefaultButton" data-dropdown-toggle="lastDaysdropdown"
+                        data-dropdown-placement="top"
+                        class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white inline-flex items-center">
+                        Bulan Ini
+                        <svg class="w-2.5 m-2.5 ms-1.5" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 1 4 4 4-4" />
+                        </svg>
+                    </button>
+                    <div id="lastDaysdropdown"
+                        class="hidden z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
+                            <li><a href="#"
+                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Minggu
+                                    Ini</a></li>
+                            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Bulan
+                                    Ini</a></li>
+                            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Tahun
+                                    Ini</a></li>
+                        </ul>
+                    </div>
+                    <a href="#"
+                        class="text-blue-600 hover:text-blue-700 dark:hover:text-blue-500 uppercase text-sm font-semibold inline-flex items-center px-3 py-2">
+                        Laporan Pelanggaran
+                        <svg class="w-2.5 h-2.5 ms-1.5" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 6 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 9 4-4-4-4" />
+                        </svg>
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
     @endif
 
     <div>
@@ -123,8 +127,8 @@
                         Baca Lebih Lanjut
                         <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M1 5h12m0 0L9 1m4 4L9 9" />
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
                         </svg>
                     </a>
                 </div>

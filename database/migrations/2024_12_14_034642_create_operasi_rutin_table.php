@@ -16,9 +16,9 @@ class CreateOperasiRutinTable extends Migration
         Schema::create('operasi_rutin', function (Blueprint $table) {
             $table->id(); // Primary key dengan auto-increment
             $table->string('nim', 9); // Kolom NIM dengan panjang maksimum 9 karakter
-            $table->string('nas', 8); // Kolom NAS dengan panjang maksimum 8 karakter
-            $table->string('name', 255); // Kolom Nama dengan panjang maksimum 255 karakter
-            $table->string('violation', 255); // Kolom Pelanggaran dengan panjang maksimum 255 karakter
+            $table->string('nama_mahasiswa', 255); // Kolom NAS dengan panjang maksimum 8 karakter
+            $table->string('pelanggaran', 255); // Kolom Nama dengan panjang maksimum 255 karakter
+            $table->string('nama_pencatat', 255); // Kolom Pelanggaran dengan panjang maksimum 255 karakter
             $table->timestamps(); // Kolom created_at dan updated_at
         });
     }

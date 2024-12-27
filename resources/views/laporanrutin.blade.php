@@ -57,7 +57,7 @@
 </script>
 
 <div class="p-4 sm:ml-64 m-4">
-    <h3 class="text-2xl font-bold dark:text-white">Daftar Pelanggaran Penindakan Harian</h3>
+    <h3 class="text-2xl font-bold dark:text-white">Daftar Pelanggaran Operasi Rutin</h3>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-4">
         <div id="exampleWrapper" class="dark:bg-gray-900">
             <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
@@ -214,36 +214,43 @@
                         </div>
                     </div>
                 </div>
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400" id="export-table" class="datatable-table">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                    id="export-table" class="datatable-table">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" class="px-6 py-3">Hari/Tanggal</th>
                             <th scope="col" class="px-6 py-3">NIM</th>
-                            <th scope="col" class="px-6 py-3">Nama</th>
-                            <th scope="col" class="px-6 py-3">Jenis Pelanggaran</th>
+                            <th scope="col" class="px-6 py-3">Nama Mahasiswa</th>
+                            <th scope="col" class="px-6 py-3">Pelanggaran</th>
+                            <th scope="col" class="px-6 py-3">Nama Pencatat</th>
                             <th scope="col" class="px-6 py-3">Status Badge</th>
                             <th scope="col" class="px-6 py-3">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($data as $row)
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{ $row->created_at->format('d-m-Y') }}
-                            </th>
-                            <td class="px-6 py-4">{{ $row->nim }}</td>
-                            <td class="px-6 py-4">{{ $row->name }}</td>
-                            <td class="px-6 py-4">{{ $row->violation }}</td>
-                            <td class="px-6 py-4">Aktif</td>
-                            <td class="px-6 py-4 flex-row">
-                                <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 ...">Edit</button>
-                                <button type="button" class="text-white bg-red-500 hover:bg-red-800 ...">Hapus</button>
-                            </td>
-                        </tr>
+                            <tr
+                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <th scope="row"
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    {{ $row->created_at->format('d-m-Y') }}
+                                </th>
+                                <td class="px-6 py-4">{{ $row->nim }}</td>
+                                <td class="px-6 py-4">{{ $row->nama_mahasiswa }}</td>
+                                <td class="px-6 py-4">{{ $row->pelanggaran }}</td>
+                                <td class="px-6 py-4">{{ $row->nama_pencatat }}</td>
+                                <td class="px-6 py-4">Aktif</td>
+                                <td class="px-6 py-4 flex-row">
+                                    <button type="button"
+                                        class="text-white bg-blue-700 hover:bg-blue-800 ...">Edit</button>
+                                    <button type="button"
+                                        class="text-white bg-red-500 hover:bg-red-800 ...">Hapus</button>
+                                </td>
+                            </tr>
                         @empty
-                        <tr>
-                            <td colspan="6" class="px-6 py-4 text-center">No data available</td>
-                        </tr>
+                            <tr>
+                                <td colspan="6" class="px-6 py-4 text-center">No data available</td>
+                            </tr>
                         @endforelse
                     </tbody>
                 </table>

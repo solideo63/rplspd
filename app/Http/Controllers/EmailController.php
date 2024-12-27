@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -10,19 +11,20 @@ class EmailController extends Controller
     {
         $request->validate([
             'nim' => 'required|regex:/^[0-9]{9}$/', // Validasi NIM harus 9 digit angka
-            'name' => 'required|string|max:255',
-            'violation' => 'required|string|max:255',
+            'nama_mahasiswa' => 'required|string|max:255',
+            'pelanggaran' => 'required|string|max:255',
         ]);
 
         $email = $request->nim . '@stis.ac.id';
 
         $data = [
-            'name' => $request->name,
-            'violation' => $request->violation,
+            'nim' => $request->nim,
+            'nama_mahasiswa' => $request->nama_mahasiswa,
+            'pelanggaran' => $request->pelanggaran,
         ];
 
         try {
-            Mail::send('emails.violation', $data, function ($message) use ($email) {
+            Mail::send('emails.pelanggaran', $data, function ($message) use ($email) {
                 $message->to($email)->subject('Pencatatan Pelanggaran');
             });
 
