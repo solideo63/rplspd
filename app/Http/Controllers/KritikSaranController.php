@@ -12,19 +12,17 @@ class KritikSaranController extends Controller
         return view('kritiksaran');
     }
 
-    public function kirimKritikSaran(Request $request)
+    public function submit(Request $request)
     {
+
+        $krisar = new KritikSaran();
+        $krisar->kritiksaran = $request->kritiksaran;
+        $krisar->save();
+
+        return redirect()->route('kritiksaran')->with('success', 'Kritik dan Saran berhasil dikirim!');
         // Validasi input
-        $request->validate([
-            'kritiksaran' => 'required|string|max:5000',
-        ]);
-
-        // Simpan ke database
-        KritikSaran::create([
-            'isi_kritik_saran' => $request->kritiksaran,
-        ]);
-
-        // Redirect dengan pesan sukses
-        return redirect('/kirim-kritik-saran')->with('success', 'Kritik dan Saran berhasil dikirim!');
+        
     }
+
+    
 }

@@ -9,10 +9,11 @@ use App\Http\Controllers\KritikSaranController;
 use App\Http\Controllers\OperasiRutinController;
 use App\Http\Controllers\SesiController;
 use App\Http\Controllers\UbahPasswordController;
+use App\Http\Controllers\PeraturanController;
 
 Route::middleware(['guest'])->group(function () {
-    Route::get('/', [SesiController::class, 'index'])->name('login');
-    Route::post('/', [SesiController::class, 'login']);
+    Route::get('/login', [SesiController::class, 'index'])->name('login');
+    Route::post('/login', [SesiController::class, 'login']);
 });
 Route::get('/home', function () {
     return redirect('/admin');
@@ -24,8 +25,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/ubah-password', [UbahPasswordController::class, 'index']);
     Route::post('/ubah-password', [UbahPasswordController::class, 'ubahPassword']);
     // Kritik Saran
-    Route::get('/kirim-kritik-saran', [KritikSaranController::class, 'index']);
-    Route::post('/kirim-kritik-saran', [KritikSaranController::class, 'kirimKritikSaran']);
+    
 });
 
 // Route Ubah Password
@@ -37,6 +37,13 @@ Route::middleware(['auth'])->group(function () {
 // Route::get('/dashboard', function () {
 //     return view('dashboard', ['title' => 'Dashboard']);
 // });
+
+Route::get('/', function () {
+    return view('landingpage');
+});
+
+Route::get('/kirim-kritik-saran', [KritikSaranController::class, 'index'])->name('kritiksaran');
+Route::post('/kirim-kritik-saran/submit', [KritikSaranController::class, 'submit'])->name('kritiksaran.submit');
 
 Route::get('/laporan-rutin', function () {
     return view('laporanrutin');
@@ -99,3 +106,27 @@ Route::post('/operasi-rutin', [OperasiRutinController::class, 'store'])->name('o
 // Route::get('/laporan-rutin', [OperasiRutinController::class, 'index'])->name('laporan-rutin.index');
 
 Route::get('/laporan-rutin', [OperasiRutinController::class, 'index'])->name('laporanrutin');
+
+// Route manage FAQ admin
+Route::get('/admin-faq', [FaqController::class, 'admin_tampil'])->name('admin.tampil.faq');
+Route::get('/admin-faq/tambah', [FaqController::class, 'admin_tambah'])->name('admin.tambah.faq');
+Route::post('/admin-faq/submit', [FaqController::class, 'admin_submit'])->name('admin.submit.faq');
+Route::get('/admin-faq/edit/{id}', [FaqController::class, 'admin_edit'])->name('admin.edit.faq');
+Route::post('/admin-faq/update/{id}', [FaqController::class, 'admin_update'])->name('admin.update.faq');
+Route::post('/admin-faq/delete/{id}', [FaqController::class, 'admin_delete'])->name('admin.delete.faq');
+
+
+// Route manage peraturan admin
+Route::get('/admin-peraturan', [PeraturanController::class, 'admin_tampil'])->name('admin.tampil.peraturan');
+Route::get('/admin-peraturan/tambah', [PeraturanController::class, 'admin_tambah'])->name('admin.tambah.peraturan');
+Route::post('/admin-peraturan/submit', [PeraturanController::class, 'admin_submit'])->name('admin.submit.peraturan');
+Route::get('/admin-peraturan/edit/{id}', [PeraturanController::class, 'admin_edit'])->name('admin.edit.peraturan');
+Route::post('/admin-peraturan/update/{id}', [PeraturanController::class, 'admin_update'])->name('admin.update.peraturan');
+Route::post('/admin-peraturan/delete/{id}', [PeraturanController::class, 'admin_delete'])->name('admin.delete.peraturan');
+
+Route::get('/peraturan', [PeraturanController::class, 'tampil'])->name('tampil.peraturan');
+
+Route::get('/landing', function () {
+    return view('landingpage');
+});
+

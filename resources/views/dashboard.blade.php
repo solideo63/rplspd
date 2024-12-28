@@ -102,6 +102,7 @@
         </div>
     @endif
 
+
     <div>
         <div class="flex justify-center">
             <h3 class="text-3xl font-bold dark:text-white pl-4 items-center">Peraturan Terkait</h3>
@@ -135,6 +136,7 @@
             </div>
         </div>
     </div>
+
 
     <div>
         <h3 class="text-3xl font-bold dark:text-white pl-4">Ketentuan Berseragam</h3>
