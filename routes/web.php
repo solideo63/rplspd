@@ -103,7 +103,7 @@ Route::post('/operasi-rutin', [OperasiRutinController::class, 'store'])->name('o
 
 Route::delete('/delete/{id}', [OperasiRutinController::class, 'destroy'])->name('deleteRoute');
 
-Route::get('operasi-rutin/{id}/edit', [OperasiRutinController::class, 'edit'])->name('operasi-rutin.edit');
+Route::get('catat/{id}/edit', [OperasiRutinController::class, 'edit'])->name('catatedit');
 
 Route::put('operasi-rutin/{id}/update', [OperasiRutinController::class, 'update'])->name('operasi-rutin.update');
 

@@ -141,6 +141,22 @@ class OperasiRutinController extends Controller
         ]);
     }
 
+    public function edit($id)
+    {
+        session()->forget('tingkat');
+        // Ambil data operasi rutin yang sesuai dengan ID
+        $operasiRutin = OperasiRutin::findOrFail($id);
+
+        // Ambil semua data pelanggaran
+        $pelanggarans = Pelanggaran::all();
+
+        // Ambil data tingkat dari session atau defaultkan ke tingkat operasi rutin yang dipilih
+        $tingkat = session('tingkat') ?? $operasiRutin->tingkat;
+
+        // Kirim data ke view untuk ditampilkan dalam form
+        return view('editcatatrutin', compact('operasiRutin', 'pelanggarans', 'tingkat'));
+    }
+
     /**
      * Update the specified resource in storage.
      *
