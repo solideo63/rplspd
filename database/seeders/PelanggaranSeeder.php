@@ -33,7 +33,7 @@ class PelanggaranSeeder extends Seeder
             ['kodePelanggaran' => '09C00', 'namaPelanggaran' => 'Make Up', 'kategoriPelanggaran' => 'Ringan'],
             ['kodePelanggaran' => '09C01', 'namaPelanggaran' => 'Lipstik', 'kategoriPelanggaran' => 'Ringan'],
             ['kodePelanggaran' => '09C02', 'namaPelanggaran' => 'Bedak', 'kategoriPelanggaran' => 'Ringan'],
-            ['kodePelanggaran' => '09C03', 'namaPelanggaran' => 'Bush on', 'kategoriPelanggaran' => 'Ringan'],
+            ['kodePelanggaran' => '09C03', 'namaPelanggaran' => 'Blush on', 'kategoriPelanggaran' => 'Ringan'],
             ['kodePelanggaran' => '09C04', 'namaPelanggaran' => 'Pensil alis', 'kategoriPelanggaran' => 'Ringan'],
             ['kodePelanggaran' => '09C05', 'namaPelanggaran' => 'Maskara', 'kategoriPelanggaran' => 'Ringan'],
             ['kodePelanggaran' => '09C06', 'namaPelanggaran' => 'Bulu Mata Palsu', 'kategoriPelanggaran' => 'Ringan'],
