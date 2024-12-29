@@ -17,8 +17,10 @@ class OperasiRutin extends Model
         'nim',
         'nama_mahasiswa',
         'pelanggaran',
-        'nama_pencatat', 
+        'nama_pencatat',
     ];
+
+    protected $hidden = ['created_at', 'updated_at'];
 
     // Format default untuk timestamps (jika diperlukan custom)
     protected $casts = [
