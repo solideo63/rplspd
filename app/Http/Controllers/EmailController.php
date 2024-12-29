@@ -32,7 +32,7 @@ class EmailController extends Controller
         $data = [
             'nim' => $nim,
             'nama_mahasiswa' => $name,
-            'pelanggaran' => $pelanggaran,
+            'pelanggarans' => $namaPelanggaran,
         ];
 
         try {

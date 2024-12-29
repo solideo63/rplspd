@@ -1,10 +1,10 @@
 <h1>Laporan Pelanggaran</h1>
-<p>Halo, <strong>{{ $name }}</strong>,</p>
+<p>Halo, <strong>{{ $nama_mahasiswa }}</strong>,</p>
 <p>Kami telah mencatat pelanggaran yang Anda lakukan berdasarkan laporan yang diterima. Berikut adalah rincian data
     pelanggaran Anda:</p>
 <ul>
-    @foreach ($violations as $violation)
-        <li>{{ $violation }}</li>
+    @foreach ($pelanggarans as $pelanggaran)
+        <li>{{ $pelanggaran }}</li>
     @endforeach
 </ul>
 <p>
