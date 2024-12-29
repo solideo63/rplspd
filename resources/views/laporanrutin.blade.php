@@ -244,25 +244,26 @@
                                 <td class="px-6 py-4 text-center">{{ $row->tingkat }}</td>
                                 <td class="px-6 py-4">{{ $row->pelanggaran }}</td>
                                 <td class="px-6 py-4">{{ $row->nama_pencatat }}</td>
-                                <td class="px-6 py-4 flex">
-                                    <!-- Edit Button with only icon -->
-                                    <a href="{{ route('operasi-rutin.edit', $row->id) }}"
-                                        class="flex items-center justify-center text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm p-2 transition-all ease-in-out duration-200 transform hover:scale-105 active:scale-95 mr-2">
-                                        <i class="fas fa-edit"></i> <!-- Ikon edit -->
-                                    </a>
+                                @if (Auth::user()->role == 'spd' && Auth::user()->name == $row->nama_pencatat)
+                                    <td class="px-6 py-4 flex">
+                                        <!-- Edit Button with only icon -->
+                                        <a href="{{ route('operasi-rutin.edit', $row->id) }}"
+                                            class="flex items-center justify-center text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm p-2 transition-all ease-in-out duration-200 transform hover:scale-105 active:scale-95 mr-2">
+                                            <i class="fas fa-edit"></i> <!-- Ikon edit -->
+                                        </a>
 
-                                    <!-- Hapus Button with only icon -->
-                                    <form action="{{ route('deleteRoute', $row->id) }}" method="POST"
-                                        class="inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" onclick="return confirm('Are you sure?')"
-                                            class="flex items-center justify-center text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm p-2 transition-all ease-in-out duration-200 transform hover:scale-105 active:scale-95">
-                                            <i class="fas fa-trash-alt"></i> <!-- Ikon trash (hapus) -->
-                                        </button>
-                                    </form>
-                                </td>
-
+                                        <!-- Hapus Button with only icon -->
+                                        <form action="{{ route('deleteRoute', $row->id) }}" method="POST"
+                                            class="inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" onclick="return confirm('Are you sure?')"
+                                                class="flex items-center justify-center text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm p-2 transition-all ease-in-out duration-200 transform hover:scale-105 active:scale-95">
+                                                <i class="fas fa-trash-alt"></i> <!-- Ikon trash (hapus) -->
+                                            </button>
+                                        </form>
+                                    </td>
+                                @endif
                             </tr>
                         @empty
                             <tr>
