@@ -1,9 +1,19 @@
-<h1>Pencatatan Pelanggaran</h1>
-<p>Halo, {{ $nama_mahasiswa }}</p>
-<p>Berikut adalah data pelanggaran Anda:</p>
+<h1>Laporan Pelanggaran</h1>
+<p>Halo, <strong>{{ $name }}</strong>,</p>
+<p>Kami telah mencatat pelanggaran yang Anda lakukan berdasarkan laporan yang diterima. Berikut adalah rincian data
+    pelanggaran Anda:</p>
 <ul>
-    <li><strong>NIM:</strong> {{ $nim }}</li>
-    <li><strong>Nama:</strong> {{ $nama_mahasiswa }}</li>
-    <li><strong>Jenis Pelanggaran:</strong> {{ $pelanggaran }}</li>
+    @foreach ($violations as $violation)
+        <li>{{ $violation }}</li>
+    @endforeach
 </ul>
-<p>Terima kasih telah melaporkan pelanggaran ini.</p>
+<p>
+    Jika Anda memiliki pertanyaan atau memerlukan informasi lebih lanjut, jangan ragu untuk menghubungi kami melalui
+    email ini.
+</p>
+<p>Terima kasih atas perhatian dan kerja samanya.</p>
+<div class="footer">
+    <p>Hormat kami,</p>
+    <p><strong>[Satuan Penegak Disiplin]</strong></p>
+    <p>Sistem Informasi Pelanggaran</p>
+</div>
