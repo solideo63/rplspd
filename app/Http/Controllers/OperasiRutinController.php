@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Exception;
+use Carbon\Carbon;
+use App\Models\Pelanggaran;
 use App\Models\OperasiRutin;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class OperasiRutinController extends Controller
@@ -32,6 +35,24 @@ class OperasiRutinController extends Controller
         return view('laporanrutin', compact('data'));
     }
 
+    public function showForm(Request $request)
+    {
+        $pelanggarans = Pelanggaran::all();
+
+        // Jika tidak berada di halaman showForm dan session tingkat ada, maka hapus session tingkat
+        if (!request()->routeIs('catat')) {
+            session()->forget('tingkat');
+        }
+
+        // Ambil nilai tingkat dari query string atau session
+        $tingkat = $request->query('tingkat') ?? session('tingkat');
+
+        // Jika tingkat ada di query string, simpan di session
+        if ($tingkat) {
+            session(['tingkat' => $tingkat]);
+        }
+        return view('catat', compact('pelanggarans', 'tingkat'));
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -44,15 +65,51 @@ class OperasiRutinController extends Controller
         $request->validate([
             'nim' => 'required|regex:/^[0-9]{9}$/', // NIM harus 9 digit angka
             'nama_mahasiswa' => 'required|string|max:255',
-            'pelanggaran' => 'required|string|max:255',
+            'pelanggaran' => 'required',
+            'tingkat' => 'required|integer',
         ]);
 
         // Tambahkan nama pencatat dari session login
-        $data = $request->only(['nim', 'nama_mahasiswa', 'pelanggaran']); // Ambil data request
-        $data['nama_pencatat'] = Auth::user()->name; // Tambahkan nama pencatat dari session login
 
+        $nim = $request->nim;
+        $nama = $request->nama_mahasiswa;
+        $pelanggaran = $request->pelanggaran;
+        $tingkat = $request->tingkat;
+        $pencatat = Auth::user()->name;
+        session(['tingkat' => $tingkat]);
+        // $data = $request->only(['nim', 'nama_mahasiswa', 'pelanggaran']); // Ambil data request
+        // $data['nama_pencatat'] = Auth::user()->name; // Tambahkan nama pencatat dari session login
+
+        // Menggunakan Carbon untuk mendapatkan waktu lokal sesuai zona waktu Asia/Jakarta
+        $timestamp = Carbon::now('Asia/Jakarta'); // Menetapkan waktu sesuai dengan zona waktu Jakarta
+
+        if (is_array($pelanggaran)) {
+            foreach ($pelanggaran as $kode) {
+                $namaPelanggaran = Pelanggaran::where('kodePelanggaran', $kode)->value('namaPelanggaran') ?? 'Unknown'; // Ambil nama pelanggaran
+                array_push($data, [
+                    'nim' => $nim,
+                    'nama_mahasiswa' => $nama,
+                    'tingkat' => $tingkat,
+                    'pelanggaran' => $namaPelanggaran,
+                    'nama_pencatat' => $pencatat,
+                    'created_at' => $timestamp, // Gunakan timestamp sesuai zona waktu lokal
+                ]);
+            }
+        } else {
+            $namaPelanggaran = Pelanggaran::where('kodePelanggaran', $pelanggaran)->value('namaPelanggaran') ?? 'Unknown'; // Ambil nama pelanggaran
+            array_push($data, [
+                'nim' => $nim,
+                'nama_mahasiswa' => $nama,
+                'tingkat' => $tingkat,
+                'pelanggaran' => $namaPelanggaran,
+                'nama_pencatat' => $pencatat,
+                'created_at' => $timestamp, // Gunakan timestamp sesuai zona waktu lokal
+            ]);
+        }
+
+        OperasiRutin::insert($data);
         // Simpan data ke database menggunakan Eloquent
-        $operasiRutin = OperasiRutin::create($data); // Pastikan model OperasiRutin memiliki $fillable yang sesuai
+        // $operasiRutin = OperasiRutin::create($data); // Pastikan model OperasiRutin memiliki $fillable yang sesuai
 
         // Setelah menyimpan data, panggil EmailController untuk mengirim email
         app(EmailController::class)->sendEmail($request); // Pastikan fungsi sendEmail sudah benar
@@ -121,14 +178,19 @@ class OperasiRutinController extends Controller
      */
     public function destroy($id)
     {
-        $operasiRutin = OperasiRutin::find($id);
+        try {
+            $operasiRutin = OperasiRutin::find($id);
 
-        if (!$operasiRutin) {
-            return response()->json(['message' => 'Data tidak ditemukan'], 404);
+            if (!$operasiRutin) {
+                return response()->json(['message' => 'Data tidak ditemukan'], 404);
+            }
+
+            $operasiRutin->delete();
+
+            return redirect()->route('laporanrutin')->with('success', 'Data berhasil dihapus');
+        } catch (Exception $e) {
+            // Menangani kesalahan jika terjadi exception
+            return redirect()->route('laporanrutin')->with('error', 'Data gagal dihapus: ' . $e->getMessage());
         }
-
-        $operasiRutin->delete();
-
-        return response()->json(['message' => 'Data berhasil dihapus']);
     }
 }

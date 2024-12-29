@@ -10,6 +10,7 @@ use App\Http\Controllers\OperasiRutinController;
 use App\Http\Controllers\SesiController;
 use App\Http\Controllers\UbahPasswordController;
 use App\Http\Controllers\PeraturanController;
+use App\Http\Controllers\PelanggaranController;
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/login', [SesiController::class, 'index'])->name('login');
@@ -25,7 +26,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/ubah-password', [UbahPasswordController::class, 'index']);
     Route::post('/ubah-password', [UbahPasswordController::class, 'ubahPassword']);
     // Kritik Saran
-    
+
 });
 
 // Route Ubah Password
@@ -99,6 +100,10 @@ Route::get('/faq', [FaqController::class, 'index']);
 
 Route::post('/send-email', [EmailController::class, 'sendEmail'])->name('send.email');
 
+Route::get('pelanggaran', [PelanggaranController::class, 'index'])->name('pelanggaran.index');
+
+Route::get('/catat', [OperasiRutinController::class, 'showForm'])->name('catat');
+
 Route::post('/operasi-rutin', [OperasiRutinController::class, 'store'])->name('operasi-rutin.store');
 
 
@@ -129,4 +134,3 @@ Route::get('/peraturan', [PeraturanController::class, 'tampil'])->name('tampil.p
 Route::get('/landing', function () {
     return view('landingpage');
 });
-
