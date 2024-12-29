@@ -80,6 +80,8 @@ class OperasiRutinController extends Controller
         // $data = $request->only(['nim', 'nama_mahasiswa', 'pelanggaran']); // Ambil data request
         // $data['nama_pencatat'] = Auth::user()->name; // Tambahkan nama pencatat dari session login
 
+        $data = [];
+
         // Menggunakan Carbon untuk mendapatkan waktu lokal sesuai zona waktu Asia/Jakarta
         $timestamp = Carbon::now('Asia/Jakarta'); // Menetapkan waktu sesuai dengan zona waktu Jakarta
 

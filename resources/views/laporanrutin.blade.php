@@ -221,31 +221,48 @@
                             <th scope="col" class="px-6 py-3">Hari/Tanggal</th>
                             <th scope="col" class="px-6 py-3">NIM</th>
                             <th scope="col" class="px-6 py-3">Nama Mahasiswa</th>
+                            <th scope="col" class="px-6 py-3">Tingkat</th>
                             <th scope="col" class="px-6 py-3">Pelanggaran</th>
                             <th scope="col" class="px-6 py-3">Nama Pencatat</th>
-                            <th scope="col" class="px-6 py-3">Status Badge</th>
-                            <th scope="col" class="px-6 py-3">Aksi</th>
+                            <th scope="col" class="px-6 py-3 text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($data as $row)
                             <tr
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <tr
+                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <th scope="row"
                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{ $row->created_at->format('d-m-Y') }}
+                                    <!-- Menampilkan hari beserta tanggal -->
+                                    {{ $row->created_at ? $row->created_at->format('l, d-m-Y') : 'N/A' }}
+                                    <!-- Format: Hari, dd-mm-yyyy (contoh: Monday, 27-12-2024) -->
                                 </th>
                                 <td class="px-6 py-4">{{ $row->nim }}</td>
                                 <td class="px-6 py-4">{{ $row->nama_mahasiswa }}</td>
+                                <td class="px-6 py-4 text-center">{{ $row->tingkat }}</td>
                                 <td class="px-6 py-4">{{ $row->pelanggaran }}</td>
                                 <td class="px-6 py-4">{{ $row->nama_pencatat }}</td>
-                                <td class="px-6 py-4">Aktif</td>
-                                <td class="px-6 py-4 flex-row">
-                                    <button type="button"
-                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Edit</button>
-                                    <button type="button"
-                                        class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Hapus</button>
+                                <td class="px-6 py-4 flex">
+                                    <!-- Edit Button with only icon -->
+                                    <a href="{{ route('operasi-rutin.edit', $row->id) }}"
+                                        class="flex items-center justify-center text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm p-2 transition-all ease-in-out duration-200 transform hover:scale-105 active:scale-95 mr-2">
+                                        <i class="fas fa-edit"></i> <!-- Ikon edit -->
+                                    </a>
+
+                                    <!-- Hapus Button with only icon -->
+                                    <form action="{{ route('deleteRoute', $row->id) }}" method="POST"
+                                        class="inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" onclick="return confirm('Are you sure?')"
+                                            class="flex items-center justify-center text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm p-2 transition-all ease-in-out duration-200 transform hover:scale-105 active:scale-95">
+                                            <i class="fas fa-trash-alt"></i> <!-- Ikon trash (hapus) -->
+                                        </button>
+                                    </form>
                                 </td>
+
                             </tr>
                         @empty
                             <tr>

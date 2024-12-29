@@ -78,11 +78,6 @@ Route::get('/catat-harian', function () {
     return view('catatharian');
 });
 
-Route::get('/catat', [CatatController::class, 'showForm']);
-
-Route::get('/catat', function () {
-    return view('catat');
-})->name('catat');
 
 // Route::get('/kritik-saran', function () {
 //     return view('kritiksaran');
@@ -106,7 +101,11 @@ Route::get('/catat', [OperasiRutinController::class, 'showForm'])->name('catat')
 
 Route::post('/operasi-rutin', [OperasiRutinController::class, 'store'])->name('operasi-rutin.store');
 
+Route::delete('/delete/{id}', [OperasiRutinController::class, 'destroy'])->name('deleteRoute');
 
+Route::get('operasi-rutin/{id}/edit', [OperasiRutinController::class, 'edit'])->name('operasi-rutin.edit');
+
+Route::put('operasi-rutin/{id}/update', [OperasiRutinController::class, 'update'])->name('operasi-rutin.update');
 
 // Route::get('/laporan-rutin', [OperasiRutinController::class, 'index'])->name('laporan-rutin.index');
 
