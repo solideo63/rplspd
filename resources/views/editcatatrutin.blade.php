@@ -4,10 +4,8 @@
     <div class="flex justify-center">
         <div
             class="block max-w-sm p-6 bg-yellow-300 border rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-full">
-            <h3 class="text-2xl font-bold dark:text-white">Edit Detail Pelanggaran
-            </h3>
-            <p class="text-gray-800 dark:text-gray-400 italic opacity-50">(Mohon isi data pelanggaran di bawah ini)
-            </p>
+            <h3 class="text-2xl font-bold dark:text-white">Edit Detail Pelanggaran</h3>
+            <p class="text-gray-800 dark:text-gray-400 italic opacity-50">(Mohon isi data pelanggaran di bawah ini)</p>
 
             {{-- Notifikasi Sukses --}}
             @if (session('success'))
@@ -21,7 +19,6 @@
                     <span>{{ session('success') }}</span>
                 </div>
                 <script>
-                    // Menghilangkan notifikasi setelah 3 detik
                     setTimeout(() => {
                         document.getElementById('success-message').classList.add('opacity-0', 'transition-opacity',
                             'duration-500');
@@ -31,7 +28,8 @@
             @endif
 
             {{-- Form --}}
-            <form class="max-w-sm mx-auto pt-6" action="{{ route('operasi-rutin.store') }}" method="POST">
+            <form class="max-w-sm mx-auto pt-6" action="{{ route('operasi-rutin.update', $operasiRutin->id) }}"
+                method="POST">
                 @csrf
                 @method('PUT')
                 <div class="mb-5">
@@ -45,7 +43,7 @@
                     <label for="nama_mahasiswa"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Mahasiswa</label>
                     <input type="text" id="nama_mahasiswa" name="nama_mahasiswa" required
-                        value="{{ old('name', $operasiRutin->nama_mahasiswa ?? '') }}"
+                        value="{{ old('nama_mahasiswa', $operasiRutin->nama_mahasiswa ?? '') }}"
                         class="shadow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 </div>
                 <input type="hidden" name="tingkat" value="{{ $tingkat }}">
@@ -54,20 +52,20 @@
                         Pelanggaran</label>
                     <select
                         class="pelanggaran shadow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        name="pelanggaran[]" multiple="multiple" id="pelanggaran" required
+                        name="pelanggaran" multiple="multiple" id="pelanggaran" required
                         style="background-color: white; color: black;">
                         @foreach ($pelanggarans as $pelanggaran)
-                            <option value="{{ $pelanggaran->kodePelanggaran }}"
-                                {{ in_array($pelanggaran->kodePelanggaran, old('violation', [])) ? 'selected' : '' }}>
+                            <option value="{{ $pelanggaran->namaPelanggaran }}" @selected(old('pelanggaran', $selectedPelanggaran) == $pelanggaran->namaPelanggaran)>
                                 {{ $pelanggaran->namaPelanggaran }}
                             </option>
                         @endforeach
+
                     </select>
                 </div>
                 <div class="flex justify-end">
                     <button type="submit"
                         class="text-white bg-blue-800 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                        Submit
+                        Submit Hasil Perubahan
                     </button>
                 </div>
             </form>
@@ -77,15 +75,19 @@
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <script>
     $(document).ready(function() {
+        // Inisialisasi Select2 dengan multiple
         $('#pelanggaran').select2({
             theme: "classic",
             allowClear: true,
             minimumInputLength: 1,
             ajax: {
-                url: "{{ route('pelanggaran.index') }}",
+                url: "{{ route('pelanggaran.edit') }}",
+                dataType: 'json',
                 processResults: function(data) {
+                    console.log(data);
                     return {
                         results: $.map(data, function(item) {
                             return {
@@ -93,10 +95,17 @@
                                 text: item.namaPelanggaran
                             }
                         })
-                    }
+                    };
                 }
             }
         });
+
+        // Pre-select values berdasarkan nilai lama (old values atau selectedPelanggaran)
+        var selectedPelanggaran = @json($selectedPelanggaran); // Ambil nilai yang sudah dipilih
+        if (selectedPelanggaran && selectedPelanggaran.length > 0) {
+            // Pastikan bahwa selectedPelanggaran adalah array
+            $('#pelanggaran').val(selectedPelanggaran).trigger('change');
+        }
     });
 </script>
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pelanggaran;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class PelanggaranController extends Controller
 {
@@ -12,12 +13,40 @@ class PelanggaranController extends Controller
      */
     public function index()
     {
+        // try {
+        //     // $query = request->input('q'); // Ambil parameter pencarian
+        //     $pelanggaran = Pelanggaran::where('namaPelanggaran', 'LIKE',  '%' . request('q') . '%')
+        //         ->select('kodePelanggaran', 'namaPelanggaran')
+        //         ->get();
+
+        //     return response()->json($pelanggaran);
+        // } catch (\Exception $e) {
+        //     // Log error untuk debugging
+        //     Log::error($e->getMessage());
+        //     return response()->json(['error' => 'Terjadi kesalahan di server'], 500);
+        // }
         $perPage = request('per_page', 15);  // Default to 20 items per page if no parameter is provided
         $data = Pelanggaran::where('namaPelanggaran', 'LIKE', '%' . request('q') . '%')
             ->orWhere('kodePelanggaran', 'LIKE', '%' . request('q') . '%')
             ->paginate($perPage);
 
         return response()->json($data);
+    }
+
+    public function munculedit()
+    {
+        try {
+            // $query = request->input('q'); // Ambil parameter pencarian
+            $pelanggaran = Pelanggaran::where('namaPelanggaran', 'LIKE',  '%' . request('q') . '%')
+                ->select('kodePelanggaran', 'namaPelanggaran')
+                ->get();
+
+            return response()->json($pelanggaran);
+        } catch (\Exception $e) {
+            // Log error untuk debugging
+            Log::error($e->getMessage());
+            return response()->json(['error' => 'Terjadi kesalahan di server'], 500);
+        }
     }
 
     /**

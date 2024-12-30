@@ -97,6 +97,8 @@ Route::post('/send-email', [EmailController::class, 'sendEmail'])->name('send.em
 
 Route::get('pelanggaran', [PelanggaranController::class, 'index'])->name('pelanggaran.index');
 
+Route::get('pelanggaran/edit', [PelanggaranController::class, 'munculedit'])->name('pelanggaran.edit');
+
 Route::get('/catat', [OperasiRutinController::class, 'showForm'])->name('catat');
 
 Route::post('/operasi-rutin', [OperasiRutinController::class, 'store'])->name('operasi-rutin.store');

@@ -153,8 +153,11 @@ class OperasiRutinController extends Controller
         // Ambil data tingkat dari session atau defaultkan ke tingkat operasi rutin yang dipilih
         $tingkat = session('tingkat') ?? $operasiRutin->tingkat;
 
+        $selectedPelanggaran = $operasiRutin->pelanggaran;
+
+        // dd($selectedPelanggaran);
         // Kirim data ke view untuk ditampilkan dalam form
-        return view('editcatatrutin', compact('operasiRutin', 'pelanggarans', 'tingkat'));
+        return view('editcatatrutin', compact('operasiRutin', 'pelanggarans', 'tingkat', 'selectedPelanggaran'));
     }
 
     /**
