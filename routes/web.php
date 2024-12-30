@@ -11,6 +11,7 @@ use App\Http\Controllers\SesiController;
 use App\Http\Controllers\UbahPasswordController;
 use App\Http\Controllers\PeraturanController;
 use App\Http\Controllers\PelanggaranController;
+use App\Http\Controllers\TokenController;
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/login', [SesiController::class, 'index'])->name('login');
@@ -26,7 +27,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/ubah-password', [UbahPasswordController::class, 'index']);
     Route::post('/ubah-password', [UbahPasswordController::class, 'ubahPassword']);
     // Kritik Saran
-
+    // Buat Token
+    Route::get('/buat-token', [TokenController::class, 'index']);
+    Route::get('/generate-token', [TokenController::class, 'generateToken']);
+    // Mas Ukin Token
+    Route::get('/enter-token', [TokenController::class, 'showEnterTokenForm'])->name('enter-token');
+    Route::post('/enter-token', [TokenController::class, 'processToken']);
+    Route::get('/restricted-page', [TokenController::class, 'showRestrictedPage'])->name('restricted-page');
+    Route::get('/klaim-pelanggaran', function () {
+        return view('klaim-pelanggaran', ['title' => 'Klaim Pelanggaran']);
+    })->name('klaim-pelanggaran');
 });
 
 // Route Ubah Password
@@ -87,9 +97,9 @@ Route::get('/riwayat', function () {
     return view('riwayat');
 });
 
-Route::get('/klaim-pelanggaran', function () {
-    return view('klaim-pelanggaran', ['title' => 'Klaim Pelanggaran']);
-});
+// Route::get('/klaim-pelanggaran', function () {
+//     return view('klaim-pelanggaran', ['title' => 'Klaim Pelanggaran']);
+// });
 
 Route::get('/faq', [FaqController::class, 'index']);
 

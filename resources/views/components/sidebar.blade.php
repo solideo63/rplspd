@@ -13,7 +13,7 @@
     aria-label="Sidebar" style="background-color: #2A3F64; border: none">
     <div class="h-full px-3 pb-4 overflow-y-auto" style="background-color: #2A3F64; border: none">
         <ul class="space-y-2 font-medium">
-            @auth 
+            @auth
             <li style="color: white">
                 <x-sidebarlink href="/dashboard" :active="request()->is('dashboard')"
                     icon='
@@ -97,7 +97,7 @@
 
             @if(Auth::user()->role == 'spd')
             <li style="color: white">
-                <x-sidebarlink href="/klaim-pelanggaran" :active="request()->is('')"
+                <x-sidebarlink href="/enter-token" :active="request()->is('')"
                     icon='
                     <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
@@ -112,6 +112,17 @@
             @endif
 
             @if(Auth::user()->role == 'admin')
+            <li style="color: white">
+                <x-sidebarlink href="/buat-token" :active="request()->is('')"
+                    icon='
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+  <path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.5 12A2.5 2.5 0 0 1 21 9.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v2.5a2.5 2.5 0 0 1 0 5V17a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-2.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+</svg>
+
+                    '>
+                    Buat Token
+                </x-sidebarlink>
+            </li>
             <li style="color: white">
                 <x-sidebarlink href="/admin-faq" :active="request()->is('')"
                     icon='
@@ -159,10 +170,10 @@
                     Kritik Saran
                 </x-sidebarlink>
             </li>
-            
-                
+
+
             @endguest
-            
+
         </ul>
     </div>
 </aside>
