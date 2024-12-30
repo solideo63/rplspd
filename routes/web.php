@@ -59,7 +59,7 @@ Route::get('/laporan-harian', function () {
 });
 
 Route::get('/catat-rutin', function () {
-    return view('catatrutinpilih');
+    return view('operasirutin.catatrutinpilih');
 });
 
 // Route::get('/login', function () {

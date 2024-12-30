@@ -32,7 +32,7 @@ class OperasiRutinController extends Controller
         $data = OperasiRutin::all();
 
         // Mengirim data ke view
-        return view('laporanrutin', compact('data'));
+        return view('operasirutin.laporanrutin', compact('data'));
     }
 
     public function showForm(Request $request)
@@ -51,7 +51,7 @@ class OperasiRutinController extends Controller
         if ($tingkat) {
             session(['tingkat' => $tingkat]);
         }
-        return view('catat', compact('pelanggarans', 'tingkat'));
+        return view('operasirutin.catat', compact('pelanggarans', 'tingkat'));
     }
 
     /**
@@ -117,7 +117,7 @@ class OperasiRutinController extends Controller
         app(EmailController::class)->sendEmail($request); // Pastikan fungsi sendEmail sudah benar
 
         // Redirect ke halaman view catat.blade.php dengan pesan sukses
-        return redirect()->route('catat') // Pastikan Anda sudah mendefinisikan route ini
+        return redirect()->route('operasirutin.catat') // Pastikan Anda sudah mendefinisikan route ini
             ->with('success', 'Data berhasil ditambahkan');
     }
 
@@ -157,7 +157,7 @@ class OperasiRutinController extends Controller
 
         // dd($selectedPelanggaran);
         // Kirim data ke view untuk ditampilkan dalam form
-        return view('editcatatrutin', compact('operasiRutin', 'pelanggarans', 'tingkat', 'selectedPelanggaran'));
+        return view('operasirutin.editcatatrutin', compact('operasiRutin', 'pelanggarans', 'tingkat', 'selectedPelanggaran'));
     }
 
     /**
@@ -184,7 +184,7 @@ class OperasiRutinController extends Controller
         $operasiRutin = OperasiRutin::find($id);
 
         if (!$operasiRutin) {
-            return redirect()->route('editcatatrutin', $id)->with('error', 'Data tidak ditemukan');
+            return redirect()->route('operasirutin.editcatatrutin', $id)->with('error', 'Data tidak ditemukan');
         }
         // session()->forget('tingkat');
 
@@ -225,7 +225,7 @@ class OperasiRutinController extends Controller
         // dd($operasiRutin->fresh());
 
         // Redirect ke halaman edit dengan pesan sukses
-        return redirect()->route('laporanrutin', $id)->with('success', 'Data berhasil diperbarui');
+        return redirect()->route('operasirutin.laporanrutin', $id)->with('success', 'Data berhasil diperbarui');
     }
 
     /**
@@ -248,7 +248,7 @@ class OperasiRutinController extends Controller
             return redirect()->route('laporanrutin')->with('success', 'Data berhasil dihapus');
         } catch (Exception $e) {
             // Menangani kesalahan jika terjadi exception
-            return redirect()->route('laporanrutin')->with('error', 'Data gagal dihapus: ' . $e->getMessage());
+            return redirect()->route('operasirutin.laporanrutin')->with('error', 'Data gagal dihapus: ' . $e->getMessage());
         }
     }
 }
