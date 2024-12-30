@@ -169,27 +169,45 @@ class OperasiRutinController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // Validasi input dari form
+        $request->validate([
+            'nim' => 'required|regex:/^[0-9]{9}$/', // NIM harus 9 digit angka
+            'nama_mahasiswa' => 'required|string|max:255',
+            'pelanggaran' => 'required', // Pelanggaran harus berupa kode pelanggaran tunggal
+            'tingkat' => 'required|integer',
+        ]);
+
+        // Cari data OperasiRutin berdasarkan ID
         $operasiRutin = OperasiRutin::find($id);
 
         if (!$operasiRutin) {
-            return response()->json(['message' => 'Data tidak ditemukan'], 404);
+            return redirect()->route('editcatatrutin', $id)->with('error', 'Data tidak ditemukan');
         }
 
-        $request->validate([
-            'nim' => 'nullable|regex:/^[0-9]{9}$/',
-            'name' => 'nullable|string|max:255',
-            'violation' => 'nullable|string|max:255',
-            'nas' => 'nullable',
+        // Ambil data dari request
+        $nim = $request->nim;
+        $nama = $request->nama_mahasiswa;
+        $kodePelanggaran = $request->pelanggaran; // Kode pelanggaran tunggal
+        $tingkat = $request->tingkat;
+        $pencatat = Auth::user()->name;
+
+        // Cari nama pelanggaran berdasarkan kode pelanggaran
+        $namaPelanggaran = Pelanggaran::where('kodePelanggaran', $kodePelanggaran)->value('namaPelanggaran') ?? 'Unknown'; // Ambil nama pelanggaran
+
+        // Update data di database
+        $operasiRutin->update([
+            'nim' => $nim,
+            'nama_mahasiswa' => $nama,
+            'tingkat' => $tingkat,
+            'pelanggaran' => $namaPelanggaran, // Simpan nama pelanggaran sebagai string
+            'nama_pencatat' => $pencatat
         ]);
 
-        // Update data hanya pada properti yang diberikan
-        $operasiRutin->update($request->only(['nim', 'name', 'violation', 'nas']));
-
-        return response()->json([
-            'message' => 'Data berhasil diperbarui',
-            'data' => $operasiRutin
-        ]);
+        // Redirect ke halaman edit dengan pesan sukses
+        return redirect()->route('laporanrutin', $id)->with('success', 'Data berhasil diperbarui');
     }
+
+
 
     /**
      * Remove the specified resource from storage.

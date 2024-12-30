@@ -36,8 +36,11 @@ class PelanggaranController extends Controller
     public function munculedit()
     {
         try {
-            // $query = request->input('q'); // Ambil parameter pencarian
-            $pelanggaran = Pelanggaran::where('namaPelanggaran', 'LIKE',  '%' . request('q') . '%')
+            // Ambil parameter pencarian
+            $query = request('q');
+
+            $pelanggaran = Pelanggaran::where('namaPelanggaran', 'LIKE', '%' . $query . '%')
+                ->orWhere('kodePelanggaran', 'LIKE', '%' . $query . '%') // Add this line for kodePelanggaran search
                 ->select('kodePelanggaran', 'namaPelanggaran')
                 ->get();
 
