@@ -277,7 +277,7 @@
                             <tr
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    <!-- Menampilkan hari beserta tanggal -->
+                                    <!-- Menampilkan hari beserta tanggal untuk created_at -->
                                     {{ $row->created_at ? $row->created_at->format('l, d-m-Y') : 'N/A' }}
                                     <!-- Format: Hari, dd-mm-yyyy (contoh: Monday, 27-12-2024) -->
 
@@ -288,7 +288,6 @@
                                                 {{ $row->updated_at->timezone('Asia/Jakarta')->format('d-m-Y H:i') }}</small>
                                         </div>
                                     @endif
-
                                 </td>
                                 <td class="px-6 py-4">{{ $row->nim }}</td>
                                 <td class="px-6 py-4">{{ $row->nama_mahasiswa }}</td>

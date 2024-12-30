@@ -169,6 +169,7 @@ class OperasiRutinController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         // Validasi input dari form
         $request->validate([
             'nim' => 'required|regex:/^[0-9]{9}$/', // NIM harus 9 digit angka
@@ -177,12 +178,15 @@ class OperasiRutinController extends Controller
             'tingkat' => 'required|integer',
         ]);
 
+        $pelanggarans = Pelanggaran::all();
+
         // Cari data OperasiRutin berdasarkan ID
         $operasiRutin = OperasiRutin::find($id);
 
         if (!$operasiRutin) {
             return redirect()->route('editcatatrutin', $id)->with('error', 'Data tidak ditemukan');
         }
+        // session()->forget('tingkat');
 
         // Ambil data dari request
         $nim = $request->nim;
@@ -191,23 +195,38 @@ class OperasiRutinController extends Controller
         $tingkat = $request->tingkat;
         $pencatat = Auth::user()->name;
 
-        // Cari nama pelanggaran berdasarkan kode pelanggaran
-        $namaPelanggaran = Pelanggaran::where('kodePelanggaran', $kodePelanggaran)->value('namaPelanggaran') ?? 'Unknown'; // Ambil nama pelanggaran
+        session(['tingkat' => $tingkat]);
+
+        // Jika pelanggaran berupa kodePelanggaran
+        $namaPelanggaran = null;
+
+        // Cek apakah $kodePelanggaran adalah namaPelanggaran
+        $existingPelanggaran = $pelanggarans->firstWhere('namaPelanggaran', $kodePelanggaran);
+
+        if ($existingPelanggaran) {
+            // Jika ditemukan sebagai nama pelanggaran
+            $namaPelanggaran = $kodePelanggaran; // Pelanggaran yang dikirim adalah namaPelanggaran
+        } else {
+            // Jika tidak ditemukan, berarti pelanggaran adalah kodePelanggaran
+            $namaPelanggaran = Pelanggaran::where('kodePelanggaran', $kodePelanggaran)->value('namaPelanggaran') ?? 'Unknown';
+        }
+
+        $timestamp = Carbon::now('Asia/Jakarta'); // Menetapkan waktu sesuai dengan zona waktu Jakarta
 
         // Update data di database
         $operasiRutin->update([
             'nim' => $nim,
             'nama_mahasiswa' => $nama,
-            'tingkat' => $tingkat,
-            'pelanggaran' => $namaPelanggaran, // Simpan nama pelanggaran sebagai string
-            'nama_pencatat' => $pencatat
+            'tingkat' => $tingkat, // Hanya memperbarui tingkat
+            'pelanggaran' => $namaPelanggaran, // Memastikan pelanggaran tetap sesuai dengan kode yang dipilih
+            'nama_pencatat' => $pencatat,
+            'updated_at' => $timestamp,
         ]);
+        // dd($operasiRutin->fresh());
 
         // Redirect ke halaman edit dengan pesan sukses
         return redirect()->route('laporanrutin', $id)->with('success', 'Data berhasil diperbarui');
     }
-
-
 
     /**
      * Remove the specified resource from storage.
