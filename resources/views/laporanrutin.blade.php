@@ -276,14 +276,20 @@
                         @forelse($data as $row)
                             <tr
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <tr
-                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <th scope="row"
-                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <!-- Menampilkan hari beserta tanggal -->
                                     {{ $row->created_at ? $row->created_at->format('l, d-m-Y') : 'N/A' }}
                                     <!-- Format: Hari, dd-mm-yyyy (contoh: Monday, 27-12-2024) -->
-                                </th>
+
+                                    @if ($row->updated_at && $row->updated_at != $row->created_at)
+                                        <!-- Jika sudah diupdate, tampilkan informasi terakhir update dengan menyesuaikan zona waktu -->
+                                        <div class="text-xs text-gray-500 mt-1">
+                                            <small>Terakhir diupdate:
+                                                {{ $row->updated_at->timezone('Asia/Jakarta')->format('d-m-Y H:i') }}</small>
+                                        </div>
+                                    @endif
+
+                                </td>
                                 <td class="px-6 py-4">{{ $row->nim }}</td>
                                 <td class="px-6 py-4">{{ $row->nama_mahasiswa }}</td>
                                 <td class="px-6 py-4 text-center">{{ $row->tingkat }}</td>
@@ -312,7 +318,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="px-6 py-4 text-center">No data available</td>
+                                <td colspan="7" class="px-6 py-4 text-center">No data available</td>
                             </tr>
                         @endforelse
                     </tbody>
