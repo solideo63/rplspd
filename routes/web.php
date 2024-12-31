@@ -128,8 +128,7 @@ Route::delete('/delete-umum/{id}', [OperasiUmumController::class, 'destroy'])->n
 
 Route::get('catat-umum/{id}/edit', [OperasiUmumController::class, 'edit'])->name('catatedit.umum');
 
-Route::put('operasi-rutin/{id}/update', [OperasiUmumController::class, 'update'])->name('operasi-umum.update');
-
+Route::put('operasi-umum/{id}/update', [OperasiUmumController::class, 'update'])->name('operasi-umum.update');
 
 // Route::get('/laporan-rutin', [OperasiRutinController::class, 'index'])->name('laporan-rutin.index');
 
