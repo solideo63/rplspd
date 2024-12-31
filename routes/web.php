@@ -69,9 +69,7 @@ Route::get('/laporan-harian', function () {
     return view('laporanharian');
 });
 
-Route::get('/catat-rutin', function () {
-    return view('operasirutin.catatrutinpilih');
-});
+
 
 // Route::get('/login', function () {
 //     return view('login');
@@ -81,9 +79,9 @@ Route::get('/catat-rutin', function () {
 //     return view('ubahpassword');
 // });
 
-Route::get('/catat-umum', function () {
-    return view('catatumum');
-});
+// Route::get('/catat-umum', function () {
+//     return view('catatumum');
+// });
 
 Route::get('/catat-harian', function () {
     return view('catatharian');
@@ -106,33 +104,28 @@ Route::get('/faq', [FaqController::class, 'index']);
 
 Route::post('/send-email', [EmailController::class, 'sendEmail'])->name('send.email');
 
+//Route Tampil Pelanggaran
 Route::get('pelanggaran', [PelanggaranController::class, 'index'])->name('pelanggaran.index');
-
 Route::get('pelanggaran/edit', [PelanggaranController::class, 'munculedit'])->name('pelanggaran.edit');
 
+//Route Operasi Rutin
+Route::get('/catat-rutin', function () {
+    return view('operasirutin.catatrutinpilih');
+});
 Route::get('/catat', [OperasiRutinController::class, 'showForm'])->name('catat');
-
 Route::post('/operasi-rutin', [OperasiRutinController::class, 'store'])->name('operasi-rutin.store');
-
 Route::delete('/delete-rutin/{id}', [OperasiRutinController::class, 'destroy'])->name('deleteRoute');
-
 Route::get('catat-rutin/{id}/edit', [OperasiRutinController::class, 'edit'])->name('catatedit');
-
 Route::put('operasi-rutin/{id}/update', [OperasiRutinController::class, 'update'])->name('operasi-rutin.update');
-
-Route::get('/catat-umum', [OperasiUmumController::class, 'create'])->name('catat.umum');
-
-Route::post('/operasi-umum', [OperasiUmumController::class, 'store'])->name('operasi-umum.store');
-
-Route::delete('/delete-umum/{id}', [OperasiUmumController::class, 'destroy'])->name('delete.umum');
-
-Route::get('catat-umum/{id}/edit', [OperasiUmumController::class, 'edit'])->name('catatedit.umum');
-
-Route::put('operasi-umum/{id}/update', [OperasiUmumController::class, 'update'])->name('operasi-umum.update');
-
-// Route::get('/laporan-rutin', [OperasiRutinController::class, 'index'])->name('laporan-rutin.index');
-
 Route::get('/laporan-rutin', [OperasiRutinController::class, 'index'])->name('laporanrutin');
+
+//Route Operasi Umum
+Route::get('/catat-umum', [OperasiUmumController::class, 'showForm'])->name('catat.umum');
+Route::post('/operasi-umum', [OperasiUmumController::class, 'store'])->name('operasi-umum.store');
+Route::delete('/delete-umum/{id}', [OperasiUmumController::class, 'destroy'])->name('delete.umum');
+Route::get('catat-umum/{id}/edit', [OperasiUmumController::class, 'edit'])->name('catatedit.umum');
+Route::put('operasi-umum/{id}/update', [OperasiUmumController::class, 'update'])->name('operasi-umum.update');
+Route::get('/laporan-umum', [OperasiUmumController::class, 'index'])->name('laporanumum');
 
 // Route manage FAQ admin
 Route::get('/admin-faq', [FaqController::class, 'admin_tampil'])->name('admin.tampil.faq');
@@ -141,7 +134,6 @@ Route::post('/admin-faq/submit', [FaqController::class, 'admin_submit'])->name('
 Route::get('/admin-faq/edit/{id}', [FaqController::class, 'admin_edit'])->name('admin.edit.faq');
 Route::post('/admin-faq/update/{id}', [FaqController::class, 'admin_update'])->name('admin.update.faq');
 Route::post('/admin-faq/delete/{id}', [FaqController::class, 'admin_delete'])->name('admin.delete.faq');
-
 
 // Route manage peraturan admin
 Route::get('/admin-peraturan', [PeraturanController::class, 'admin_tampil'])->name('admin.tampil.peraturan');

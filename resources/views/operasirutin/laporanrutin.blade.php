@@ -307,7 +307,8 @@
                                             class="inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" onclick="return confirm('Are you sure?')"
+                                            <button type="submit"
+                                                onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Ini?')"
                                                 class="flex items-center justify-center text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm p-2 transition-all ease-in-out duration-200 transform hover:scale-105 active:scale-95">
                                                 <i class="fas fa-trash-alt"></i> <!-- Ikon trash (hapus) -->
                                             </button>

@@ -59,9 +59,6 @@
                                 </div>
                             </a>
 
-
-
-
                         </div>
                         <a href="#"
                             class="block py-2 text-sm font-medium text-center text-gray-900 rounded-b-lg bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white">
