@@ -1,17 +1,18 @@
 <?php
 
-use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CatatController;
 use App\Http\Controllers\FaqController;
-use App\Http\Controllers\EmailController;
-use App\Http\Controllers\KritikSaranController;
-use App\Http\Controllers\OperasiRutinController;
 use App\Http\Controllers\SesiController;
-use App\Http\Controllers\UbahPasswordController;
-use App\Http\Controllers\PeraturanController;
-use App\Http\Controllers\PelanggaranController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CatatController;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\TokenController;
+use App\Http\Controllers\PeraturanController;
+use App\Http\Controllers\KritikSaranController;
+use App\Http\Controllers\OperasiUmumController;
+use App\Http\Controllers\PelanggaranController;
+use App\Http\Controllers\OperasiRutinController;
+use App\Http\Controllers\UbahPasswordController;
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/login', [SesiController::class, 'index'])->name('login');
@@ -113,11 +114,22 @@ Route::get('/catat', [OperasiRutinController::class, 'showForm'])->name('catat')
 
 Route::post('/operasi-rutin', [OperasiRutinController::class, 'store'])->name('operasi-rutin.store');
 
-Route::delete('/delete/{id}', [OperasiRutinController::class, 'destroy'])->name('deleteRoute');
+Route::delete('/delete-rutin/{id}', [OperasiRutinController::class, 'destroy'])->name('deleteRoute');
 
-Route::get('catat/{id}/edit', [OperasiRutinController::class, 'edit'])->name('catatedit');
+Route::get('catat-rutin/{id}/edit', [OperasiRutinController::class, 'edit'])->name('catatedit');
 
 Route::put('operasi-rutin/{id}/update', [OperasiRutinController::class, 'update'])->name('operasi-rutin.update');
+
+Route::get('/catat-umum', [OperasiUmumController::class, 'create'])->name('catat.umum');
+
+Route::post('/operasi-umum', [OperasiUmumController::class, 'store'])->name('operasi-umum.store');
+
+Route::delete('/delete-umum/{id}', [OperasiUmumController::class, 'destroy'])->name('delete.umum');
+
+Route::get('catat-umum/{id}/edit', [OperasiUmumController::class, 'edit'])->name('catatedit.umum');
+
+Route::put('operasi-rutin/{id}/update', [OperasiUmumController::class, 'update'])->name('operasi-umum.update');
+
 
 // Route::get('/laporan-rutin', [OperasiRutinController::class, 'index'])->name('laporan-rutin.index');
 

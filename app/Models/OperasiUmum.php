@@ -11,14 +11,14 @@ class OperasiUmum extends Model
     use HasFactory;
 
     // Nama tabel di database
-    protected $table = 'operasi_rutin';
+    protected $table = 'operasi_umums';
 
     // Kolom yang dapat diisi (mass assignable)
     protected $fillable = [
         'nim',
-        'name',
-        'violation',
-        'nas',
+        'nama_mahasiswa',
+        'pelanggaran',
+        'nama_pencatat',
     ];
 
     // Format default untuk timestamps (jika diperlukan custom)

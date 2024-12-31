@@ -117,7 +117,7 @@ class OperasiRutinController extends Controller
         app(EmailController::class)->sendEmail($request); // Pastikan fungsi sendEmail sudah benar
 
         // Redirect ke halaman view catat.blade.php dengan pesan sukses
-        return redirect()->route('operasirutin.catat') // Pastikan Anda sudah mendefinisikan route ini
+        return redirect()->route('catat') // Pastikan Anda sudah mendefinisikan route ini
             ->with('success', 'Data berhasil ditambahkan');
     }
 

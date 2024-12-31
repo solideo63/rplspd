@@ -35,6 +35,33 @@
                 </script>
             @endif
 
+            {{-- Notifikasi Error --}}
+            @if ($errors->any())
+                <div id="error-message"
+                    class="flex items-center p-4 mb-4 text-sm text-red-800 bg-red-50 rounded-lg dark:bg-red-800 dark:text-red-200 border border-red-300 shadow">
+                    <svg class="w-5 h-5 mr-3" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm-3.707-5.707a1 1 0 011.414-1.414L9 10.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-2-2z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                <script>
+                    // Menghilangkan notifikasi error setelah 5 detik
+                    setTimeout(() => {
+                        document.getElementById('error-message').classList.add('opacity-0', 'transition-opacity',
+                            'duration-500');
+                        setTimeout(() => document.getElementById('error-message').remove(), 500);
+                    }, 5000);
+                </script>
+            @endif
+
+
             {{-- Form --}}
             <form class="max-w-sm mx-auto pt-6" action="{{ route('operasi-rutin.store') }}" method="POST">
                 @csrf
