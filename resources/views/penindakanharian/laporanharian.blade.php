@@ -159,7 +159,118 @@
                         </div>
                     </div>
                 </div>
-                <x-tabellapor></x-tabellapor>
+                {{-- Notifikasi Sukses --}}
+                @if (session('success'))
+                    <div id="success-message"
+                        class="flex items-center p-4 mb-4 text-sm text-green-800 bg-green-50 rounded-lg dark:bg-green-800 dark:text-green-200 border border-green-300 shadow">
+                        <svg class="w-5 h-5 mr-3" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707a1 1 0 00-1.414-1.414L9 11.586 7.707 10.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <span>{{ session('success') }}</span>
+                    </div>
+                    <script>
+                        // Menghilangkan notifikasi setelah 3 detik
+                        setTimeout(() => {
+                            document.getElementById('success-message').classList.add('opacity-0', 'transition-opacity',
+                                'duration-500');
+                            setTimeout(() => document.getElementById('success-message').remove(), 500);
+                        }, 3000);
+                    </script>
+                @endif
+
+                {{-- Notifikasi Gagal --}}
+                @if (session('error'))
+                    <div id="error-message"
+                        class="flex items-center p-4 mb-4 text-sm text-red-800 bg-red-50 rounded-lg dark:bg-red-800 dark:text-red-200 border border-red-300 shadow">
+                        <svg class="w-5 h-5 mr-3" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707a1 1 0 00-1.414-1.414L9 11.586 7.707 10.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <span>{{ session('error') }}</span>
+                    </div>
+                    <script>
+                        // Menghilangkan notifikasi setelah 3 detik
+                        setTimeout(() => {
+                            document.getElementById('error-message').classList.add('opacity-0', 'transition-opacity',
+                                'duration-500');
+                            setTimeout(() => document.getElementById('error-message').remove(), 500);
+                        }, 3000);
+                    </script>
+                @endif
+
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                    id="export-table" class="datatable-table">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">Hari/Tanggal</th>
+                            <th scope="col" class="px-6 py-3">NIM</th>
+                            <th scope="col" class="px-6 py-3">Nama Mahasiswa</th>
+                            <th scope="col" class="px-6 py-3">Tingkat</th>
+                            <th scope="col" class="px-6 py-3">Pelanggaran</th>
+                            <th scope="col" class="px-6 py-3">Nama Pencatat</th>
+                            <th scope="col" class="px-6 py-3 text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($data as $row)
+                            <tr
+                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <!-- Menampilkan hari beserta tanggal untuk created_at -->
+                                    {{ $row->created_at ? $row->created_at->format('l, d-m-Y') : 'N/A' }}
+                                    <!-- Format: Hari, dd-mm-yyyy (contoh: Monday, 27-12-2024) -->
+
+                                    @if ($row->updated_at && $row->updated_at != $row->created_at)
+                                        <!-- Jika sudah diupdate, tampilkan informasi terakhir update dengan menyesuaikan zona waktu -->
+                                        <div class="text-xs text-gray-500 mt-1">
+                                            <small>Terakhir diupdate:
+                                                {{ $row->updated_at->timezone('Asia/Jakarta')->format('d-m-Y H:i') }}</small>
+                                        </div>
+                                    @endif
+                                </td>
+                                <td class="px-6 py-4">{{ $row->nim }}</td>
+                                <td class="px-6 py-4">{{ $row->nama_mahasiswa }}</td>
+                                <td class="px-6 py-4 text-center">{{ $row->tingkat }}</td>
+                                <td class="px-6 py-4">{{ $row->pelanggaran }}</td>
+                                <td class="px-6 py-4">{{ $row->nama_pencatat }}</td>
+                                @if (Auth::user()->role == 'spd' && Auth::user()->name == $row->nama_pencatat)
+                                    <td class="px-6 py-4 flex">
+                                        <!-- Edit Button with only icon -->
+                                        <a href="{{ route('enter-token', $row->id) }}"
+                                            class="flex items-center justify-center text-white bg-yellow-300 hover:bg-yellow-400 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm p-2 transition-all ease-in-out duration-200 transform hover:scale-105 active:scale-95 mr-2">
+                                            <i class="fas fa-file-invoice"></i><!-- Ikon edit -->
+                                        </a>
+                                        {{-- <a href="{{ route('catatedit.harian', $row->id) }}"
+                                            class="flex items-center justify-center text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm p-2 transition-all ease-in-out duration-200 transform hover:scale-105 active:scale-95 mr-2">
+                                            <i class="fas fa-edit"></i> <!-- Ikon edit -->
+                                        </a>
+
+                                        <!-- Hapus Button with only icon -->
+                                        <form action="{{ route('delete.harian', $row->id) }}" method="POST"
+                                            class="inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Ini?')"
+                                                class="flex items-center justify-center text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm p-2 transition-all ease-in-out duration-200 transform hover:scale-105 active:scale-95">
+                                                <i class="fas fa-trash-alt"></i> <!-- Ikon trash (hapus) -->
+                                            </button>
+                                        </form> --}}
+                                    </td>
+                                @endif
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="7" class="px-6 py-4 text-center">No data available</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

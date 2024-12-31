@@ -13,6 +13,7 @@ use App\Http\Controllers\OperasiUmumController;
 use App\Http\Controllers\PelanggaranController;
 use App\Http\Controllers\OperasiRutinController;
 use App\Http\Controllers\UbahPasswordController;
+use App\Http\Controllers\PenindakanHarianController;
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/login', [SesiController::class, 'index'])->name('login');
@@ -57,19 +58,17 @@ Route::get('/', function () {
 Route::get('/kirim-kritik-saran', [KritikSaranController::class, 'index'])->name('kritiksaran');
 Route::post('/kirim-kritik-saran/submit', [KritikSaranController::class, 'submit'])->name('kritiksaran.submit');
 
-Route::get('/laporan-rutin', function () {
-    return view('laporanrutin');
-});
+// Route::get('/laporan-rutin', function () {
+//     return view('laporanrutin');
+// });
 
-Route::get('/laporan-umum', function () {
-    return view('laporanumum');
-});
+// Route::get('/laporan-umum', function () {
+//     return view('laporanumum');
+// });
 
-Route::get('/laporan-harian', function () {
-    return view('laporanharian');
-});
-
-
+// Route::get('/laporan-harian', function () {
+//     return view('laporanharian');
+// });
 
 // Route::get('/login', function () {
 //     return view('login');
@@ -83,9 +82,9 @@ Route::get('/laporan-harian', function () {
 //     return view('catatumum');
 // });
 
-Route::get('/catat-harian', function () {
-    return view('catatharian');
-});
+// Route::get('/catat-harian', function () {
+//     return view('catatharian');
+// });
 
 
 // Route::get('/kritik-saran', function () {
@@ -120,12 +119,17 @@ Route::put('operasi-rutin/{id}/update', [OperasiRutinController::class, 'update'
 Route::get('/laporan-rutin', [OperasiRutinController::class, 'index'])->name('laporanrutin');
 
 //Route Operasi Umum
-Route::get('/catat-umum', [OperasiUmumController::class, 'showForm'])->name('catat.umum');
+Route::get('/catat-umum', [OperasiUmumController::class, 'create'])->name('catat.umum');
 Route::post('/operasi-umum', [OperasiUmumController::class, 'store'])->name('operasi-umum.store');
 Route::delete('/delete-umum/{id}', [OperasiUmumController::class, 'destroy'])->name('delete.umum');
 Route::get('catat-umum/{id}/edit', [OperasiUmumController::class, 'edit'])->name('catatedit.umum');
 Route::put('operasi-umum/{id}/update', [OperasiUmumController::class, 'update'])->name('operasi-umum.update');
 Route::get('/laporan-umum', [OperasiUmumController::class, 'index'])->name('laporanumum');
+
+//Route Penindakan Harian
+Route::get('/catat-harian', [PenindakanHarianController::class, 'create'])->name('catat.harian');
+Route::post('/penindakan-harian', [PenindakanHarianController::class, 'store'])->name('penindakan-harian.store');
+Route::get('/laporan-harian', [PenindakanHarianController::class, 'index'])->name('laporanharian');
 
 // Route manage FAQ admin
 Route::get('/admin-faq', [FaqController::class, 'admin_tampil'])->name('admin.tampil.faq');
