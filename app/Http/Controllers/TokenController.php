@@ -45,7 +45,7 @@ class TokenController extends Controller
 
         Token::create([
             'token' => $token,
-            'waktu_kedaluarsa' => Carbon::now()->addDay(),
+            'waktu_kedaluarsa' => Carbon::now()->addHours(24)->addHours(7),
         ]);
 
         return response()->json([
