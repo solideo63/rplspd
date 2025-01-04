@@ -6,6 +6,7 @@ use App\Http\Controllers\SesiController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CatatController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\KlaimPelanggaranController;
 use App\Http\Controllers\TokenController;
 use App\Http\Controllers\PeraturanController;
 use App\Http\Controllers\KritikSaranController;
@@ -130,6 +131,10 @@ Route::get('/laporan-umum', [OperasiUmumController::class, 'index'])->name('lapo
 Route::get('/catat-harian', [PenindakanHarianController::class, 'create'])->name('catat.harian');
 Route::post('/penindakan-harian', [PenindakanHarianController::class, 'store'])->name('penindakan-harian.store');
 Route::get('/laporan-harian', [PenindakanHarianController::class, 'index'])->name('laporanharian');
+
+// Route Klaim Pelanggaran
+Route::get('/klaim-pelanggaran', [KlaimPelanggaranController::class, 'index'])->name('klaim-pelanggaran');
+Route::delete('/delete-harian/{id}', [KlaimPelanggaranController::class, 'destroy'])->name('delete.harian');
 
 // Route manage FAQ admin
 Route::get('/admin-faq', [FaqController::class, 'admin_tampil'])->name('admin.tampil.faq');

@@ -56,7 +56,7 @@
     document.getElementById('datepicker-actions').addEventListener('change', handleDateFilter);
 </script>
 
-<div class="p-4 sm:ml-64 m-4">
+<div class="p-4 sm:ml-64 mt-8">
     <h3 class="text-2xl font-bold dark:text-white">Daftar Pelanggaran Operasi Rutin</h3>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-4">
         <div id="exampleWrapper" class="dark:bg-gray-900">

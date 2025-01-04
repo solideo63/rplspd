@@ -1,6 +1,6 @@
 <x-layout></x-layout>
 
-<div class="p-4 sm:ml-64 mt-4 ">
+<div class="p-4 sm:ml-64 mt-8 ">
     <h2 class="text-2xl font-bold tracking-tight text-red-800 mb-2">Pilih Tingkat Operasi Rutin</h2> </br>
     <div class="flex flex-col justify-center items-center">
         <a href="/catat?tingkat=1">
