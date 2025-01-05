@@ -25,66 +25,69 @@
             <div class="flex items-center ms-3">
                 <div class="flex items-center ms-3">
                     @auth
-                        <!-- Button Dropdown -->
-                        <button id="dropdownKritikSaranButton" data-dropdown-toggle="dropdownKritikSaran"
-                            class="relative inline-flex items-center text-sm font-medium text-center text-gray-500 hover:text-gray-900 focus:outline-none dark:hover:text-white dark:text-gray-400"
-                            type="button">
-                            <!-- Ikon -->
-                            <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M21 8v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8m18 0-8.029-4.46a2 2 0 0 0-1.942 0L3 8m18 0-9 6.5L3 8" />
-                            </svg>
-                        </button>
+                        @if (Auth::user()->role == 'spd')
+                            <!-- Button Dropdown -->
+                            <button id="dropdownKritikSaranButton" data-dropdown-toggle="dropdownKritikSaran"
+                                class="relative inline-flex items-center text-sm font-medium text-center text-gray-500 hover:text-gray-900 focus:outline-none dark:hover:text-white dark:text-gray-400"
+                                type="button">
+                                <!-- Ikon -->
+                                <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                    viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M21 8v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8m18 0-8.029-4.46a2 2 0 0 0-1.942 0L3 8m18 0-9 6.5L3 8" />
+                                </svg>
+                            </button>
 
-                        <!-- Dropdown Kritik dan Saran -->
-                        <div id="dropdownKritikSaran" data-dropdown-placement="bottom-end"
-                            class="z-20 hidden w-full max-w-sm bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-800 dark:divide-gray-700"
-                            aria-labelledby="dropdownKritikSaranButton">
-                            <!-- Header -->
-                            <div
-                                class="block px-4 py-2 font-medium text-center text-gray-700 rounded-t-lg bg-gray-50 dark:bg-gray-800 dark:text-white">
-                                Kritik dan Saran
-                            </div>
-
-                            <!-- Isi Kritik dan Saran -->
-                            <div class="divide-y divide-gray-100 dark:divide-gray-700">
-                                @forelse ($kritiksaran as $item)
-                                    <a href="#" class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700">
-                                        <div class="w-full ps-3">
-                                            <div class="text-gray-500 text-sm mb-1.5 dark:text-gray-400">
-                                                Kritik dan Saran dari
-                                                <span
-                                                    class="font-semibold text-gray-900 dark:text-white">{{ $item->nama ?? 'Anonymous' }}</span>:
-                                                {{ Str::limit($item->kritiksaran, 50, '...') }}
-                                            </div>
-                                            <div class="text-xs text-blue-600 dark:text-blue-500">
-                                                {{ $item->created_at->diffForHumans() }}
-                                            </div>
-                                        </div>
-                                    </a>
-                                @empty
-                                    <div
-                                        class="flex items-center justify-center px-4 py-3 text-sm text-gray-500 dark:text-gray-400">
-                                        Tidak ada kritik atau saran.
-                                    </div>
-                                @endforelse
-                            </div>
-
-                            <!-- Footer -->
-                            <a href="/kritik-saran"
-                                class="block py-2 text-sm font-medium text-center text-gray-900 rounded-b-lg bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white">
-                                <div class="inline-flex items-center">
-                                    <svg class="w-4 h-4 me-2 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 14">
-                                        <path
-                                            d="M10 0C4.612 0 0 5.336 0 7c0 1.742 3.546 7 10 7 6.454 0 10-5.258 10-7 0-1.664-4.612-7-10-7Zm0 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" />
-                                    </svg>
-                                    Lihat Semua
+                            <!-- Dropdown Kritik dan Saran -->
+                            <div id="dropdownKritikSaran" data-dropdown-placement="bottom-end"
+                                class="z-20 hidden w-full max-w-sm bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-800 dark:divide-gray-700"
+                                aria-labelledby="dropdownKritikSaranButton">
+                                <!-- Header -->
+                                <div
+                                    class="block px-4 py-2 font-medium text-center text-gray-700 rounded-t-lg bg-gray-50 dark:bg-gray-800 dark:text-white">
+                                    Kritik dan Saran
                                 </div>
-                            </a>
-                        </div>
+
+                                <!-- Isi Kritik dan Saran -->
+                                <div class="divide-y divide-gray-100 dark:divide-gray-700">
+                                    @forelse ($kritiksaran as $item)
+                                        <a href="#" class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                            <div class="w-full ps-3">
+                                                <div class="text-gray-500 text-sm mb-1.5 dark:text-gray-400">
+                                                    Kritik dan Saran dari
+                                                    <span
+                                                        class="font-semibold text-gray-900 dark:text-white">{{ $item->nama ?? 'Anonymous' }}</span>:
+                                                    {{ Str::limit($item->kritiksaran, 50, '...') }}
+                                                </div>
+                                                <div class="text-xs text-blue-600 dark:text-blue-500">
+                                                    {{ $item->created_at->diffForHumans() }}
+                                                </div>
+                                            </div>
+                                        </a>
+                                    @empty
+                                        <div
+                                            class="flex items-center justify-center px-4 py-3 text-sm text-gray-500 dark:text-gray-400">
+                                            Tidak ada kritik atau saran.
+                                        </div>
+                                    @endforelse
+                                </div>
+
+                                <!-- Footer -->
+                                <a href="/kritik-saran"
+                                    class="block py-2 text-sm font-medium text-center text-gray-900 rounded-b-lg bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white">
+                                    <div class="inline-flex items-center">
+                                        <svg class="w-4 h-4 me-2 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 14">
+                                            <path
+                                                d="M10 0C4.612 0 0 5.336 0 7c0 1.742 3.546 7 10 7 6.454 0 10-5.258 10-7 0-1.664-4.612-7-10-7Zm0 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" />
+                                        </svg>
+                                        Lihat Semua
+                                    </div>
+                                </a>
+                            </div>
+                        @endif
 
                         <div class="flex items-center ms-3">
                             <button data-popover-target="popover-user-profile" type="button"
