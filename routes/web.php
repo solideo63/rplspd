@@ -58,6 +58,7 @@ Route::get('/', function () {
 
 Route::get('/kirim-kritik-saran', [KritikSaranController::class, 'index'])->name('kritiksaran');
 Route::post('/kirim-kritik-saran/submit', [KritikSaranController::class, 'submit'])->name('kritiksaran.submit');
+Route::get('/kritik-saran', [KritikSaranController::class, 'view'])->name('lihatkritiksaran');
 
 // Route::get('/laporan-rutin', function () {
 //     return view('laporanrutin');
