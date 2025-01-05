@@ -186,6 +186,8 @@ class PenindakanHarianController extends Controller
             'updated_at' => $timestamp,
         ]);
 
+        app(EmailController::class)->sendEmail($request);
+
         // Redirect ke halaman edit dengan pesan sukses
         return redirect()->route('laporanharian', $id)->with('success', 'Data berhasil diperbarui');
     }

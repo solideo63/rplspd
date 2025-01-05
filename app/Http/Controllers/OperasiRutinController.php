@@ -222,6 +222,8 @@ class OperasiRutinController extends Controller
             'nama_pencatat' => $pencatat,
             'updated_at' => $timestamp,
         ]);
+
+        app(EmailController::class)->sendEmail($request);
         // dd($operasiRutin->fresh());
 
         // Redirect ke halaman edit dengan pesan sukses
