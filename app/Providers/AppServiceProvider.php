@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
+use App\Models\KritikSaran;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\ServiceProvider;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -25,5 +27,7 @@ class AppServiceProvider extends ServiceProvider
         Route::prefix('api') // Prefix 'api' untuk semua route di api.php
             ->middleware('api') // Middleware default untuk API Laravel
             ->group(base_path('routes/api.php')); // Pastikan path benar
+
+        View::share('kritiksaran', KritikSaran::latest()->take(5)->get());
     }
 }

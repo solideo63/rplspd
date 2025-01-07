@@ -13,6 +13,7 @@ class KritikSaran extends Model
     protected $table = 'kritiksaran';
 
     protected $fillable = [
+        'nama',
         'kritiksaran', // Kolom yang boleh diisi
     ];
 }
