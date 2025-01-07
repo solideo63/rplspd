@@ -6,14 +6,15 @@ use App\Http\Controllers\SesiController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CatatController;
 use App\Http\Controllers\EmailController;
-use App\Http\Controllers\KlaimPelanggaranController;
 use App\Http\Controllers\TokenController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PeraturanController;
 use App\Http\Controllers\KritikSaranController;
 use App\Http\Controllers\OperasiUmumController;
 use App\Http\Controllers\PelanggaranController;
 use App\Http\Controllers\OperasiRutinController;
 use App\Http\Controllers\UbahPasswordController;
+use App\Http\Controllers\KlaimPelanggaranController;
 use App\Http\Controllers\PenindakanHarianController;
 
 Route::middleware(['guest'])->group(function () {
@@ -42,15 +43,7 @@ Route::middleware(['auth'])->group(function () {
     })->name('klaim-pelanggaran');
 });
 
-// Route Ubah Password
-
-// Route::get('/', function () {
-//     return view('dashboard', ['title' => 'Dashboard']);
-// });
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard', ['title' => 'Dashboard']);
-// });
+Route::get('/filter-by-date-ajax', [CatatController::class, 'filterByDateAjax'])->name('filter.date.ajax');
 
 Route::get('/', function () {
     return view('landingpage');
@@ -60,46 +53,9 @@ Route::get('/kirim-kritik-saran', [KritikSaranController::class, 'index'])->name
 Route::post('/kirim-kritik-saran/submit', [KritikSaranController::class, 'submit'])->name('kritiksaran.submit');
 Route::get('/kritik-saran', [KritikSaranController::class, 'view'])->name('lihatkritiksaran');
 
-// Route::get('/laporan-rutin', function () {
-//     return view('laporanrutin');
-// });
-
-// Route::get('/laporan-umum', function () {
-//     return view('laporanumum');
-// });
-
-// Route::get('/laporan-harian', function () {
-//     return view('laporanharian');
-// });
-
-// Route::get('/login', function () {
-//     return view('login');
-// });
-
-// Route::get('/ubah-password', function () {
-//     return view('ubahpassword');
-// });
-
-// Route::get('/catat-umum', function () {
-//     return view('catatumum');
-// });
-
-// Route::get('/catat-harian', function () {
-//     return view('catatharian');
-// });
-
-
-// Route::get('/kritik-saran', function () {
-//     return view('kritiksaran');
-// });
-
 Route::get('/riwayat', function () {
     return view('riwayat');
 });
-
-// Route::get('/klaim-pelanggaran', function () {
-//     return view('klaim-pelanggaran', ['title' => 'Klaim Pelanggaran']);
-// });
 
 Route::get('/faq', [FaqController::class, 'index']);
 
@@ -119,6 +75,8 @@ Route::delete('/delete-rutin/{id}', [OperasiRutinController::class, 'destroy'])-
 Route::get('catat-rutin/{id}/edit', [OperasiRutinController::class, 'edit'])->name('catatedit');
 Route::put('operasi-rutin/{id}/update', [OperasiRutinController::class, 'update'])->name('operasi-rutin.update');
 Route::get('/laporan-rutin', [OperasiRutinController::class, 'index'])->name('laporanrutin');
+Route::get('/laporan-rutin/data', [OperasiRutinController::class, 'fetchData'])->name('operasi-rutin.data');
+Route::get('/laporan-rutin/filter', [OperasiRutinController::class, 'filterByDate'])->name('operasi-rutin.filter');
 
 //Route Operasi Umum
 Route::get('/catat-umum', [OperasiUmumController::class, 'create'])->name('catat.umum');
@@ -158,3 +116,8 @@ Route::get('/peraturan', [PeraturanController::class, 'tampil'])->name('tampil.p
 Route::get('/landing', function () {
     return view('landingpage');
 });
+
+// Tambahkan route untuk download
+Route::get('/laporan-rutin/download/{format}', [OperasiRutinController::class, 'downloadFilteredData'])->name('operasi-rutin.download');
+
+Route::get('/dashboard/data', [DashboardController::class, 'StatDesk']);

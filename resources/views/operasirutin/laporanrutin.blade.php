@@ -1,60 +1,45 @@
 <x-layout> </x-layout>
 <script>
-    function handleSearch(operasi_rutin) {
-        const query = operasi_rutin.target.value.trim().toLowerCase(); // Input pencarian
-        const rows = document.querySelectorAll('#export-table tbody tr'); // Ambil semua baris tabel di <tbody>
+    function downloadFile(format) {
+        const baseUrl = "{{ route('operasi-rutin.download', ['format' => ':format']) }}";
+        const tanggal = document.getElementById('datepicker-actions').value; // Ambil tanggal dari input datepicker
+        if (!tanggal) {
+            alert('Silakan pilih tanggal terlebih dahulu!');
+            return;
+        }
+        const url = baseUrl.replace(':format', format) + `?tanggal=${tanggal}`;
+        window.location.href = url;
+    }
+
+    // Filter pencarian berdasarkan nama atau NIM
+    function handleSearch(event) {
+        const query = event.target.value.trim().toLowerCase(); // Input pencarian
+        const rows = document.querySelectorAll('#export-table tbody tr'); // Semua baris di tbody
 
         rows.forEach((row) => {
             const nim = row.querySelector('td:nth-child(2)')?.textContent.toLowerCase() || '';
             const name = row.querySelector('td:nth-child(3)')?.textContent.toLowerCase() || '';
 
-            // Jika input cocok dengan NIM atau NAMA
+            // Cocokkan input dengan NIM atau Nama
             if (nim.includes(query) || name.includes(query)) {
-                row.style.display = ''; // Tampilkan baris
+                row.dataset.matchesSearch = 'true';
             } else {
-                row.style.display = 'none'; // Sembunyikan baris
-            }
-        });
-
-        applyFilters();
-    }
-
-    function handleDateFilter(event) {
-        const selectedDate = this.value; // Ambil nilai tanggal
-        const tableBody = document.querySelector('#data-table tbody'); // Target body tabel
-
-        rows.forEach((row) => {
-            const rowDate = row.querySelector('td:nth-child(1)')?.textContent.trim();
-
-            if (selectedDate === '' || rowDate === selectedDate) {
-                row.dataset.matchesDate = 'true';
-            } else {
-                row.dataset.matchesDate = 'false';
-            }
-        });
-
-        applyFilters();
-    }
-
-
-    function applyFilters() {
-        const rows = document.querySelectorAll('#data-table tbody tr');
-
-        rows.forEach((row) => {
-            const matchesSearch = row.dataset.matchesSearch === 'true';
-            const matchesDate = row.dataset.matchesDate === 'true';
-
-            if (matchesSearch && matchesDate) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
+                row.dataset.matchesSearch = 'false';
             }
         });
     }
-
-    document.getElementById('search-input').addEventListener('input', handleSearch);
-    document.getElementById('datepicker-actions').addEventListener('change', handleDateFilter);
 </script>
+
+<style>
+    .hover-effect {
+        color: gray;
+        /* Efek transisi warna */
+    }
+
+    .hover-effect:hover {
+        color: black;
+    }
+</style>
 
 <div class="p-4 sm:ml-64 mt-8">
     <h3 class="text-2xl font-bold dark:text-white">Daftar Pelanggaran Operasi Rutin</h3>
@@ -73,12 +58,12 @@
                             </svg>
                         </button>
                         <div id="exportDropdown"
-                            class="z-10 hidden w-48 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
-                            data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top"
-                            style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
-                            <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200"
+                            class="z-10 w-52 divide-y divide-gray-100 rounded-lg bg-white shadow dark:bg-gray-700 block"
+                            style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(494.667px, 69.3333px, 0px);"
+                            data-popper-placement="bottom">
+                            <ul class="p-2 text-left text-sm font-medium text-gray-500 dark:text-gray-400"
                                 aria-labelledby="exportDropdownButton">
-                                <li><button id="export-csv"
+                                <li><button id="export-csv" onclick="downloadFile('csv')"
                                         class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"><svg
                                             class="me-1.5 h-4 w-4 text-gray-400 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
                                             aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
@@ -86,27 +71,33 @@
                                             <path fill-rule="evenodd"
                                                 d="M9 2.221V7H4.221a2 2 0 0 1 .365-.5L8.5 2.586A2 2 0 0 1 9 2.22ZM11 2v5a2 2 0 0 1-2 2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2 2 2 0 0 0 2 2h12a2 2 0 0 0 2-2 2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2V4a2 2 0 0 0-2-2h-7Zm1.018 8.828a2.34 2.34 0 0 0-2.373 2.13v.008a2.32 2.32 0 0 0 2.06 2.497l.535.059a.993.993 0 0 0 .136.006.272.272 0 0 1 .263.367l-.008.02a.377.377 0 0 1-.018.044.49.49 0 0 1-.078.02 1.689 1.689 0 0 1-.297.021h-1.13a1 1 0 1 0 0 2h1.13c.417 0 .892-.05 1.324-.279.47-.248.78-.648.953-1.134a2.272 2.272 0 0 0-2.115-3.06l-.478-.052a.32.32 0 0 1-.285-.341.34.34 0 0 1 .344-.306l.94.02a1 1 0 1 0 .043-2l-.943-.02h-.003Zm7.933 1.482a1 1 0 1 0-1.902-.62l-.57 1.747-.522-1.726a1 1 0 0 0-1.914.578l1.443 4.773a1 1 0 0 0 1.908.021l1.557-4.773Zm-13.762.88a.647.647 0 0 1 .458-.19h1.018a1 1 0 1 0 0-2H6.647A2.647 2.647 0 0 0 4 13.647v1.706A2.647 2.647 0 0 0 6.647 18h1.018a1 1 0 1 0 0-2H6.647A.647.647 0 0 1 6 15.353v-1.706c0-.172.068-.336.19-.457Z"
                                                 clip-rule="evenodd"></path>
-                                        </svg><span>Export CSV</span></button></li>
-                                <li><button id="export-json"
-                                        class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white">
-                                        <svg class="me-1.5 h-4 w-4 text-gray-400 group-hover:text-gray-900 dark:text-gray-400 "
+                                        </svg><span class="hover-effect">Export CSV</span></button></li>
+                                <li><button id="export-excel" onclick="downloadFile('excel')"
+                                        class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"><svg
+                                            class="me-1.5 h-4 w-4 text-gray-400 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
                                             aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
                                             height="24" fill="currentColor" viewBox="0 0 24 24">
                                             <path fill-rule="evenodd"
-                                                d="M9 2.221V7H4.221a2 2 0 0 1 .365-.5L8.5 2.586A2 2 0 0 1 9 2.22ZM11 2v5a2 2 0 0 1-2 2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2 2 2 0 0 0 2 2h12a2 2 0 0 0 2-2 2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2V4a2 2 0 0 0-2-2h-7Zm-6 9a1 1 0 0 0-1 1v5a1 1 0 1 0 2 0v-1h.5a2.5 2.5 0 0 0 0-5H5Zm1.5 3H6v-1h.5a.5.5 0 0 1 0 1Zm4.5-3a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h1.376A2.626 2.626 0 0 0 15 15.375v-1.75A2.626 2.626 0 0 0 12.375 11H11Zm1 5v-3h.375a.626.626 0 0 1 .625.626v1.748a.625.625 0 0 1-.626.626H12Zm5-5a1 1 0 0 0-1 1v5a1 1 0 1 0 2 0v-1h1a1 1 0 1 0 0-2h-1v-1h1a1 1 0 1 0 0-2h-2Z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                        <span>Export PDF</span></button></li>
-                                <li><button id="export-txt"
-                                        class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white">
-                                        <svg class="me-1.5 h-4 w-4 text-gray-400 group-hover:text-gray-900 dark:text-gray-400"
+                                                d="M9 2.221V7H4.221a2 2 0 0 1 .365-.5L8.5 2.586A2 2 0 0 1 9 2.22ZM11 2v5a2 2 0 0 1-2 2H4v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2h-7Zm-.293 9.293a1 1 0 0 1 0 1.414L9.414 14l1.293 1.293a1 1 0 0 1-1.414 1.414l-2-2a1 1 0 0 1 0-1.414l2-2a1 1 0 0 1 1.414 0Zm2.586 1.414a1 1 0 0 1 1.414-1.414l2 2a1 1 0 0 1 0 1.414l-2 2a1 1 0 0 1-1.414-1.414L14.586 14l-1.293-1.293Z"
+                                                clip-rule="evenodd"></path>
+                                        </svg><span class="hover-effect">Export EXCEL</span></button></li>
+                                <li>
+                                    <button id="export-pdf" onclick="downloadFile('pdf')"
+                                        style="color: gray; transition: color 0.3s;"
+                                        onmouseover="this.style.color='black'; this.querySelector('svg').style.color='black';"
+                                        onmouseout="this.style.color='gray'; this.querySelector('svg').style.color='gray';"
+                                        class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600">
+                                        <svg style="color: gray; transition: color 0.3s;"
+                                            class="me-1.5 h-4 w-4 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
                                             aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
                                             height="24" fill="currentColor" viewBox="0 0 24 24">
                                             <path fill-rule="evenodd"
-                                                d="M9 7V2.221a2 2 0 0 0-.5.365L4.586 6.5a2 2 0 0 0-.365.5H9Zm2 0V2h7a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9h5a2 2 0 0 0 2-2Zm2-2a1 1 0 1 0 0 2h3a1 1 0 1 0 0-2h-3Zm0 3a1 1 0 1 0 0 2h3a1 1 0 1 0 0-2h-3Zm-6 4a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-6Zm8 1v1h-2v-1h2Zm0 3h-2v1h2v-1Zm-4-3v1H9v-1h2Zm0 3H9v1h2v-1Z"
-                                                clip-rule="evenodd" />
+                                                d="M9 2.221V7H4.221a2 2 0 0 1 .365-.5L8.5 2.586A2 2 0 0 1 9 2.22ZM11 2v5a2 2 0 0 1-2 2H4v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2h-7ZM8 16a1 1 0 0 1 1-1h6a1 1 0 1 1 0 2H9a1 1 0 0 1-1-1Zm1-5a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2H9Z"
+                                                clip-rule="evenodd"></path>
                                         </svg>
-                                        <span>Export EXCEL</span></button></li>
+                                        <span class="hover-effect">Export PDF</span>
+                                    </button>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -192,9 +183,13 @@
                                             d=" M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
                                     </svg>
                                 </div>
-                                <input id="datepicker-actions" type="date"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2 ps-10 w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="Pilih Tanggal" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
+                                <form action="{{ route('operasi-rutin.filter') }}" method="GET" id="filterForm">
+                                    <input id="datepicker-actions" name="tanggal" type="date"
+                                        value="{{ request('tanggal') }}"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2 ps-10 w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        placeholder="Pilih Tanggal" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                        onchange="document.getElementById('filterForm').submit();">
+                                </form>
                             </div>
                         </div>
                         <label for="table-search" class="sr-only">Search</label>
@@ -328,5 +323,9 @@
     </div>
 </div>
 <x-footer></x-footer>
-<script src="{{ asset('js/export.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
+{{-- <script src="{{ asset('js/export.js') }}"></script> --}}
+{{-- <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script> --}}
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>

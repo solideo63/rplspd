@@ -11,6 +11,90 @@
     <br>
     @if (Auth::user()->role != 'mahasiswa')
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2 p-4">
+            <div>
+                <h2>Bar Chart: Pelanggaran Berdasarkan Violation</h2>
+                <canvas id="bar-chart"></canvas>
+            </div>
+            <div>
+                <h2>Pie Chart: Pelanggaran Berdasarkan Tingkat</h2>
+                <canvas id="pie-chart"></canvas>
+            </div>
+        </div>
+
+        <script>
+            // Fetch data from Laravel API
+            fetch('/dashboard/data') // Pastikan route sudah ditambahkan
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data); // Debugging output
+                    // Bar Chart
+                    const barChartLabels = data.barChartData.map(item => item.violation);
+                    const barChartValues = data.barChartData.map(item => item.total);
+
+                    const barChart = new Chart(document.getElementById('bar-chart'), {
+                        type: 'bar',
+                        data: {
+                            labels: barChartLabels,
+                            datasets: [{
+                                label: 'Jumlah Pelanggaran',
+                                data: barChartValues,
+                                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    display: false
+                                }
+                            }
+                        }
+                    });
+
+                    // Pie Chart
+                    const pieChartLabels = data.pieChartData.map(item => item.tingkat);
+                    const pieChartValues = data.pieChartData.map(item => item.total);
+
+                    const pieChart = new Chart(document.getElementById('pie-chart'), {
+                        type: 'pie',
+                        data: {
+                            labels: pieChartLabels,
+                            datasets: [{
+                                data: pieChartValues,
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.6)',
+                                    'rgba(54, 162, 235, 0.6)',
+                                    'rgba(255, 206, 86, 0.6)',
+                                    'rgba(75, 192, 192, 0.6)',
+                                    'rgba(153, 102, 255, 0.6)'
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    display: true
+                                }
+                            }
+                        }
+                    });
+                });
+        </script>
+    @endif
+
+    {{-- @if (Auth::user()->role != 'mahasiswa')
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2 p-4">
             <div class="bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6 w-full">
                 <div class="flex justify-between border-gray-200 border-b dark:border-gray-700 pb-3">
                     <dl>
@@ -100,7 +184,7 @@
                 </div>
             </div>
         </div>
-    @endif
+    @endif --}}
 
 
     <div>
@@ -128,8 +212,8 @@
                         Baca Lebih Lanjut
                         <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M1 5h12m0 0L9 1m4 4L9 9" />
                         </svg>
                     </a>
                 </div>

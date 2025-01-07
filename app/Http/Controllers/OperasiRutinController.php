@@ -8,6 +8,9 @@ use App\Models\Pelanggaran;
 use App\Models\OperasiRutin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\PDF;
+use App\Exports\OperasiRutinExport;
 
 class OperasiRutinController extends Controller
 {
@@ -251,6 +254,43 @@ class OperasiRutinController extends Controller
         } catch (Exception $e) {
             // Menangani kesalahan jika terjadi exception
             return redirect()->route('laporanrutin')->with('error', 'Data gagal dihapus: ' . $e->getMessage());
+        }
+    }
+
+    public function fetchData()
+    {
+        $data = OperasiRutin::all();
+        return response()->json($data);
+    }
+
+    public function filterByDate(Request $request)
+    {
+        // Ambil input tanggal dari request
+        $tanggal = $request->input('tanggal');
+
+        // Filter data berdasarkan tanggal (assumes `created_at` stores the operation date)
+        $data = OperasiRutin::whereDate('updated_at', $tanggal)->get();
+
+        // Kirim data hasil filter ke view
+        return view('operasirutin.laporanrutin', compact('data', 'tanggal'));
+    }
+
+    public function downloadFilteredData(Request $request, $format)
+    {
+        $tanggal = $request->input('tanggal');
+
+        // Filter data berdasarkan tanggal
+        $data = OperasiRutin::whereDate('updated_at', $tanggal)->get();
+
+        if ($format === 'excel') {
+            return Excel::download(new OperasiRutinExport($data, $tanggal), "laporan_operasi_rutin_{$tanggal}.xlsx");
+        } elseif ($format === 'pdf') {
+            $pdf = PDF::loadView('exports.laporanrutin_pdf', compact('data', 'tanggal'));
+            return $pdf->download("laporan_operasi_rutin_{$tanggal}.pdf");
+        } elseif ($format === 'csv') {
+            return Excel::download(new OperasiRutinExport($data, $tanggal), "laporan_operasi_rutin_{$tanggal}.csv", \Maatwebsite\Excel\Excel::CSV);
+        } else {
+            return redirect()->back()->withErrors('Format tidak valid!');
         }
     }
 }
