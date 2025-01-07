@@ -269,7 +269,7 @@ class OperasiRutinController extends Controller
         $tanggal = $request->input('tanggal');
 
         // Filter data berdasarkan tanggal (assumes `created_at` stores the operation date)
-        $data = OperasiRutin::whereDate('updated_at', $tanggal)->get();
+        $data = OperasiRutin::whereDate('created_at', $tanggal)->get();
 
         // Kirim data hasil filter ke view
         return view('operasirutin.laporanrutin', compact('data', 'tanggal'));

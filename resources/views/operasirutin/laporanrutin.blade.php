@@ -18,10 +18,10 @@
 
         rows.forEach((row) => {
             const nim = row.querySelector('td:nth-child(2)')?.textContent.toLowerCase() || '';
-            const name = row.querySelector('td:nth-child(3)')?.textContent.toLowerCase() || '';
+            const nama_mahasiswa = row.querySelector('td:nth-child(3)')?.textContent.toLowerCase() || '';
 
             // Cocokkan input dengan NIM atau Nama
-            if (nim.includes(query) || name.includes(query)) {
+            if (nim.includes(query) || nama_mahasiswa.includes(query)) {
                 row.dataset.matchesSearch = 'true';
             } else {
                 row.dataset.matchesSearch = 'false';
@@ -58,7 +58,7 @@
                             </svg>
                         </button>
                         <div id="exportDropdown"
-                            class="z-10 w-52 divide-y divide-gray-100 rounded-lg bg-white shadow dark:bg-gray-700 block"
+                            class="z-10 hidden w-48 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
                             style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(494.667px, 69.3333px, 0px);"
                             data-popper-placement="bottom">
                             <ul class="p-2 text-left text-sm font-medium text-gray-500 dark:text-gray-400"
