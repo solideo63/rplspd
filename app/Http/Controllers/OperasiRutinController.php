@@ -280,7 +280,7 @@ class OperasiRutinController extends Controller
         $tanggal = $request->input('tanggal');
 
         // Filter data berdasarkan tanggal
-        $data = OperasiRutin::whereDate('updated_at', $tanggal)->get();
+        $data = OperasiRutin::whereDate('created_at', $tanggal)->get();
 
         if ($format === 'excel') {
             return Excel::download(new OperasiRutinExport($data, $tanggal), "laporan_operasi_rutin_{$tanggal}.xlsx");

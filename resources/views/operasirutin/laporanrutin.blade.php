@@ -11,23 +11,41 @@
         window.location.href = url;
     }
 
-    // Filter pencarian berdasarkan nama atau NIM
-    function handleSearch(event) {
-        const query = event.target.value.trim().toLowerCase(); // Input pencarian
-        const rows = document.querySelectorAll('#export-table tbody tr'); // Semua baris di tbody
+    function applyFilters() {
+        const rows = document.querySelectorAll('#data-table tbody tr');
 
         rows.forEach((row) => {
-            const nim = row.querySelector('td:nth-child(2)')?.textContent.toLowerCase() || '';
-            const nama_mahasiswa = row.querySelector('td:nth-child(3)')?.textContent.toLowerCase() || '';
+            const matchesSearch = row.dataset.matchesSearch === 'true';
+            const matchesDate = row.dataset.matchesDate === 'true';
 
-            // Cocokkan input dengan NIM atau Nama
-            if (nim.includes(query) || nama_mahasiswa.includes(query)) {
-                row.dataset.matchesSearch = 'true';
+            if (matchesSearch && matchesDate) {
+                row.style.display = '';
             } else {
-                row.dataset.matchesSearch = 'false';
+                row.style.display = 'none';
             }
         });
     }
+
+    function handleSearch(operasi_rutin) {
+        const query = operasi_rutin.target.value.trim().toLowerCase(); // Input pencarian
+        const rows = document.querySelectorAll('#export-table tbody tr'); // Ambil semua baris tabel di <tbody>
+
+        rows.forEach((row) => {
+            const nim = row.querySelector('td:nth-child(2)')?.textContent.toLowerCase() || '';
+            const name = row.querySelector('td:nth-child(3)')?.textContent.toLowerCase() || '';
+
+            // Jika input cocok dengan NIM atau NAMA
+            if (nim.includes(query) || name.includes(query)) {
+                row.style.display = ''; // Tampilkan baris
+            } else {
+                row.style.display = 'none'; // Sembunyikan baris
+            }
+        });
+
+        applyFilters();
+    }
+
+    document.getElementById('search-input').addEventListener('input', handleSearch);
 </script>
 
 <style>
