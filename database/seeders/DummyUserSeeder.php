@@ -309,6 +309,144 @@ class DummyUserSeeder extends Seeder
                 'password' => bcrypt('Bp3W6VNu')
             ],
             [
+                'name' => 'Alisha Islami Zukhruf',
+                'username' => '24120232',
+                'role' => 'spd',
+                'password' => bcrypt('VtzdEmP3')
+            ],
+            [
+                'name' => 'Angelia Oktavia Br Tampubolon',
+                'username' => '24120233',
+                'role' => 'spd',
+                'password' => bcrypt('6sY2c6Cc')
+            ],
+            [
+                'name' => 'Jessica La Ercadiola Br Ginting',
+                'username' => '24120238',
+                'role' => 'spd',
+                'password' => bcrypt('e9kQZy9P')
+            ],
+            [
+                'name' => 'Moses Noel Estomihi Simanullang',
+                'username' => '24120241',
+                'role' => 'spd',
+                'password' => bcrypt('WaQgcNn4')
+            ],
+            [
+                'name' => 'Muhammad Zain Al Azhari',
+                'username' => '24120245',
+                'role' => 'spd',
+                'password' => bcrypt('EdJqp9nf')
+            ],
+            [
+                'name' => 'Nailis Sahila',
+                'username' => '24120246',
+                'role' => 'spd',
+                'password' => bcrypt('qUPtzKc4')
+            ],
+            [
+                'name' => 'Ardi Wirahman',
+                'username' => '24120234',
+                'role' => 'spd',
+                'password' => bcrypt('6eNZQLYz')
+            ],
+            [
+                'name' => 'Ahmad Aikun',
+                'username' => '24120231',
+                'role' => 'spd',
+                'password' => bcrypt('nbVqk9QM')
+            ],
+            [
+                'name' => 'Faruq Hadi Ramadhan',
+                'username' => '24120236',
+                'role' => 'spd',
+                'password' => bcrypt('BjQnPdW9')
+            ],
+            [
+                'name' => 'Nuraini Fauziah',
+                'username' => '24120249',
+                'role' => 'spd',
+                'password' => bcrypt('dhut3pV5')
+            ],
+            [
+                'name' => 'Putri Yuli Yanti',
+                'username' => '24120251',
+                'role' => 'spd',
+                'password' => bcrypt('j9n9nySb')
+            ],
+            [
+                'name' => 'Riani Br Ginting',
+                'username' => '24120252',
+                'role' => 'spd',
+                'password' => bcrypt('zqkMk2nF')
+            ],
+            [
+                'name' => 'Decapryo Rivian Belo',
+                'username' => '24120235',
+                'role' => 'spd',
+                'password' => bcrypt('a2yyTFJY')
+            ],
+            [
+                'name' => 'Ica Bali Tri Susmita',
+                'username' => '24120237',
+                'role' => 'spd',
+                'password' => bcrypt('DmXXK6g8')
+            ],
+            [
+                'name' => 'Michael Klington Hutapea',
+                'username' => '24120240',
+                'role' => 'spd',
+                'password' => bcrypt('7Hqs5nVt')
+            ],
+            [
+                'name' => 'Muhamad Fadhlan Hendri',
+                'username' => '24120242',
+                'role' => 'spd',
+                'password' => bcrypt('JrJx6y7x')
+            ],
+            [
+                'name' => 'M. Faruq Hafidzullah Erfaringga',
+                'username' => '24120244',
+                'role' => 'spd',
+                'password' => bcrypt('xp3AyGnY')
+            ],
+            [
+                'name' => 'Ni Putu Karistya Paicha Maesi',
+                'username' => '24120247',
+                'role' => 'spd',
+                'password' => bcrypt('E4nZ5aRN')
+            ],
+            [
+                'name' => 'Nur Hafizatun Nissa',
+                'username' => '24120248',
+                'role' => 'spd',
+                'password' => bcrypt('qm8dPEG5')
+            ],
+            [
+                'name' => 'Ade Irma',
+                'username' => '24120230',
+                'role' => 'spd',
+                'password' => bcrypt('DDvuPq89')
+            ],
+            [
+                'name' => 'Juan Stevan Rehatta',
+                'username' => '24120239',
+                'role' => 'spd',
+                'password' => bcrypt('DW8kq6QM')
+            ],
+            [
+                'name' => 'Muhamad Zidan Kurnia Ahida',
+                'username' => '24120243',
+                'role' => 'spd',
+                'password' => bcrypt('auH9AYnL')
+            ],
+            [
+                'name' => 'Putra Dafa Pratama',
+                'username' => '24120250',
+                'role' => 'spd',
+                'password' => bcrypt('8ZRUWrNk')
+            ],
+            [
                 'name' => 'Admin',
                 'username' => '12345',
                 'role' => 'admin',
@@ -319,7 +457,7 @@ class DummyUserSeeder extends Seeder
                 'username' => '54321',
                 'role' => 'pemonitor',
                 'password' => bcrypt('54321')
-            ],
+            ]
 
         ];
         foreach ($userData as $key => $val) {
