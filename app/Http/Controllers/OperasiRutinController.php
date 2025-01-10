@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\PDF;
 use App\Exports\OperasiRutinExport;
+use Termwind\Components\Dd;
 
 class OperasiRutinController extends Controller
 {
@@ -292,5 +293,48 @@ class OperasiRutinController extends Controller
         } else {
             return redirect()->back()->withErrors('Format tidak valid!');
         }
+    }
+
+    public function filterbyTingkat(Request $request)
+    {
+        // Ambil query builder untuk Pelanggaran
+        $query = OperasiRutin::query();
+
+        // Jika parameter 'tingkat' ada dan tidak kosong, filter berdasarkan tingkat
+        if ($request->has('tingkat') && $request->tingkat != '') {
+            $query->where('tingkat', $request->tingkat);
+        }
+
+        // Ambil data pelanggaran yang sudah difilter
+        $data = $query->get();
+        // dd($data);
+        // Kirim data ke view
+        return view('operasirutin.laporanrutin', compact('data'));
+    }
+
+    public function filter(Request $request)
+    {
+        // Ambil query builder untuk OperasiRutin
+        $query = OperasiRutin::query();
+
+        // Filter berdasarkan tanggal jika parameter 'tanggal' ada dan tidak kosong
+        if ($request->has('tanggal') && $request->tanggal != '') {
+            $query->whereDate('created_at', $request->tanggal);
+        }
+
+        // Filter berdasarkan tingkat jika parameter 'tingkat' ada dan tidak kosong
+        if ($request->has('tingkat') && $request->tingkat != '') {
+            $query->where('tingkat', $request->tingkat);
+        }
+
+        if ($request->has('nama') && $request->nama != '') {
+            $query->where('nama_mahasiswa', 'like', '%' . $request->nama . '%');
+        }
+
+        // Ambil data hasil filter
+        $data = $query->get();
+
+        // Kirim data ke view
+        return view('operasirutin.laporanrutin', compact('data'));
     }
 }

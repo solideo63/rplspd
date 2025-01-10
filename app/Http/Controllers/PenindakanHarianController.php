@@ -7,7 +7,10 @@ use Carbon\Carbon;
 use App\Models\Pelanggaran;
 use Illuminate\Http\Request;
 use App\Models\PenindakanHarian;
+use App\Exports\OperasiRutinExport;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\PenindakanHarianExport;
 use App\Http\Requests\StorePenindakanHarianRequest;
 use App\Http\Requests\UpdatePenindakanHarianRequest;
 
@@ -210,6 +213,51 @@ class PenindakanHarianController extends Controller
         } catch (Exception $e) {
             // Menangani kesalahan jika terjadi exception
             return redirect()->route('laporanharian')->with('error', 'Data gagal dihapus: ' . $e->getMessage());
+        }
+    }
+
+    public function filter(Request $request)
+    {
+        // Ambil query builder untuk OperasiRutin
+        $query = PenindakanHarian::query();
+
+        // Filter berdasarkan tanggal jika parameter 'tanggal' ada dan tidak kosong
+        if ($request->has('tanggal') && $request->tanggal != '') {
+            $query->whereDate('created_at', $request->tanggal);
+        }
+
+        // Filter berdasarkan tingkat jika parameter 'tingkat' ada dan tidak kosong
+        if ($request->has('tingkat') && $request->tingkat != '') {
+            $query->where('tingkat', $request->tingkat);
+        }
+
+        if ($request->has('nama') && $request->nama != '') {
+            $query->where('nama_mahasiswa', 'like', '%' . $request->nama . '%');
+        }
+
+        // Ambil data hasil filter
+        $data = $query->get();
+
+        // Kirim data ke view
+        return view('penindakanharian.laporanharian', compact('data'));
+    }
+
+    public function downloadFilteredData(Request $request, $format, \Barryvdh\DomPDF\PDF $pdfInstance)
+    {
+        $tanggal = $request->input('tanggal');
+
+        // Filter data berdasarkan tanggal
+        $data = PenindakanHarian::whereDate('created_at', $tanggal)->get();
+
+        if ($format === 'excel') {
+            return Excel::download(new PenindakanHarianExport($data, $tanggal), "laporan_penindakan_harian_{$tanggal}.xlsx");
+        } elseif ($format === 'pdf') {
+            $pdf = $pdfInstance->loadView('exports.laporanharian_pdf', compact('data', 'tanggal'));
+            return $pdf->download("laporan_penindakan_harian_{$tanggal}.pdf");
+        } elseif ($format === 'csv') {
+            return Excel::download(new PenindakanHarianExport($data, $tanggal), "laporan_penindakan_harian_{$tanggal}.csv", \Maatwebsite\Excel\Excel::CSV);
+        } else {
+            return redirect()->back()->withErrors('Format tidak valid!');
         }
     }
 }

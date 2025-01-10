@@ -122,92 +122,31 @@
                     <div
                         class="flex flex-col sm:flex-row flex-wrap space-y-2 sm:space-y-0 items-start justify-start pb-4 gap-4">
                         <div class="w-full sm:w-auto">
-                            <button id="dropdownRadioButton" data-dropdown-toggle="dropdownRadio"
-                                class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm p-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                                type="button">
-                                <svg class="w-5 h-5 mr-3 text-gray-500 dark:text-white" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M15 9h3m-3 3h3m-3 3h3m-6 1c-.306-.613-.933-1-1.618-1H7.618c-.685 0-1.312.387-1.618 1M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm7 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z" />
-                                </svg>
-                                Pilih Tingkat
-                                <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                    fill="none" viewBox="0 0 10 6">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" d="m1 1 4 4 4-4" />
-                                </svg>
-                            </button>
-                            <!-- Dropdown menu -->
-                            <div id="dropdownRadio"
-                                class="z-10 hidden w-48 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
-                                data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top"
-                                style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
-                                <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200"
-                                    aria-labelledby="dropdownRadioButton">
-                                    <li>
-                                        <div
-                                            class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                                            <input id="filter-radio-example-1" type="radio" value=""
-                                                name="filter-radio"
-                                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                            <label for="filter-radio-example-1"
-                                                class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Tingkat
-                                                I</label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div
-                                            class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                                            <input checked="" id="filter-radio-example-2" type="radio"
-                                                value="" name="filter-radio"
-                                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                            <label for="filter-radio-example-2"
-                                                class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Tingkat
-                                                II</label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div
-                                            class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                                            <input id="filter-radio-example-3" type="radio" value=""
-                                                name="filter-radio"
-                                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                            <label for="filter-radio-example-3"
-                                                class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Tingkat
-                                                III</label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div
-                                            class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                                            <input id="filter-radio-example-4" type="radio" value=""
-                                                name="filter-radio"
-                                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                            <label for="filter-radio-example-4"
-                                                class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Tingkat
-                                                IV</label>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
+                            <form method="GET" action="{{ route('operasi-rutin.filter') }}" id="filterForm">
+                                <!-- Dropdown untuk memilih tingkat -->
+                                <div class="w-full sm:w-auto">
+                                    <select id="tingkat" name="tingkat"
+                                        class="inline-flex items-center w-auto text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm p-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                                        onchange="this.form.submit()">
+                                        <option value="" disabled selected>Pilih Tingkat</option>
+                                        <option value="1" {{ request('tingkat') == '1' ? 'selected' : '' }}>Tingkat
+                                            1</option>
+                                        <option value="2" {{ request('tingkat') == '2' ? 'selected' : '' }}>Tingkat
+                                            2</option>
+                                        <option value="3" {{ request('tingkat') == '3' ? 'selected' : '' }}>Tingkat
+                                            3</option>
+                                        <option value="4" {{ request('tingkat') == '4' ? 'selected' : '' }}>Tingkat
+                                            4</option>
+                                    </select>
+                                </div>
                         </div>
                         <div>
                             <div class="relative w-full sm:w-auto">
-                                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                        <path
-                                            d=" M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-                                    </svg>
-                                </div>
-                                <form action="{{ route('operasi-rutin.filter') }}" method="GET" id="filterForm">
-                                    <input id="datepicker-actions" name="tanggal" type="date"
-                                        value="{{ request('tanggal') }}"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2 ps-10 w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        placeholder="Pilih Tanggal" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                        onchange="document.getElementById('filterForm').submit();">
-                                </form>
+                                <input id="datepicker-actions" name="tanggal" type="date"
+                                    value="{{ request('tanggal') }}"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2 w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="Pilih Tanggal" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                    onchange="document.getElementById('filterForm').submit();">
                             </div>
                         </div>
                         <label for="table-search" class="sr-only">Search</label>
@@ -221,9 +160,26 @@
                                         clip-rule="evenodd"></path>
                                 </svg>
                             </div>
-                            <input type="text" id="table-search"
-                                class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Cari Nama" oninput="handleSearch(event)">
+                            <input type="text" id="table-search" name="nama"
+                                class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-50 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                value="{{ request('nama') }}" placeholder="Cari Nama" oninput="handleSearch(event)">
+                            </form>
+                        </div>
+                        <div class="relative w-full sm:w-auto">
+                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                <svg class="w-3.5 h-3.5 text-white dark:text-gray-800 aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none"
+                                    viewBox="0 0 20 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6" />
+                                </svg>
+                            </div>
+                            <button type="button" style="background-color: #9F2A32;"
+                                onclick="window.location.href='{{ route('laporanrutin') }}'"
+                                class="block p-2
+                                ps-10 text-sm w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4
+                                focus:outline-none focus:ring-blue-300 font-medium rounded-lg dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"">Hapus
+                                Filter </button>
                         </div>
                     </div>
                 </div>

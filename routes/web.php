@@ -76,7 +76,8 @@ Route::get('catat-rutin/{id}/edit', [OperasiRutinController::class, 'edit'])->na
 Route::put('operasi-rutin/{id}/update', [OperasiRutinController::class, 'update'])->name('operasi-rutin.update');
 Route::get('/laporan-rutin', [OperasiRutinController::class, 'index'])->name('laporanrutin');
 Route::get('/laporan-rutin/data', [OperasiRutinController::class, 'fetchData'])->name('operasi-rutin.data');
-Route::get('/laporan-rutin/filter', [OperasiRutinController::class, 'filterByDate'])->name('operasi-rutin.filter');
+Route::get('/laporan-rutin/filter', [OperasiRutinController::class, 'filter'])->name('operasi-rutin.filter');
+Route::get('/laporan-rutin/download/{format}', [OperasiRutinController::class, 'downloadFilteredData'])->name('operasi-rutin.download');
 
 //Route Operasi Umum
 Route::get('/catat-umum', [OperasiUmumController::class, 'create'])->name('catat.umum');
@@ -85,11 +86,15 @@ Route::delete('/delete-umum/{id}', [OperasiUmumController::class, 'destroy'])->n
 Route::get('catat-umum/{id}/edit', [OperasiUmumController::class, 'edit'])->name('catatedit.umum');
 Route::put('operasi-umum/{id}/update', [OperasiUmumController::class, 'update'])->name('operasi-umum.update');
 Route::get('/laporan-umum', [OperasiUmumController::class, 'index'])->name('laporanumum');
+Route::get('/laporan-umum/filter', [OperasiUmumController::class, 'filter'])->name('operasi-umum.filter');
+Route::get('/laporan-umum/download/{format}', [OperasiUmumController::class, 'downloadFilteredData'])->name('operasi-umum.download');
 
 //Route Penindakan Harian
 Route::get('/catat-harian', [PenindakanHarianController::class, 'create'])->name('catat.harian');
 Route::post('/penindakan-harian', [PenindakanHarianController::class, 'store'])->name('penindakan-harian.store');
 Route::get('/laporan-harian', [PenindakanHarianController::class, 'index'])->name('laporanharian');
+Route::get('/laporan-harian/filter', [PenindakanHarianController::class, 'filter'])->name('penindakan-harian.filter');
+Route::get('/laporan-harian/download/{format}', [PenindakanHarianController::class, 'downloadFilteredData'])->name('penindakan-harian.download');
 
 // Route Klaim Pelanggaran
 Route::get('/klaim-pelanggaran', [KlaimPelanggaranController::class, 'index'])->name('klaim-pelanggaran');
@@ -116,8 +121,5 @@ Route::get('/peraturan', [PeraturanController::class, 'tampil'])->name('tampil.p
 Route::get('/landing', function () {
     return view('landingpage');
 });
-
-// Tambahkan route untuk download
-Route::get('/laporan-rutin/download/{format}', [OperasiRutinController::class, 'downloadFilteredData'])->name('operasi-rutin.download');
 
 Route::get('/dashboard/data', [DashboardController::class, 'StatDesk']);
