@@ -21,7 +21,7 @@ class PenindakanHarianController extends Controller
     public function index()
     {
         // Mengambil semua data dari tabel operasi_rutin
-        $data = PenindakanHarian::orderBy('created_at', 'desc');
+        $data = PenindakanHarian::all();
 
         // Mengirim data ke view
         return view('penindakanharian.laporanharian', compact('data'));
