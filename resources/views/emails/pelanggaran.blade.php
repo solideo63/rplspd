@@ -1,5 +1,8 @@
 <h1>Laporan Pelanggaran</h1>
-<p>Halo, <strong>{{ $nama_mahasiswa }}</strong>,</p>
+<p>Kepada Saudara/i,</p>
+<li>Nama: {{ $nama_mahasiswa }}</li>
+<li>NIM: {{ $nim }}</li>
+<li>Kelas: {{ $kelas }}</li>
 <p>Kami telah mencatat pelanggaran yang Anda lakukan berdasarkan laporan yang diterima. Berikut adalah rincian data
     pelanggaran Anda:</p>
 <ul>
@@ -15,5 +18,5 @@
 <div class="footer">
     <p>Hormat kami,</p>
     <p><strong>[Satuan Penegak Disiplin]</strong></p>
-    <p>Sistem Informasi Pelanggaran</p>
+    <p>Sistem Pencatatan dan Pelaporan Pelanggaran (SIMPPEL SPD)</p>
 </div>
