@@ -34,6 +34,7 @@ class OperasiUmumExport implements FromCollection, WithHeadings, WithCustomStart
         return [
             'NIM',
             'Nama Mahasiswa',
+            'Kelas',
             'Tingkat',
             'Pelanggaran'
         ];

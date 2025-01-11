@@ -20,7 +20,7 @@ class KlaimPelanggaranController extends Controller
     public function index()
     {
         // Mengambil semua data dari tabel operasi_rutin
-        $data = PenindakanHarian::all();
+        $data = PenindakanHarian::orderBy('created_at', 'desc')->paginate(15);
 
         // Mengirim data ke view
         return view('klaim-pelanggaran', compact('data'));
@@ -44,6 +44,7 @@ class KlaimPelanggaranController extends Controller
         $request->validate([
             'nim' => 'required|regex:/^[0-9]{9}$/', // NIM harus 9 digit angka
             'nama_mahasiswa' => 'required|string|max:255',
+            'kelas' => 'required|string',
             'pelanggaran' => 'required',
             'tingkat' => 'required|integer',
         ]);
@@ -52,6 +53,7 @@ class KlaimPelanggaranController extends Controller
 
         $nim = $request->nim;
         $nama = $request->nama_mahasiswa;
+        $kelas = $request->kelas;
         $pelanggaran = $request->pelanggaran;
         $tingkat = $request->tingkat;
         $pencatat = Auth::user()->name;
@@ -67,6 +69,7 @@ class KlaimPelanggaranController extends Controller
                 array_push($data, [
                     'nim' => $nim,
                     'nama_mahasiswa' => $nama,
+                    'kelas' => $kelas,
                     'tingkat' => $tingkat,
                     'pelanggaran' => $namaPelanggaran,
                     'nama_pencatat' => $pencatat,
@@ -78,6 +81,7 @@ class KlaimPelanggaranController extends Controller
             array_push($data, [
                 'nim' => $nim,
                 'nama_mahasiswa' => $nama,
+                'kelas' => $kelas,
                 'tingkat' => $tingkat,
                 'pelanggaran' => $namaPelanggaran,
                 'nama_pencatat' => $pencatat,
@@ -115,83 +119,6 @@ class KlaimPelanggaranController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    // public function edit($id)
-    // {
-    //     // Ambil data operasi rutin yang sesuai dengan ID
-    //     $penindakanHarian = PenindakanHarian::findOrFail($id);
-
-    //     // Ambil semua data pelanggaran
-    //     $pelanggarans = Pelanggaran::all();
-
-    //     $selectedPelanggaran = $penindakanHarian->pelanggaran;
-
-    //     // dd($selectedPelanggaran);
-    //     // Kirim data ke view untuk ditampilkan dalam form
-    //     return view('penindakanharian.editcatatharian', compact('operasiUmum', 'pelanggarans', 'selectedPelanggaran'));
-    // }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    // public function update(Request $request, $id)
-    // {
-    //     // Validasi input dari form
-    //     $request->validate([
-    //         'nim' => 'required|regex:/^[0-9]{9}$/', // NIM harus 9 digit angka
-    //         'nama_mahasiswa' => 'required|string|max:255',
-    //         'pelanggaran' => 'required', // Pelanggaran harus berupa kode pelanggaran tunggal
-    //         'tingkat' => 'required|integer',
-    //     ]);
-
-    //     $pelanggarans = Pelanggaran::all();
-
-    //     // Cari data OperasiRutin berdasarkan ID
-    //     $penindakanHarian = PenindakanHarian::find($id);
-
-    //     if (!$penindakanHarian) {
-    //         return redirect()->route('catatedit.harian', $id)->with('error', 'Data tidak ditemukan');
-    //     }
-
-    //     // Ambil data dari request
-    //     $nim = $request->nim;
-    //     $nama = $request->nama_mahasiswa;
-    //     $kodePelanggaran = $request->pelanggaran; // Kode pelanggaran tunggal
-    //     $tingkat = $request->tingkat;
-    //     $pencatat = Auth::user()->name;
-
-    //     // Jika pelanggaran berupa kodePelanggaran
-    //     $namaPelanggaran = null;
-
-    //     // Cek apakah $kodePelanggaran adalah namaPelanggaran
-    //     $existingPelanggaran = $pelanggarans->firstWhere('namaPelanggaran', $kodePelanggaran);
-
-    //     if ($existingPelanggaran) {
-    //         // Jika ditemukan sebagai nama pelanggaran
-    //         $namaPelanggaran = $kodePelanggaran; // Pelanggaran yang dikirim adalah namaPelanggaran
-    //     } else {
-    //         // Jika tidak ditemukan, berarti pelanggaran adalah kodePelanggaran
-    //         $namaPelanggaran = Pelanggaran::where('kodePelanggaran', $kodePelanggaran)->value('namaPelanggaran') ?? 'Unknown';
-    //     }
-
-    //     $timestamp = Carbon::now('Asia/Jakarta'); // Menetapkan waktu sesuai dengan zona waktu Jakarta
-
-    //     // Update data di database
-    //     $penindakanHarian->update([
-    //         'nim' => $nim,
-    //         'nama_mahasiswa' => $nama,
-    //         'tingkat' => $tingkat, // Hanya memperbarui tingkat
-    //         'pelanggaran' => $namaPelanggaran, // Memastikan pelanggaran tetap sesuai dengan kode yang dipilih
-    //         'nama_pencatat' => $pencatat,
-    //         'updated_at' => $timestamp,
-    //     ]);
-
-    //     // Redirect ke halaman edit dengan pesan sukses
-    //     return redirect()->route('laporanharian', $id)->with('success', 'Data berhasil diperbarui');
-    // }
-
-    /**
      * Remove the specified resource from storage.
      */
     public function destroy($id)
@@ -210,5 +137,31 @@ class KlaimPelanggaranController extends Controller
             // Menangani kesalahan jika terjadi exception
             return redirect()->route('laporanharian')->with('error', 'Data gagal dihapus: ' . $e->getMessage());
         }
+    }
+
+    public function filter(Request $request)
+    {
+        // Ambil query builder untuk OperasiRutin
+        $query = PenindakanHarian::query();
+
+        // Filter berdasarkan tanggal jika parameter 'tanggal' ada dan tidak kosong
+        if ($request->has('tanggal') && $request->tanggal != '') {
+            $query->whereDate('created_at', $request->tanggal);
+        }
+
+        // Filter berdasarkan tingkat jika parameter 'tingkat' ada dan tidak kosong
+        if ($request->has('tingkat') && $request->tingkat != '') {
+            $query->where('tingkat', $request->tingkat);
+        }
+
+        if ($request->has('nama') && $request->nama != '') {
+            $query->where('nama_mahasiswa', 'like', '%' . $request->nama . '%');
+        }
+
+        // Ambil data hasil filter
+        $data = $query->get();
+
+        // Kirim data ke view
+        return view('klaim-pelanggaran', compact('data'));
     }
 }

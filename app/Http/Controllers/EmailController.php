@@ -13,12 +13,14 @@ class EmailController extends Controller
         $request->validate([
             'nim' => 'required|regex:/^[0-9]{9}$/', // Validasi NIM harus 9 digit angka
             'nama_mahasiswa' => 'required|string|max:255',
+            'kelas' => 'required|string',
             'pelanggaran' => 'required',
         ]);
 
         $email = $request->nim . '@stis.ac.id';
         $nim = $request->nim;
         $name = $request->nama_mahasiswa;
+        $kelas = $request->kelas;
         $pelanggaran = $request->pelanggaran; // Bisa berupa array atau nilai tunggal
 
         // Ubah kode pelanggaran menjadi nama pelanggaran
@@ -32,6 +34,7 @@ class EmailController extends Controller
         $data = [
             'nim' => $nim,
             'nama_mahasiswa' => $name,
+            'kelas' => $kelas,
             'pelanggarans' => $namaPelanggaran,
         ];
 
