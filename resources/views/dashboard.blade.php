@@ -8,7 +8,14 @@
 @endif
 
 <div class="p-4 sm:ml-64 mt-4">
-    <h2 class="text-4xl ml-4 mb-4 font-extrabold text-gray-900 dark:text-white">Selamat datang, {{ Auth::user()->name }}</h2>
+    <h2 class="text-4xl ml-4 text-left mb-4 font-extrabold text-gray-900 dark:text-white">Selamat datang, {{ Auth::user()->name }}</h2>
+    
+    <!-- Quotes Section -->
+    <div id="quote-container" class="text-gray-500 text-left mb-6">
+        <p class="text-lg italic font-medium">
+            "Memuat quotes..."
+        </p>
+    </div>
 
     <!-- Filter Section -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -61,6 +68,34 @@
     let barChartInstance = null;
     let pieChartInstance = null;
 
+    // Fungsi untuk memuat quotes
+    function fetchQuote() {
+        fetch(`/dashboard/data`) // Endpoint untuk data quotes
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const quoteContainer = document.getElementById('quote-container');
+                quoteContainer.innerHTML = `
+                    <p class="text-lg italic font-medium">
+                        "${data.quote}"
+                    </p>
+                `;
+            })
+            .catch(error => {
+                console.error("Error fetching quote:", error);
+                const quoteContainer = document.getElementById('quote-container');
+                quoteContainer.innerHTML = `
+                    <p class="text-lg italic font-medium text-red-500">
+                        "Tidak dapat memuat quotes. Silakan coba lagi nanti."
+                    </p>
+                `;
+            });
+    }
+
     function fetchAndRenderCharts(filter, timeFilter) {
         fetch(`/dashboard/data?filter=${filter}&time_filter=${timeFilter}`)
             .then(response => {
@@ -70,6 +105,8 @@
                 return response.json();
             })
             .then(data => {
+                fetchQuote(); // Panggil fetchQuote untuk memperbarui quotes setiap refresh
+
                 // Mengelompokkan data untuk Bar Chart
                 const groupedBarData = data.barChartData.reduce((acc, item) => {
                     acc[item.pelanggaran] = (acc[item.pelanggaran] || 0) + item.total;
@@ -183,6 +220,7 @@
         fetchAndRenderCharts(filterValue, timeFilterValue);
     });
 
+    // Fetch initial data
     fetchAndRenderCharts('all', '');
 </script>
 
