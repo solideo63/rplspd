@@ -62,6 +62,7 @@ class OperasiUmumController extends Controller
         $request->validate([
             'nim' => 'required|regex:/^[0-9]{9}$/', // NIM harus 9 digit angka
             'nama_mahasiswa' => 'required|string|max:255',
+            'kelas' => 'required|string',
             'pelanggaran' => 'required',
             'tingkat' => 'required|integer',
         ]);
@@ -70,6 +71,7 @@ class OperasiUmumController extends Controller
 
         $nim = $request->nim;
         $nama = $request->nama_mahasiswa;
+        $kelas = $request->kelas;
         $pelanggaran = $request->pelanggaran;
         $tingkat = $request->tingkat;
         $pencatat = Auth::user()->name;
@@ -85,6 +87,7 @@ class OperasiUmumController extends Controller
                 array_push($data, [
                     'nim' => $nim,
                     'nama_mahasiswa' => $nama,
+                    'kelas' => $kelas,
                     'tingkat' => $tingkat,
                     'pelanggaran' => $namaPelanggaran,
                     'nama_pencatat' => $pencatat,
@@ -96,6 +99,7 @@ class OperasiUmumController extends Controller
             array_push($data, [
                 'nim' => $nim,
                 'nama_mahasiswa' => $nama,
+                'kelas' => $kelas,
                 'tingkat' => $tingkat,
                 'pelanggaran' => $namaPelanggaran,
                 'nama_pencatat' => $pencatat,
@@ -159,6 +163,7 @@ class OperasiUmumController extends Controller
         $request->validate([
             'nim' => 'required|regex:/^[0-9]{9}$/', // NIM harus 9 digit angka
             'nama_mahasiswa' => 'required|string|max:255',
+            'kelas' => 'required|string',
             'pelanggaran' => 'required', // Pelanggaran harus berupa kode pelanggaran tunggal
             'tingkat' => 'required|integer',
         ]);
@@ -175,6 +180,7 @@ class OperasiUmumController extends Controller
         // Ambil data dari request
         $nim = $request->nim;
         $nama = $request->nama_mahasiswa;
+        $kelas = $request->kelas;
         $kodePelanggaran = $request->pelanggaran; // Kode pelanggaran tunggal
         $tingkat = $request->tingkat;
         $pencatat = Auth::user()->name;
@@ -199,6 +205,7 @@ class OperasiUmumController extends Controller
         $operasiUmum->update([
             'nim' => $nim,
             'nama_mahasiswa' => $nama,
+            'kelas' => $kelas,
             'tingkat' => $tingkat, // Hanya memperbarui tingkat
             'pelanggaran' => $namaPelanggaran, // Memastikan pelanggaran tetap sesuai dengan kode yang dipilih
             'nama_pencatat' => $pencatat,

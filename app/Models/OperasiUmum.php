@@ -17,6 +17,7 @@ class OperasiUmum extends Model
     protected $fillable = [
         'nim',
         'nama_mahasiswa',
+        'kelas',
         'pelanggaran',
         'nama_pencatat',
     ];

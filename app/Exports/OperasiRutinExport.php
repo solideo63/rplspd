@@ -36,6 +36,7 @@ class OperasiRutinExport implements FromCollection, WithHeadings, WithCustomStar
         return [
             'NIM',
             'Nama Mahasiswa',
+            'Kelas',
             'Tingkat',
             'Pelanggaran'
         ];

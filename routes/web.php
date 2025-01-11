@@ -118,11 +118,8 @@ Route::get('/laporan-harian/download/{format}', [PenindakanHarianController::cla
 
 // Route Klaim Pelanggaran
 Route::get('/klaim-pelanggaran', [KlaimPelanggaranController::class, 'index'])->name('klaim-pelanggaran');
+Route::get('/klaim-pelanggaran/filter', [KlaimPelanggaranController::class, 'filter'])->name('klaim-pelanggaran.filter');
 Route::delete('/delete-harian/{id}', [KlaimPelanggaranController::class, 'destroy'])->name('delete.harian');
-
-
-
-
 
 Route::get('/peraturan', [PeraturanController::class, 'tampil'])->name('tampil.peraturan');
 

@@ -16,6 +16,7 @@ class OperasiRutin extends Model
     protected $fillable = [
         'nim',
         'nama_mahasiswa',
+        'kelas',
         'pelanggaran',
         'nama_pencatat',
     ];

@@ -34,6 +34,7 @@ class PenindakanHarianExport implements FromCollection, WithHeadings, WithCustom
         return [
             'NIM',
             'Nama Mahasiswa',
+            'Kelas',
             'Tingkat',
             'Pelanggaran'
         ];

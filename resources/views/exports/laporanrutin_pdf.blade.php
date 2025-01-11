@@ -219,15 +219,17 @@
         <table border="1" cellpadding="5" cellspacing="0">
             <thead>
                 <tr>
+                    <th>KELAS</th>
                     <th>NIM</th>
-                    <th>Nama Mahasiswa</th>
-                    <th>Tingkat</th>
-                    <th>Pelanggaran</th>
+                    <th>NAMA</th>
+                    <th>TINGKAT</th>
+                    <th>PELANGGARAN</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($data as $item)
                     <tr>
+                        <td>{{ $item->kelas }}</td>
                         <td>{{ $item->nim }}</td>
                         <td>{{ $item->nama_mahasiswa }}</td>
                         <td>{{ $item->tingkat }}</td>

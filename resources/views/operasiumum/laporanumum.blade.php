@@ -254,6 +254,7 @@
                             <th scope="col" class="px-6 py-3">Hari/Tanggal</th>
                             <th scope="col" class="px-6 py-3">NIM</th>
                             <th scope="col" class="px-6 py-3">Nama Mahasiswa</th>
+                            <th scope="col" class="px-6 py-3">Kelas</th>
                             <th scope="col" class="px-6 py-3">Tingkat</th>
                             <th scope="col" class="px-6 py-3">Pelanggaran</th>
                             <th scope="col" class="px-6 py-3">Nama Pencatat</th>
@@ -279,6 +280,7 @@
                                 </td>
                                 <td class="px-6 py-4">{{ $row->nim }}</td>
                                 <td class="px-6 py-4">{{ $row->nama_mahasiswa }}</td>
+                                <td class="px-6 py-4">{{ $row->kelas }}</td>
                                 <td class="px-6 py-4 text-center">{{ $row->tingkat }}</td>
                                 <td class="px-6 py-4">{{ $row->pelanggaran }}</td>
                                 <td class="px-6 py-4">{{ $row->nama_pencatat }}</td>
