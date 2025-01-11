@@ -16,24 +16,14 @@ use App\Http\Controllers\OperasiRutinController;
 use App\Http\Controllers\UbahPasswordController;
 use App\Http\Controllers\KlaimPelanggaranController;
 use App\Http\Controllers\PenindakanHarianController;
-use App\Http\Middleware\EnsureUserIsAuthenticated;
-
-Route::middleware([EnsureUserIsAuthenticated::class])->group(function () {
-    // Semua route di dalam grup ini akan memerlukan autentikasi
-    //Route::get('/dashboard', function () {
-      //  return view('dashboard');
-    //});
-
-    // Tambahkan route lain yang memerlukan autentikasi
-});
 
 Route::get('/login', [SesiController::class, 'index'])->name('login');
 
 
-//Route::middleware(['guest'])->group(function () {
-  //  Route::get('/login', [SesiController::class, 'index'])->name('login');
-    //Route::post('/login', [SesiController::class, 'login']);
-//});
+Route::middleware(['guest'])->group(function () {
+    Route::get('/login', [SesiController::class, 'index'])->name('login');
+    Route::post('/login', [SesiController::class, 'login']);
+});
 Route::get('/home', function () {
     return redirect('/admin');
 });
