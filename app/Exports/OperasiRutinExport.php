@@ -27,16 +27,13 @@ class OperasiRutinExport implements FromCollection, WithHeadings, WithCustomStar
 
     public function collection()
     {
-        return $this->data->filter(function ($item) {
-            return $item->tingkat == $this->tingkat;
-        });
+        return $this->data;
     }
 
     public function headings(): array
     {
         // Sesuaikan dengan kolom di database tanpa Nama Pencatat
         return [
-            'ID',
             'NIM',
             'Nama Mahasiswa',
             'Tingkat',
@@ -57,7 +54,7 @@ class OperasiRutinExport implements FromCollection, WithHeadings, WithCustomStar
                 $sheet = $event->sheet->getDelegate();
 
                 // Tambahkan informasi tanggal di atas tabel
-                $sheet->setCellValue('A1', 'Data Operasi Rutin - Tanggal: ' . $this->tanggal);
+                $sheet->setCellValue('A1', 'Data Pelanggaran Operasi Rutin - Tanggal: ' . $this->tanggal);
                 $sheet->mergeCells('A1:E1'); // Sesuaikan range dengan jumlah kolom
                 $sheet->getStyle('A1')->getFont()->setBold(true); // Buat teks tanggal tebal
             },

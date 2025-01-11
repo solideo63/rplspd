@@ -253,6 +253,7 @@ class PenindakanHarianController extends Controller
             return Excel::download(new PenindakanHarianExport($data, $tanggal), "laporan_penindakan_harian_{$tanggal}.xlsx");
         } elseif ($format === 'pdf') {
             $pdf = $pdfInstance->loadView('exports.laporanharian_pdf', compact('data', 'tanggal'));
+            $pdf->setPaper('A4', 'portrait');
             return $pdf->download("laporan_penindakan_harian_{$tanggal}.pdf");
         } elseif ($format === 'csv') {
             return Excel::download(new PenindakanHarianExport($data, $tanggal), "laporan_penindakan_harian_{$tanggal}.csv", \Maatwebsite\Excel\Excel::CSV);
