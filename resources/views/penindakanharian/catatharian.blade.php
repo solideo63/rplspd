@@ -5,7 +5,8 @@
         <div
             class="block max-w-sm p-6  bg-yellow-300 border rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-full">
             <h3 class="text-2xl text-center font-bold dark:text-white">Pencatatan Penindakan Harian</h3>
-            <p class="text-gray-800 dark:text-gray-400 italic opacity-50">(Mohon isi data pelanggaran di bawah ini)
+            <p class="text-center text-gray-800 dark:text-gray-400 italic opacity-50">(Mohon isi data pelanggaran di
+                bawah ini)
             </p>
 
             {{-- Notifikasi Sukses --}}
@@ -67,13 +68,13 @@
                 <div class="mb-5">
                     <label for="nama_mahasiswa"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Mahasiswa</label>
-                    <input type="text" id="nama_mahasiswa" name="nama_mahasiswa" required
+                    <input type="text" id="nama_mahasiswa" name="nama_mahasiswa" required disabled
                         class="shadow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 </div>
                 <div class="mb-5">
                     <label for="kelas"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kelas</label>
-                    <select id="kelas" name="kelas" required
+                    <select id="kelas" name="kelas" required disabled
                         class="shadow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option value="" disabled selected>Pilih Kelas...</option>
                         <option value="1D31">1D31</option>

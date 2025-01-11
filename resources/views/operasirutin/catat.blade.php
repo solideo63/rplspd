@@ -12,7 +12,8 @@
                     {{ $tingkat }}</p>
                 @endif
             </h3>
-            <p class="text-gray-800 dark:text-gray-400 italic opacity-50">(Mohon isi data pelanggaran di bawah ini)
+            <p class="text-center text-gray-800 dark:text-gray-400 italic opacity-50">(Mohon isi data pelanggaran di
+                bawah ini)
             </p>
 
             {{-- Notifikasi Sukses --}}

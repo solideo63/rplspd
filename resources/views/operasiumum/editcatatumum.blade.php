@@ -4,8 +4,9 @@
     <div class="flex justify-center">
         <div
             class="block max-w-sm p-6 bg-yellow-300 border rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-full">
-            <h3 class="text-2xl font-bold dark:text-white">Edit Detail Pelanggaran</h3>
-            <p class="text-gray-800 dark:text-gray-400 italic opacity-50">(Mohon isi data pelanggaran di bawah ini)</p>
+            <h3 class="text-center text-2xl font-bold dark:text-white">Edit Detail Pelanggaran</h3>
+            <p class="text-center text-gray-800 dark:text-gray-400 italic opacity-50">(Mohon isi data pelanggaran di
+                bawah ini)</p>
 
             {{-- Notifikasi Sukses --}}
             @if (session('success'))
