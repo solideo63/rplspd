@@ -20,20 +20,10 @@ class OperasiRutinController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    // public function index()
-    // {
-    //     $operasiRutin = OperasiRutin::all();
-    //     return response()->json([
-    //         'message' => 'Data berhasil diambil',
-    //         'data' => $operasiRutin
-    //     ]);
-    // }
-
-
     public function index()
     {
         // Mengambil semua data dari tabel operasi_rutin
-        $data = OperasiRutin::all();
+        $data = OperasiRutin::orderBy('created_at', 'desc')->paginate(15);
 
         // Mengirim data ke view
         return view('operasirutin.laporanrutin', compact('data'));

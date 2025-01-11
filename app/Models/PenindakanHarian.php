@@ -21,6 +21,8 @@ class PenindakanHarian extends Model
         'nama_pencatat',
     ];
 
+    protected $hidden = ['id', 'created_at', 'updated_at'];
+
     // Format default untuk timestamps (jika diperlukan custom)
     protected $casts = [
         'created_at' => 'datetime',
