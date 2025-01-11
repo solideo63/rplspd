@@ -301,8 +301,6 @@
             </div>
         </div>
     </div>
-    <br>
-    {{ $data->links() }}
 </div>
 <x-footer></x-footer>
 <script src="{{ asset('js/export.js') }}"></script>
