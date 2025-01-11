@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('token', 5)->unique();
             $table->timestamp('waktu_buat')->useCurrent();
-            $table->timestamp('waktu_kedaluarsa');
+            $table->timestamp('waktu_kedaluarsa')->nullable();
             $table->timestamps();
         });
     }

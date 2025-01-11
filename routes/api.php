@@ -10,13 +10,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // Operasi Rutin
 Route::get('/laporan-rutin', [PelanggaranController::class, 'index']);
-Route::get('/laporan-rutin/{id}', [PelanggaranController::class, 'show']);
-Route::post('/laporan-rutin', [PelanggaranController::class, 'store']);
+Route::get('/laporan-rutin/{tanggal}', [PelanggaranController::class, 'filterByTanggal']);
+// Route::get('/laporan-rutin/{id}', [PelanggaranController::class, 'show']);
+// Route::post('/laporan-rutin', [PelanggaranController::class, 'store']);
 
 // Operasi Umum
 Route::get('/laporan-umum', [PelanggaranController::class, 'indexumum']);
-Route::get('/laporan-umum/{id}', [PelanggaranController::class, 'showumum']);
-Route::post('/laporan-umum', [PelanggaranController::class, 'storeumum']);
+Route::get('/laporan-umum/{tanggal}', [PelanggaranController::class, 'filterByTanggalUmum']);
+// Route::get('/laporan-umum/{id}', [PelanggaranController::class, 'showumum']);
+// Route::post('/laporan-umum', [PelanggaranController::class, 'storeumum']);
 
 Route::get('/test', function () {
     return response()->json(['message' => 'API is working']);

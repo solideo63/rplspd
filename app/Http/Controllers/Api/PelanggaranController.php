@@ -12,15 +12,67 @@ class PelanggaranController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = OperasiRutin::orderBy('nim', 'asc')->get();
+        $tanggal = $request->query('tanggal');
+
+        // Validasi format tanggal
+        if ($tanggal && !\Carbon\Carbon::hasFormat($tanggal, 'Y-m-d')) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Format Tanggal Tidak Valid',
+            ], 400);
+        }
+
+        // Filter data berdasarkan tanggal dari kolom created_at
+        $data = OperasiRutin::when($tanggal, function ($query, $tanggal) {
+            return $query->whereDate('created_at', $tanggal);
+        })->get();
+
+        if ($data->isEmpty()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data Tidak Ditemukan',
+            ], 404);
+        }
+
         return response()->json([
             'status' => true,
             'message' => 'Data Ditemukan',
             'data' => $data,
         ], 200);
     }
+
+    public function filterByTanggal($tanggal)
+    {
+        // $tanggal = $request->input('tanggal');
+
+        // Validasi format tanggal
+        try {
+            $parsedDate = \Carbon\Carbon::createFromFormat('d-m-Y', $tanggal);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Format Tanggal Tidak Valid',
+            ], 400);
+        }
+
+        // Filter data berdasarkan tanggal (hanya tanggal, abaikan waktu)
+        $data = OperasiRutin::whereDate('created_at', $parsedDate->toDateString())->get();
+
+        if ($data->isEmpty()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data Tidak Ditemukan',
+            ], 404);
+        }
+
+        return response()->json([
+            'message' => "Data Operasi Rutin Tanggal $tanggal Ditemukan",
+            'data' => $data,
+        ], 200);
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -70,6 +122,37 @@ class PelanggaranController extends Controller
             'data' => $data,
         ], 200);
     }
+
+    public function filterByTanggalUmum($tanggal)
+    {
+        // $tanggal = $request->input('tanggal');
+
+        // Validasi format tanggal
+        try {
+            $parsedDate = \Carbon\Carbon::createFromFormat('d-m-Y', $tanggal);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Format Tanggal Tidak Valid',
+            ], 400);
+        }
+
+        // Filter data berdasarkan tanggal (hanya tanggal, abaikan waktu)
+        $data = OperasiUmum::whereDate('created_at', $parsedDate->toDateString())->get();
+
+        if ($data->isEmpty()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data Tidak Ditemukan',
+            ], 404);
+        }
+
+        return response()->json([
+            'message' => "Data Operasi Umum Tanggal $tanggal Ditemukan",
+            'data' => $data,
+        ], 200);
+    }
+
 
     /**
      * Store a newly created resource in storage.

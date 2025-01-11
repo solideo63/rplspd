@@ -21,7 +21,7 @@ class OperasiUmum extends Model
         'nama_pencatat',
     ];
 
-    protected $hidden = ['created_at', 'updated_at'];
+    protected $hidden = ['id', 'created_at', 'updated_at'];
 
     // Format default untuk timestamps (jika diperlukan custom)
     protected $casts = [
