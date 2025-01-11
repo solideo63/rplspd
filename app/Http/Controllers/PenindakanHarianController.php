@@ -21,7 +21,7 @@ class PenindakanHarianController extends Controller
     public function index()
     {
         // Mengambil semua data dari tabel operasi_rutin
-        $data = PenindakanHarian::all();
+        $data = PenindakanHarian::orderBy('created_at', 'desc')->paginate(1);
 
         // Mengirim data ke view
         return view('penindakanharian.laporanharian', compact('data'));
@@ -242,7 +242,7 @@ class PenindakanHarianController extends Controller
         }
 
         // Ambil data hasil filter
-        $data = $query->get();
+        $data = $query->orderBy('created_at', 'desc')->paginate(1);
 
         // Kirim data ke view
         return view('penindakanharian.laporanharian', compact('data'));
@@ -253,7 +253,9 @@ class PenindakanHarianController extends Controller
         $tanggal = $request->input('tanggal');
 
         // Filter data berdasarkan tanggal
-        $data = PenindakanHarian::whereDate('created_at', $tanggal)->get();
+        $data = PenindakanHarian::whereDate('created_at', $tanggal)
+            ->orderBy('created_at', 'desc') // Mengurutkan berdasarkan tanggal secara descending
+            ->get();
 
         if ($format === 'excel') {
             return Excel::download(new PenindakanHarianExport($data, $tanggal), "laporan_penindakan_harian_{$tanggal}.xlsx");

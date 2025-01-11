@@ -131,3 +131,4 @@ Route::get('/landing', function () {
 Route::get('/dashboard/data', [DashboardController::class, 'StatDesk']);
 
 Route::get('/get-mahasiswa', [MahasiswaController::class, 'getMahasiswa'])->name('get.mahasiswa');
+Route::get('/get-mahasiswa-rutin', [MahasiswaController::class, 'getMahasiswaRutin'])->name('get.mahasiswarutin');

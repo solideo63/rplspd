@@ -302,6 +302,10 @@
             </div>
         </div>
     </div>
+    <!-- Navigasi Pagination -->
+    <div class="mt-4">
+        {{ $data->appends(request()->query())->links('pagination::tailwind') }}
+    </div>
 </div>
 <x-footer></x-footer>
 {{-- <script src="{{ asset('js/export.js') }}"></script> --}}

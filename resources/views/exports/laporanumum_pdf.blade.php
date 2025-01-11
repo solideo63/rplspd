@@ -123,6 +123,7 @@
             {{ $tanggal ? \Carbon\Carbon::parse($tanggal)->translatedFormat('l') : 'N/A' }}</p>
         <p>Tanggal:
             {{ $tanggal ? \Carbon\Carbon::parse($tanggal)->translatedFormat('d F Y') : 'N/A' }}</p>
+        <h5>DAFTAR PELANGGARAN MAHASISWA</h5>
         <table border="1" cellpadding="5" cellspacing="0">
             <thead>
                 <tr>

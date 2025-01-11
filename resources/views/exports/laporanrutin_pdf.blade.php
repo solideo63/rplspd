@@ -216,6 +216,7 @@
 
     <main>
         <p>Lampiran:</p>
+        <h5>DAFTAR PELANGGARAN MAHASISWA</h5>
         <table border="1" cellpadding="5" cellspacing="0">
             <thead>
                 <tr>

@@ -23,7 +23,7 @@ class OperasiRutinController extends Controller
     public function index()
     {
         // Mengambil semua data dari tabel operasi_rutin
-        $data = OperasiRutin::all();
+        $data = OperasiRutin::orderBy('created_at', 'desc')->paginate(1);
 
         // Mengirim data ke view
         return view('operasirutin.laporanrutin', compact('data'));
@@ -261,26 +261,15 @@ class OperasiRutinController extends Controller
         return response()->json($data);
     }
 
-    public function filterByDate(Request $request)
-    {
-        // Ambil input tanggal dari request
-        $tanggal = $request->input('tanggal');
-
-        // Filter data berdasarkan tanggal (assumes `created_at` stores the operation date)
-        $data = OperasiRutin::whereDate('created_at', $tanggal)->get();
-
-        // Kirim data hasil filter ke view
-        return view('operasirutin.laporanrutin', compact('data', 'tanggal'));
-    }
-
     public function downloadFilteredData(Request $request, $format)
     {
         $tanggal = $request->input('tanggal');
         $tingkat = $request->input('tingkat');
 
         // Filter data berdasarkan tanggal
-        $data = OperasiRutin::whereDate('created_at', $tanggal)->get();
-
+        $data = OperasiRutin::whereDate('created_at', $tanggal)
+            ->orderBy('created_at', 'desc') // Mengurutkan berdasarkan tanggal secara descending
+            ->get();
         if ($format === 'excel') {
             return Excel::download(new OperasiRutinExport($data, $tanggal, $tingkat), "laporan_operasi_rutin_{$tanggal}.xlsx");
         } elseif ($format === 'pdf') {
@@ -291,23 +280,6 @@ class OperasiRutinController extends Controller
         } else {
             return redirect()->back()->withErrors('Format tidak valid!');
         }
-    }
-
-    public function filterbyTingkat(Request $request)
-    {
-        // Ambil query builder untuk Pelanggaran
-        $query = OperasiRutin::query();
-
-        // Jika parameter 'tingkat' ada dan tidak kosong, filter berdasarkan tingkat
-        if ($request->has('tingkat') && $request->tingkat != '') {
-            $query->where('tingkat', $request->tingkat);
-        }
-
-        // Ambil data pelanggaran yang sudah difilter
-        $data = $query->get();
-        // dd($data);
-        // Kirim data ke view
-        return view('operasirutin.laporanrutin', compact('data'));
     }
 
     public function filter(Request $request)
@@ -330,7 +302,7 @@ class OperasiRutinController extends Controller
         }
 
         // Ambil data hasil filter
-        $data = $query->get();
+        $data = $query->orderBy('created_at', 'desc')->paginate(1);
 
         // Kirim data ke view
         return view('operasirutin.laporanrutin', compact('data'));

@@ -19,7 +19,7 @@ class OperasiUmumController extends Controller
     public function index()
     {
         // Mengambil data dari tabel dengan pagination
-        $data = OperasiUmum::paginate(1); // 10 item per halaman
+        $data = OperasiUmum::orderBy('created_at', 'desc')->paginate(1); // 10 item per halaman
 
         // Mengirim data ke view
         return view('operasiumum.laporanumum', compact('data'));
@@ -259,7 +259,7 @@ class OperasiUmumController extends Controller
         }
 
         // Hasil query dengan pagination
-        $data = $query->paginate(1); // 10 item per halaman
+        $data = $query->orderBy('created_at', 'desc')->paginate(1); // 10 item per halaman
 
         return view('operasiumum.laporanumum', compact('data'));
     }
@@ -269,7 +269,9 @@ class OperasiUmumController extends Controller
         $tanggal = $request->input('tanggal');
 
         // Filter data berdasarkan tanggal
-        $data = OperasiUmum::whereDate('created_at', $tanggal)->get();
+        $data = OperasiUmum::whereDate('created_at', $tanggal)
+            ->orderBy('created_at', 'desc') // Mengurutkan berdasarkan tanggal secara descending
+            ->get();
 
         if ($format === 'excel') {
             return Excel::download(new OperasiUmumExport($data, $tanggal), "laporan_operasi_umum_{$tanggal}.xlsx");

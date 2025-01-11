@@ -7,23 +7,76 @@ use Illuminate\Http\Request;
 
 class MahasiswaController extends Controller
 {
-    public function getMahasiswa(Request $request)
+    public function getMahasiswaRutin(Request $request)
     {
+
         $nim = $request->input('nim');
+        $sessionTingkat = session('tingkat'); // Ambil tingkat dari sesi pengguna (bisa null)
 
         // Cari mahasiswa berdasarkan NIM
         $mahasiswa = Mahasiswa::where('nim', $nim)->first();
 
         if ($mahasiswa) {
-            return response()->json([
-                'nama' => $mahasiswa->nama,
-                'kelas' => $mahasiswa->kelas,
-                'tingkat' => substr($mahasiswa->kelas, 0, 1), // Contoh menentukan tingkat berdasarkan kelas
-            ]);
+            // Tentukan tingkat berdasarkan kelas (contoh: karakter pertama dari kelas)
+            $mahasiswaTingkat = substr($mahasiswa->kelas, 0, 1);
+
+            // Validasi hanya jika session tingkat tersedia
+            if ($sessionTingkat === null || $mahasiswaTingkat == $sessionTingkat) {
+                return response()->json([
+                    'nama' => $mahasiswa->nama,
+                    'kelas' => $mahasiswa->kelas,
+                    'tingkat' => $mahasiswaTingkat,
+                ]);
+            } else {
+                // Jika tingkat tidak sesuai, kembalikan error 404
+                return response()->json([
+                    'message' => 'Tingkat tidak sesuai dengan sesi.',
+                ], 404);
+            }
         } else {
-            return response()->json(null, 404);
+            // Jika mahasiswa tidak ditemukan, kembalikan error 404
+            return response()->json([
+                'message' => 'Mahasiswa tidak ditemukan.',
+            ], 404);
         }
     }
+    public function getMahasiswa(Request $request)
+    {
+        if (session()->has('tingkat')) {
+            session()->forget('tingkat'); // Hapus sesi tingkat
+        }
+
+        $nim = $request->input('nim');
+        $sessionTingkat = session('tingkat'); // Ambil tingkat dari sesi pengguna (bisa null)
+
+        // Cari mahasiswa berdasarkan NIM
+        $mahasiswa = Mahasiswa::where('nim', $nim)->first();
+
+        if ($mahasiswa) {
+            // Tentukan tingkat berdasarkan kelas (contoh: karakter pertama dari kelas)
+            $mahasiswaTingkat = substr($mahasiswa->kelas, 0, 1);
+
+            // Validasi hanya jika session tingkat tersedia
+            if ($sessionTingkat === null || $mahasiswaTingkat == $sessionTingkat) {
+                return response()->json([
+                    'nama' => $mahasiswa->nama,
+                    'kelas' => $mahasiswa->kelas,
+                    'tingkat' => $mahasiswaTingkat,
+                ]);
+            } else {
+                // Jika tingkat tidak sesuai, kembalikan error 404
+                return response()->json([
+                    'message' => 'Tingkat tidak sesuai dengan sesi.',
+                ], 404);
+            }
+        } else {
+            // Jika mahasiswa tidak ditemukan, kembalikan error 404
+            return response()->json([
+                'message' => 'Mahasiswa tidak ditemukan.',
+            ], 404);
+        }
+    }
+
     /**
      * Display a listing of the resource.
      */

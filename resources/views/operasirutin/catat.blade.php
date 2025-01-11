@@ -170,31 +170,44 @@
         $('#nim').on('input', function() {
             const nim = $(this).val();
 
+            // Hapus pesan error sebelumnya
+            $('#nim-error').remove();
+
             if (nim.length === 9) { // Validasi NIM hanya jika panjangnya 9 karakter
                 $.ajax({
-                    url: '{{ route('get.mahasiswa') }}',
+                    url: '{{ route('get.mahasiswarutin') }}',
                     type: 'GET',
                     data: {
                         nim: nim
                     },
                     success: function(response) {
                         if (response) {
+                            // Isi data jika ditemukan
                             $('#nama_mahasiswa').val(response.nama);
                             $('#kelas').val(response.kelas);
                             $('#tingkat').val(response.tingkat);
                         } else {
+                            // Kosongkan data dan tampilkan pesan error
                             $('#nama_mahasiswa').val('');
                             $('#kelas').val('');
                             $('#tingkat').val('');
+                            $('#nim').after(
+                                '<span id="nim-error" style="color: red; font-size: 12px;">Data tidak ditemukan atau tingkat tidak sesuai</span>'
+                            );
                         }
                     },
                     error: function() {
+                        // Kosongkan data dan tampilkan pesan error
                         $('#nama_mahasiswa').val('');
                         $('#kelas').val('');
                         $('#tingkat').val('');
+                        $('#nim').after(
+                            '<span id="nim-error" style="color: red; font-size: 12px;">Data tidak ditemukan atau tingkat tidak sesuai</span>'
+                        );
                     }
                 });
             } else {
+                // Kosongkan data jika NIM kurang dari 9 karakter
                 $('#nama_mahasiswa').val('');
                 $('#kelas').val('');
                 $('#tingkat').val('');
