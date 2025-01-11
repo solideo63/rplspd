@@ -15,18 +15,18 @@
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                 <td class="px-6 py-4">{{ $row->tanya }}</td>
                 <td class="px-6 py-4">{{ $row->jawab }}</td>
-                <td class="px-6 py-4 flex-row">
-                    <a href="{{ route('admin.edit.faq', $row->id) }}">
-                        <button type="submit" class="px-4 py-2 text-white bg-yellow-300 rounded-lg hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-300 transition duration-300 ease-in-out">
-                            Edit
-                        </button>
+                <td class="px-6 py-4">
+                    <a href="{{ route('admin.edit.faq', $row->id) }}"
+                    class="flex items-center justify-center text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm p-2 transition-all ease-in-out duration-200 transform hover:scale-105 active:scale-95 mb-2">
+                        <i class="fas fa-edit"></i> <!-- Ikon edit -->
                     </a>
                     <form action="{{ route('admin.delete.faq', $row->id) }}" method="post">
-                        @csrf
-                        <button type="submit" class="px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300 transition duration-300 ease-in-out">
-                            Hapus
+                    @csrf
+                        <button type="submit"
+                        onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Ini?')"
+                        class="flex items-center justify-center text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm p-2 transition-all ease-in-out duration-200 transform hover:scale-105 active:scale-95">
+                            <i class="fas fa-trash-alt"></i> <!-- Ikon trash (hapus) -->
                         </button>
-
                     </form>
                 </td>
             </tr>
