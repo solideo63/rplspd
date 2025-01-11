@@ -69,13 +69,13 @@
                 <div class="mb-5">
                     <label for="nama_mahasiswa"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Mahasiswa</label>
-                    <input type="text" id="nama_mahasiswa" name="nama_mahasiswa" required
+                    <input type="text" id="nama_mahasiswa" name="nama_mahasiswa" readonly
                         class="shadow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 </div>
                 <div class="mb-5">
                     <label for="kelas"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kelas</label>
-                    <select id="kelas" name="kelas" required
+                    <select id="kelas" name="kelas" readonly
                         class="shadow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option value="" disabled selected>Pilih Kelas...</option>
                         <option value="1D31">1D31</option>
@@ -171,6 +171,40 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
     $(document).ready(function() {
+        $('#nim').on('input', function() {
+            const nim = $(this).val();
+
+            if (nim.length === 9) { // Validasi NIM hanya jika panjangnya 9 karakter
+                $.ajax({
+                    url: '{{ route('get.mahasiswa') }}',
+                    type: 'GET',
+                    data: {
+                        nim: nim
+                    },
+                    success: function(response) {
+                        if (response) {
+                            $('#nama_mahasiswa').val(response.nama);
+                            $('#kelas').val(response.kelas);
+                            $('#tingkat').val(response.tingkat);
+                        } else {
+                            $('#nama_mahasiswa').val('');
+                            $('#kelas').val('');
+                            $('#tingkat').val('');
+                        }
+                    },
+                    error: function() {
+                        $('#nama_mahasiswa').val('');
+                        $('#kelas').val('');
+                        $('#tingkat').val('');
+                    }
+                });
+            } else {
+                $('#nama_mahasiswa').val('');
+                $('#kelas').val('');
+                $('#tingkat').val('');
+            }
+        });
+
         $('#pelanggaran').select2({
             theme: "classic",
             allowClear: true,

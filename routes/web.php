@@ -8,6 +8,7 @@ use App\Http\Controllers\CatatController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\TokenController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\PeraturanController;
 use App\Http\Controllers\KritikSaranController;
 use App\Http\Controllers\OperasiUmumController;
@@ -128,3 +129,5 @@ Route::get('/landing', function () {
 });
 
 Route::get('/dashboard/data', [DashboardController::class, 'StatDesk']);
+
+Route::get('/get-mahasiswa', [MahasiswaController::class, 'getMahasiswa'])->name('get.mahasiswa');

@@ -5,7 +5,8 @@
     <div class="flex justify-center">
         <div
             class="block max-w-sm p-6 bg-yellow-300 border rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-full">
-            <h3 class="text-2xl text-center font-bold dark:text-white">Pencatatan Pelanggaran Operasi Rutin Tingkat @if (session('tingkat'))
+            <h3 class="text-2xl text-center font-bold dark:text-white">Pencatatan Pelanggaran Operasi Rutin Tingkat
+                @if (session('tingkat'))
                     {{ session('tingkat') }}</p>
                 @else
                     {{ $tingkat }}</p>
@@ -165,6 +166,39 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
     $(document).ready(function() {
+        $('#nim').on('input', function() {
+            const nim = $(this).val();
+
+            if (nim.length === 9) { // Validasi NIM hanya jika panjangnya 9 karakter
+                $.ajax({
+                    url: '{{ route('get.mahasiswa') }}',
+                    type: 'GET',
+                    data: {
+                        nim: nim
+                    },
+                    success: function(response) {
+                        if (response) {
+                            $('#nama_mahasiswa').val(response.nama);
+                            $('#kelas').val(response.kelas);
+                            $('#tingkat').val(response.tingkat);
+                        } else {
+                            $('#nama_mahasiswa').val('');
+                            $('#kelas').val('');
+                            $('#tingkat').val('');
+                        }
+                    },
+                    error: function() {
+                        $('#nama_mahasiswa').val('');
+                        $('#kelas').val('');
+                        $('#tingkat').val('');
+                    }
+                });
+            } else {
+                $('#nama_mahasiswa').val('');
+                $('#kelas').val('');
+                $('#tingkat').val('');
+            }
+        });
         $('#pelanggaran').select2({
             theme: "classic",
             allowClear: true,
