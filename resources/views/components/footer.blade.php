@@ -1,32 +1,32 @@
 <footer class="bg-white dark:bg-gray-900" >
-    <div class="p-2 sm:ml-64" style="background-color: #9F2A32">
+    <div class="p-2 sm:ml-64" style="background-color: #FFFF">
         <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" >
         <div class="sm:flex sm:items-center sm:justify-between" >
             
-            <div class="mt-1 text-sm text-white font-bold">
+            <div class="mt-1 text-sm text-gray-400 font-bold">
                 <!-- Alamat -->
                 <p>Jl. Otto Iskandardinata, No. 64C</p>
                 <p>Jakarta Timur, 13330</p>
                 <p>Indonesia</p>
 
                 <!-- Informasi Hak Cipta -->
-                <span class="block mt-4 text-sm text-white">
-                © 2025 <a href="https://flowbite.com/" class="hover:underline">Satuan Penegak Disiplin</a>. All Rights Reserved.
+                <span class="block mt-4 text-sm text-gray-400">
+                © 2025 Satuan Penegak Disiplin. All Rights Reserved.
                 </span>
             </div>
 
 
             <!-- Tambahan -->
             <div class="flex flex-col items-start sm:items-center sm:justify-center sm:mt-0">
-                <p class="text-sm text-white font-bold">⚜ SATYA DHARMA SISWA ⚜</p>
-                <p class="text-sm text-white">Politeknik Statistika STIS</p>
+                <p class="text-sm text-gray-400 font-bold">⚜ SATYA DHARMA SISWA ⚜</p>
+                <p class="text-sm text-gray-400">Politeknik Statistika STIS</p>
 
                 <!-- Media Sosial -->
                 <div class="flex mt-4">
                     <!-- X Page -->
                     <a href="https://x.com/spdstis?t=QipziEt7m0XfsJROj1KIQA&s=09" target="_blank"
                     class="text-white hover:text-gray-900 dark:hover:text-white ms-5">
-                        <svg class="w-4 h-4 text-white dark:text-white" aria-hidden="true"
+                        <svg class="w-4 h-4 text-gray-400 dark:text-fray-400" aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                         viewBox="0 0 24 24">
                             <path
@@ -38,7 +38,7 @@
                     <!-- Email -->
                     <a href="mailto:spd@stis.ac.id"
                     class="text-white hover:text-gray-900 dark:hover:text-white ms-5">
-                        <svg class="w-4 h-4 text-white dark:text-white" aria-hidden="true"
+                        <svg class="w-4 h-4 text-gray-400 dark:text-gray-400" aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                         viewBox="0 0 24 24">
                             <path
@@ -49,8 +49,8 @@
 
                     <!-- Instagram -->
                     <a href="https://www.instagram.com/spdstis?igsh=Mng3cjBjd211Yndx" target="_blank"
-                    class="text-white hover:text-gray-900 dark:hover:text-white ms-5">
-                        <svg class="w-4 h-4 text-white dark:text-white" aria-hidden="true"
+                    class="text-gray-400 hover:text-gray-900 dark:hover:text-white ms-5">
+                        <svg class="w-4 h-4 text-gray-400 dark:text-gray-400" aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                         viewBox="0 0 24 24">
                             <path fill="currentColor" fill-rule="evenodd"
