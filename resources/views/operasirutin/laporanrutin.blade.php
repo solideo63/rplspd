@@ -3,11 +3,16 @@
     function downloadFile(format) {
         const baseUrl = "{{ route('operasi-rutin.download', ['format' => ':format']) }}";
         const tanggal = document.getElementById('datepicker-actions').value; // Ambil tanggal dari input datepicker
+        const tingkat = document.getElementById('tingkat-filter').value;
         if (!tanggal) {
             alert('Silakan pilih tanggal terlebih dahulu!');
             return;
         }
-        const url = baseUrl.replace(':format', format) + `?tanggal=${tanggal}`;
+        if (!tingkat) {
+            alert('Silakan pilih tingkat terlebih dahulu!');
+            return;
+        }
+        const url = baseUrl.replace(':format', format) + `?tanggal=${tanggal}&tingkat=${tingkat}`;
         window.location.href = url;
     }
 
@@ -125,7 +130,7 @@
                             <form method="GET" action="{{ route('operasi-rutin.filter') }}" id="filterForm">
                                 <!-- Dropdown untuk memilih tingkat -->
                                 <div class="w-full sm:w-auto">
-                                    <select id="tingkat" name="tingkat"
+                                    <select id="tingkat-filter" name="tingkat"
                                         class="inline-flex items-center w-auto text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm p-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
                                         onchange="this.form.submit()">
                                         <option value="" disabled selected>Pilih Tingkat</option>
@@ -247,7 +252,7 @@
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <!-- Menampilkan hari beserta tanggal untuk created_at -->
-                                    {{ $row->created_at ? $row->created_at->format('l, d-m-Y') : 'N/A' }}
+                                    {{ $row->created_at ? $row->created_at->translatedFormat('l, d-m-Y') : 'N/A' }}
                                     <!-- Format: Hari, dd-mm-yyyy (contoh: Monday, 27-12-2024) -->
 
                                     @if ($row->updated_at && $row->updated_at != $row->created_at)
