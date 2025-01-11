@@ -266,7 +266,7 @@
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <!-- Menampilkan hari beserta tanggal untuk created_at -->
-                                    {{ $row->created_at ? $row->created_at->format('l, d-m-Y') : 'N/A' }}
+                                    {{ $row->created_at ? $row->created_at->translatedFormat('l, d-m-Y') : 'N/A' }}
                                     <!-- Format: Hari, dd-mm-yyyy (contoh: Monday, 27-12-2024) -->
 
                                     @if ($row->updated_at && $row->updated_at != $row->created_at)

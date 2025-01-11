@@ -13,19 +13,23 @@ class OperasiRutinExport implements FromCollection, WithHeadings, WithCustomStar
 {
     protected $data;
     protected $tanggal;
+    protected $tingkat;
 
-    public function __construct($data, $tanggal)
+    public function __construct($data, $tanggal, $tingkat)
     {
         $this->data = $data->map(function ($item) {
             unset($item['nama_pencatat']); // Hilangkan kolom Nama Pencatat
             return $item;
         });
         $this->tanggal = $tanggal;
+        $this->tingkat = $tingkat;
     }
 
     public function collection()
     {
-        return $this->data;
+        return $this->data->filter(function ($item) {
+            return $item->tingkat == $this->tingkat;
+        });
     }
 
     public function headings(): array

@@ -262,6 +262,7 @@ class OperasiUmumController extends Controller
     {
         $tanggal = $request->input('tanggal');
 
+
         // Filter data berdasarkan tanggal
         $data = OperasiUmum::whereDate('created_at', $tanggal)->get();
 
@@ -269,6 +270,7 @@ class OperasiUmumController extends Controller
             return Excel::download(new OperasiUmumExport($data, $tanggal), "laporan_operasi_umum_{$tanggal}.xlsx");
         } elseif ($format === 'pdf') {
             $pdf = $pdfInstance->loadView('exports.laporanumum_pdf', compact('data', 'tanggal'));
+            $pdf->setPaper('A4', 'portrait');
             return $pdf->download("laporan_operasi_umum_{$tanggal}.pdf");
         } elseif ($format === 'csv') {
             return Excel::download(new OperasiUmumExport($data, $tanggal), "laporan_operasi_umum_{$tanggal}.csv", \Maatwebsite\Excel\Excel::CSV);

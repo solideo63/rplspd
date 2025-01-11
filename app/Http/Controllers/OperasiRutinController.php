@@ -279,17 +279,18 @@ class OperasiRutinController extends Controller
     public function downloadFilteredData(Request $request, $format)
     {
         $tanggal = $request->input('tanggal');
+        $tingkat = $request->input('tingkat');
 
         // Filter data berdasarkan tanggal
         $data = OperasiRutin::whereDate('created_at', $tanggal)->get();
 
         if ($format === 'excel') {
-            return Excel::download(new OperasiRutinExport($data, $tanggal), "laporan_operasi_rutin_{$tanggal}.xlsx");
+            return Excel::download(new OperasiRutinExport($data, $tanggal, $tingkat), "laporan_operasi_rutin_{$tanggal}.xlsx");
         } elseif ($format === 'pdf') {
-            $pdf = PDF::loadView('exports.laporanrutin_pdf', compact('data', 'tanggal'));
+            $pdf = PDF::loadView('exports.laporanrutin_pdf', compact('data', 'tanggal', 'tingkat'));
             return $pdf->download("laporan_operasi_rutin_{$tanggal}.pdf");
         } elseif ($format === 'csv') {
-            return Excel::download(new OperasiRutinExport($data, $tanggal), "laporan_operasi_rutin_{$tanggal}.csv", \Maatwebsite\Excel\Excel::CSV);
+            return Excel::download(new OperasiRutinExport($data, $tanggal, $tingkat), "laporan_operasi_rutin_{$tanggal}.csv", \Maatwebsite\Excel\Excel::CSV);
         } else {
             return redirect()->back()->withErrors('Format tidak valid!');
         }
