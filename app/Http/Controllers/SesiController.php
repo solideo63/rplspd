@@ -12,31 +12,36 @@ class SesiController extends Controller
         return view('login');
     }
 
-    function login(request $request)
-    {
-        $request->validate(
-            [
-                'username' => 'required',
-                'password' => 'required'
-            ],
-            [
-                'username.required' => 'Username wajib diisi!',
-                'password.required' => 'Password wajib diisi!'
-            ]
-        );
+    function login(Request $request)
+{
+    $request->validate(
+        [
+            'username' => 'required',
+            'password' => 'required'
+        ],
+        [
+            'username.required' => 'Username wajib diisi!',
+            'password.required' => 'Password wajib diisi!'
+        ]
+    );
 
-        $infologin = [
-            'username' => $request->username,
-            'password' => $request->password
-        ];
+    $infologin = [
+        'username' => $request->username,
+        'password' => $request->password
+    ];
 
-        if (Auth::attempt($infologin)) {
-            // return redirect('admin');
-            return redirect('dashboard');
-        } else {
-            return redirect('')->withErrors('Username atau password yang dimasukkan salah!')->withInput();
-        }
+    if (Auth::attempt($infologin)) {
+        // Redirect ke dashboard jika login berhasil
+        return redirect('dashboard');
+    } else {
+        // Redirect kembali ke halaman login dengan pesan kesalahan
+        return redirect()
+            ->back()
+            ->withErrors(['login' => 'Username atau password yang dimasukkan salah!'])
+            ->withInput();
     }
+}
+
 
     function logout()
     {
