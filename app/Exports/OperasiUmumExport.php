@@ -32,7 +32,6 @@ class OperasiUmumExport implements FromCollection, WithHeadings, WithCustomStart
     {
         // Sesuaikan dengan kolom di database tanpa Nama Pencatat
         return [
-            'ID',
             'NIM',
             'Nama Mahasiswa',
             'Tingkat',
@@ -53,7 +52,7 @@ class OperasiUmumExport implements FromCollection, WithHeadings, WithCustomStart
                 $sheet = $event->sheet->getDelegate();
 
                 // Tambahkan informasi tanggal di atas tabel
-                $sheet->setCellValue('A1', 'Data Operasi Umum - Tanggal: ' . $this->tanggal);
+                $sheet->setCellValue('A1', 'Data Pelanggaran Operasi Umum - Tanggal: ' . $this->tanggal);
                 $sheet->mergeCells('A1:E1'); // Sesuaikan range dengan jumlah kolom
                 $sheet->getStyle('A1')->getFont()->setBold(true); // Buat teks tanggal tebal
             },

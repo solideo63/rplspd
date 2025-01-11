@@ -81,14 +81,17 @@
                         <ul id="dropdown-pelaporan"
                             class="{{ request()->is('laporan-rutin', 'laporan-umum', 'laporan-harian') ? '' : 'hidden' }} py-2 space-y-2">
                             <li>
-                                <x-sidebarcomp href="/laporan-rutin" :active="request()->is('laporan-rutin')">Operasi Rutin</x-sidebarcomp>
+                                <x-sidebarcomp href="{{ route('laporanrutin') }}" :active="request()->is('laporan-rutin')">Operasi
+                                    Rutin</x-sidebarcomp>
                             </li>
                             <li>
-                                <x-sidebarcomp href="laporan-umum" :active="request()->is('laporan-umum')">Operasi Umum</x-sidebarcomp>
+                                <x-sidebarcomp href="{{ route('laporanumum') }}" :active="request()->is('laporan-umum')">Operasi
+                                    Umum</x-sidebarcomp>
                             </li>
                             @if (Auth::user()->role == 'spd')
                                 <li>
-                                    <x-sidebarcomp href="laporan-harian" :active="request()->is('laporan-harian')">Penindakan Harian</x-sidebarcomp>
+                                    <x-sidebarcomp href="{{ route('laporanharian') }}" :active="request()->is('laporan-harian')">Penindakan
+                                        Harian</x-sidebarcomp>
                                 </li>
                             @endif
                         </ul>

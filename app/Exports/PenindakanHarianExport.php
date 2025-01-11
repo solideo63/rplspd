@@ -17,7 +17,7 @@ class PenindakanHarianExport implements FromCollection, WithHeadings, WithCustom
     public function __construct($data, $tanggal)
     {
         $this->data = $data->map(function ($item) {
-            unset($item['nama_pencatat']); // Hilangkan kolom Nama Pencatat
+            unset($item['nama_pencatat'], $item['id'], $item['created_at'], $item['updated_at']); // Hilangkan kolom yang diinginkan
             return $item;
         });
         $this->tanggal = $tanggal;
@@ -32,7 +32,6 @@ class PenindakanHarianExport implements FromCollection, WithHeadings, WithCustom
     {
         // Sesuaikan dengan kolom di database tanpa Nama Pencatat
         return [
-            'ID',
             'NIM',
             'Nama Mahasiswa',
             'Tingkat',
@@ -53,7 +52,7 @@ class PenindakanHarianExport implements FromCollection, WithHeadings, WithCustom
                 $sheet = $event->sheet->getDelegate();
 
                 // Tambahkan informasi tanggal di atas tabel
-                $sheet->setCellValue('A1', 'Data Operasi Umum - Tanggal: ' . $this->tanggal);
+                $sheet->setCellValue('A1', 'Data Pelanggaran Penindakan - Tanggal: ' . $this->tanggal);
                 $sheet->mergeCells('A1:E1'); // Sesuaikan range dengan jumlah kolom
                 $sheet->getStyle('A1')->getFont()->setBold(true); // Buat teks tanggal tebal
             },

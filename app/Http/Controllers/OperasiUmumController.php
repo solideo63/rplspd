@@ -262,7 +262,6 @@ class OperasiUmumController extends Controller
     {
         $tanggal = $request->input('tanggal');
 
-
         // Filter data berdasarkan tanggal
         $data = OperasiUmum::whereDate('created_at', $tanggal)->get();
 
