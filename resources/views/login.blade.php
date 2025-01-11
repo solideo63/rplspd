@@ -11,15 +11,6 @@
 </head>
 
 <body class="font-sans">
-    <!--
-  This example requires updating your template:
-
-  ```
-  <html class="h-full bg-white">
-  <body class="h-full">
-  ```
--->
-
     <div class="flex min-h-screen flex-col justify-center items-center px-6 py-12 bg-gray-100 relative">
         <!-- Container Putih -->
         <div class="bg-white w-3/4 lg:w-1/3 rounded-lg shadow-lg z-10">
@@ -33,7 +24,6 @@
                         Sistem Pencatatan dan Pelaporan Pelanggaran SPD
                     </h4>
                 </div>
-
                 <!-- Gambar di kanan -->
                 <img class="h-20 w-auto" src="{{ asset('img/logospd.png') }}" alt="Logo SPD">
             </div>
@@ -42,13 +32,18 @@
         <!-- Container Kuning -->
         <div class="bg-yellow-300 w-3/4 lg:w-1/3 rounded-lg shadow-lg -mt-4 z-0">
             <div class="p-6 sm:mx-auto sm:w-full sm:max-w-sm">
-                @if($errors->any())
-                <div class="p-4 mt-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                <!-- Error Message -->
+                @if($errors->has('login') || $errors->any())
+                <div id="errorMessage" class="p-4 mb-4 text-sm text-red-800 bg-red-50 rounded-lg shadow" role="alert">
+                    @if($errors->has('login'))
+                    {{ $errors->first('login') }}
+                    @else
                     <ul>
-                        @foreach($errors->all() as $item)
-                        <li>{{$item}}</li>
+                        @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
                         @endforeach
                     </ul>
+                    @endif
                 </div>
                 @endif
 
@@ -67,13 +62,12 @@
                     <div>
                         <label for="password" class="block text-xs font-bold text-white">Password</label>
                         <div class="mt-1 pb-8">
-                            <input type="password" name="password" id="password" autocomplete="current-password"
-                                required
+                            <input type="password" name="password" id="password" autocomplete="current-password" required
                                 class="block w-full rounded-md bg-slate-100 px-[8px] py-[4px] text-[14px] text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:ring focus:ring-indigo-300 focus:outline-none">
                         </div>
                     </div>
 
-                    <!-- Submit Button (Kecil dan di pojok kanan) -->
+                    <!-- Submit Button -->
                     <div class="flex justify-end">
                         <button href="/dashboard" type="submit"
                             class="flex justify-center items-center rounded-xl bg-indigo-500 px-6 py-1.5 text-xs font-semibold text-white shadow hover:bg-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
@@ -85,7 +79,18 @@
         </div>
     </div>
 
-
+    <!-- JavaScript -->
+    <script>
+        // Hapus elemen pesan error setelah 3 detik
+        setTimeout(() => {
+            const errorMessage = document.getElementById('errorMessage');
+            if (errorMessage) {
+                errorMessage.style.transition = 'opacity 0.5s ease';
+                errorMessage.style.opacity = '0'; // Fade out effect
+                setTimeout(() => errorMessage.remove(), 500); // Remove element after fade-out
+            }
+        }, 3000);
+    </script>
 </body>
 
 </html>
