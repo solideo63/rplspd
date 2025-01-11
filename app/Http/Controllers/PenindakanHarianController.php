@@ -7,7 +7,6 @@ use Carbon\Carbon;
 use App\Models\Pelanggaran;
 use Illuminate\Http\Request;
 use App\Models\PenindakanHarian;
-use App\Exports\OperasiRutinExport;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\PenindakanHarianExport;
@@ -22,7 +21,7 @@ class PenindakanHarianController extends Controller
     public function index()
     {
         // Mengambil semua data dari tabel operasi_rutin
-        $data = PenindakanHarian::all();
+        $data = PenindakanHarian::orderBy('created_at', 'desc')->paginate(15);
 
         // Mengirim data ke view
         return view('penindakanharian.laporanharian', compact('data'));

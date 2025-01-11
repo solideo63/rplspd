@@ -19,7 +19,7 @@ class OperasiUmumController extends Controller
     public function index()
     {
         // Mengambil semua data dari tabel operasi_rutin
-        $data = OperasiUmum::all();
+        $data = OperasiUmum::orderBy('created_at', 'desc')->paginate(15);
 
         // Mengirim data ke view
         return view('operasiumum.laporanumum', compact('data'));
