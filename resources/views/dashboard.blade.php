@@ -11,14 +11,28 @@
     <h2 class="text-4xl ml-4 mb-4 font-extrabold text-gray-900 dark:text-white">Selamat datang, {{ Auth::user()->name }}</h2>
 
     <!-- Filter Section -->
-    <div class="mb-6 bg-gray-50 border rounded-lg p-4 shadow-md">
-        <label for="filter" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Pilih Data Operasi:</label>
-        <select id="filter" class="mt-2 block w-full py-2 px-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-            <option value="all">Semua Operasi</option>
-            <option value="operasi_rutin">Operasi Rutin</option>
-            <option value="operasi_umums">Operasi Umum</option>
-            <option value="penindakan_harian">Penindakan Harian</option>
-        </select>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Filter Data Operasi -->
+        <div class="mb-6 bg-gray-50 border rounded-lg p-4 shadow-md">
+            <label for="filter" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Pilih Data Operasi:</label>
+            <select id="filter" class="mt-2 block w-full py-2 px-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <option value="all">Semua Operasi</option>
+                <option value="operasi_rutin">Operasi Rutin</option>
+                <option value="operasi_umums">Operasi Umum</option>
+                <option value="penindakan_harian">Penindakan Harian</option>
+            </select>
+        </div>
+
+        <!-- Filter Waktu -->
+        <div class="mb-6 bg-gray-50 border rounded-lg p-4 shadow-md">
+            <label for="time-filter" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Filter Waktu:</label>
+            <select id="time-filter" class="mt-2 block w-full py-2 px-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <option value="">Semua Waktu</option>
+                <option value="today">Hari Ini</option>
+                <option value="this_month">Bulan Ini</option>
+                <option value="this_year">Tahun Ini</option>
+            </select>
+        </div>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -43,11 +57,12 @@
 
 <script>
     const filterElement = document.getElementById('filter');
+    const timeFilterElement = document.getElementById('time-filter');
     let barChartInstance = null;
     let pieChartInstance = null;
 
-    function fetchAndRenderCharts(filter) {
-        fetch(`/dashboard/data?filter=${filter}`)
+    function fetchAndRenderCharts(filter, timeFilter) {
+        fetch(`/dashboard/data?filter=${filter}&time_filter=${timeFilter}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -158,10 +173,17 @@
 
     filterElement.addEventListener('change', () => {
         const filterValue = filterElement.value;
-        fetchAndRenderCharts(filterValue);
+        const timeFilterValue = timeFilterElement.value;
+        fetchAndRenderCharts(filterValue, timeFilterValue);
     });
 
-    fetchAndRenderCharts('all');
+    timeFilterElement.addEventListener('change', () => {
+        const filterValue = filterElement.value;
+        const timeFilterValue = timeFilterElement.value;
+        fetchAndRenderCharts(filterValue, timeFilterValue);
+    });
+
+    fetchAndRenderCharts('all', '');
 </script>
 
 </div>

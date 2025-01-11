@@ -10,10 +10,21 @@ class DashboardController extends Controller
     public function StatDesk(Request $request)
 {
     $filter = $request->query('filter', 'all'); // Default ke 'all'
+    $timeFilter = $request->query('time_filter', null); // Default null
     $tables = ['operasi_rutin', 'operasi_umums', 'penindakan_harian'];
 
     if ($filter !== 'all') {
         $tables = [$filter];
+    }
+
+    // Apply Time Filter
+    $timeConstraint = [];
+    if ($timeFilter === 'today') {
+        $timeConstraint = ['created_at', '>=', now()->startOfDay()];
+    } elseif ($timeFilter === 'this_month') {
+        $timeConstraint = ['created_at', '>=', now()->startOfMonth()];
+    } elseif ($timeFilter === 'this_year') {
+        $timeConstraint = ['created_at', '>=', now()->startOfYear()];
     }
 
     // Mengambil data untuk Bar Chart
@@ -21,6 +32,9 @@ class DashboardController extends Controller
     foreach ($tables as $table) {
         $query = DB::table($table)
             ->select('pelanggaran', DB::raw('COUNT(*) as total'))
+            ->when($timeConstraint, function ($q) use ($timeConstraint) {
+                return $q->where(...$timeConstraint);
+            })
             ->groupBy('pelanggaran');
         $barChartDataQueries[] = $query;
     }
@@ -44,6 +58,9 @@ class DashboardController extends Controller
     foreach ($tables as $table) {
         $query = DB::table($table)
             ->select('tingkat', DB::raw('COUNT(*) as total'))
+            ->when($timeConstraint, function ($q) use ($timeConstraint) {
+                return $q->where(...$timeConstraint);
+            })
             ->groupBy('tingkat');
         $pieChartDataQueries[] = $query;
     }
@@ -67,4 +84,5 @@ class DashboardController extends Controller
         'pieChartData' => $pieChartData,
     ]);
 }
+
 }
