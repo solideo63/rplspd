@@ -1,4 +1,5 @@
-<h1>Laporan Pelanggaran</h1>
+{{-- <h1>Laporan Pelanggaran</h1> --}}
+<h1><b>[TESTING] PROJEK RPL</b></h1>
 <p>Kepada Saudara/i,</p>
 <li>Nama: {{ $nama_mahasiswa }}</li>
 <li>NIM: {{ $nim }}</li>
