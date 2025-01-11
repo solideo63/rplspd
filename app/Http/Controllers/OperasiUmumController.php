@@ -18,8 +18,8 @@ class OperasiUmumController extends Controller
      */
     public function index()
     {
-        // Mengambil semua data dari tabel operasi_rutin
-        $data = OperasiUmum::all();
+        // Mengambil data dari tabel dengan pagination
+        $data = OperasiUmum::paginate(1); // 10 item per halaman
 
         // Mengirim data ke view
         return view('operasiumum.laporanumum', compact('data'));
@@ -258,10 +258,9 @@ class OperasiUmumController extends Controller
             $query->where('nama_mahasiswa', 'like', '%' . $request->nama . '%');
         }
 
-        // Ambil data hasil filter
-        $data = $query->get();
+        // Hasil query dengan pagination
+        $data = $query->paginate(1); // 10 item per halaman
 
-        // Kirim data ke view
         return view('operasiumum.laporanumum', compact('data'));
     }
 
