@@ -23,7 +23,7 @@ class OperasiRutinController extends Controller
     public function index()
     {
         // Mengambil semua data dari tabel operasi_rutin
-        $data = OperasiRutin::orderBy('created_at', 'desc')->paginate(1);
+        $data = OperasiRutin::orderBy('created_at', 'desc')->paginate(10);
 
         // Mengirim data ke view
         return view('operasirutin.laporanrutin', compact('data'));
@@ -302,7 +302,7 @@ class OperasiRutinController extends Controller
         }
 
         // Ambil data hasil filter
-        $data = $query->orderBy('created_at', 'desc')->paginate(1);
+        $data = $query->orderBy('created_at', 'desc')->paginate(10);
 
         // Kirim data ke view
         return view('operasirutin.laporanrutin', compact('data'));

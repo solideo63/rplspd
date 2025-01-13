@@ -8,15 +8,18 @@
 @endif
 
 <div class="p-4 sm:ml-64 mt-4">
-        <h2 id="greeting" class="text-4xl ml-4 text-left mb-4 font-extrabold text-gray-900 dark:text-white">
+    <!-- Container untuk Greeting dan Quotes -->
+    <div id="greeting-quote-container" class="text-left flex flex-col items-start mb-6">
+        <!-- Greeting -->
+        <h2 id="greeting" class="text-4xl font-extrabold text-gray-900 dark:text-white mb-2">
             Selamat datang, {{ Auth::user()->name }}
         </h2>
-
-    <!-- Quotes Section -->
-    <div id="quote-container" class="text-gray-500 text-left mb-6">
-        <p class="text-lg italic font-medium">
-            "Memuat quotes..."
-        </p>
+        <!-- Quotes -->
+        <div id="quote-container" class="text-gray-500">
+            <p class="text-lg italic font-medium">
+                "Memuat quotes..."
+            </p>
+        </div>
     </div>
 
     <!-- Filter Section -->
@@ -234,9 +237,13 @@
 
             if (hours >= 5 && hours < 12) {
                 greetingMessage = "Selamat Pagi";
-            } else if (hours >= 12 && hours < 18) {
+            } else if (hours >= 12 && hours < 14) {
                 greetingMessage = "Selamat Siang";
-            } else {
+            } 
+            else if (hours >= 14 && hours < 18) {
+                greetingMessage = "Selamat Sore";
+            }
+            else {
                 greetingMessage = "Selamat Malam";
             }
 

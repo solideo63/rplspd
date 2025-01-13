@@ -19,7 +19,7 @@ class OperasiUmumController extends Controller
     public function index()
     {
         // Mengambil data dari tabel dengan pagination
-        $data = OperasiUmum::orderBy('created_at', 'desc')->paginate(1); // 10 item per halaman
+        $data = OperasiUmum::orderBy('created_at', 'desc')->paginate(10); // 10 item per halaman
 
         // Mengirim data ke view
         return view('operasiumum.laporanumum', compact('data'));
@@ -259,7 +259,7 @@ class OperasiUmumController extends Controller
         }
 
         // Hasil query dengan pagination
-        $data = $query->orderBy('created_at', 'desc')->paginate(1); // 10 item per halaman
+        $data = $query->orderBy('created_at', 'desc')->paginate(10); // 10 item per halaman
 
         return view('operasiumum.laporanumum', compact('data'));
     }

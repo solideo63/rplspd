@@ -83,7 +83,7 @@ class DashboardController extends Controller
         $quotes = [
             "The best way to predict the future is to create it. - Peter Drucker",
             "Success usually comes to those who are too busy to be looking for it. - Henry David Thoreau",
-            "Don’t be afraid to give up the good to go for the great. - John D. Rockefeller",
+            "Don't be afraid to give up the good to go for the great. - John D. Rockefeller",
             "I find that the harder I work, the more luck I seem to have. - Thomas Jefferson",
             "Success is not in what you have, but who you are. - Bo Bennett"
         ];
