@@ -7,7 +7,9 @@
             <div class="flex items-center gap-2">
                 <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">Kritik dan Saran</h2>
             </div>
-
+            <div class="mt-4">
+                {{ $kritiksaran->links() }}
+            </div>
             <div class="mt-6">
                 @if ($kritiksaran->isEmpty())
                     <!-- Menampilkan pesan jika tidak ada kritik dan saran -->
@@ -42,6 +44,7 @@
         </div>
 
     </section>
+
 </div>
 
 <x-footer></x-footer>

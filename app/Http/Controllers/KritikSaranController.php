@@ -7,9 +7,10 @@ use Illuminate\Http\Request;
 
 class KritikSaranController extends Controller
 {
-    function index()
+    public function index()
     {
-        return view('kritiksaran');
+        $kritiksaran = KritikSaran::orderBy('created_at', 'desc')->paginate(5);
+        return view('kritiksaran', compact('kritiksaran'));
     }
 
     public function submit(Request $request)
@@ -31,7 +32,7 @@ class KritikSaranController extends Controller
 
     public function view()
     {
-        $kritiksaran = KritikSaran::all();
+        $kritiksaran = KritikSaran::orderBy('created_at', 'desc')->paginate(10);
 
         return view('viewkritiksaran', compact('kritiksaran'));
     }
