@@ -1,7 +1,7 @@
 <x-layout></x-layout>
 
-<div class="p-4 sm:ml-64 mt-4">
-    <h2 class="text-3xl font-extrabold tracking-tight mb-6">Kirim Kritik dan Saran</h2>
+<div class="p-4 sm:ml-64 mt-7">
+    <h2 class="text-3xl font-bold tracking-tight mb-6">Kirim Kritik dan Saran</h2>
 
     {{-- Notifikasi Sukses --}}
     @if (session('success'))

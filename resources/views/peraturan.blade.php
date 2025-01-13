@@ -1,6 +1,6 @@
 <x-layout></x-layout>
-<div class="p-4 sm:ml-64 mt-4">
-        <h2 class="text-3xl font-bold tracking-tight text-red-800 mb-4">Peraturan Terkait</h2>
+<div class="p-4 sm:ml-64 mt-8">
+        <h2 class="text-3xl font-bold tracking-tighta">Peraturan Terkait</h2>
         @forelse($data as $row)
     <div class="flex justify-center items-center w-full p-4">
         <div

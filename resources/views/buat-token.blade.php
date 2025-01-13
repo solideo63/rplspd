@@ -1,12 +1,13 @@
 <x-layout></x-layout>
 
-<div class="p-4 sm:ml-64 mt-4 ">
+<div class="p-4 sm:ml-64 mt-9">
     <div class="flex justify-center">
         <div
             class="block max-w-sm p-6 bg-yellow-300 border rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-full">
             <h3 class="text-2xl font-bold dark:text-white">Buat Token Harian</h3>
             <br><br>
-            <div id="wadah-token" class="max-w-sm p-6 bg-yellow-100 rounded-lg dark:bg-gray-800 dark:border-gray-700 w-full justify-center">
+            <div id="wadah-token"
+                class="max-w-sm p-6 bg-yellow-100 rounded-lg dark:bg-gray-800 dark:border-gray-700 w-full justify-center">
 
                 <h1 class="text-xl font-bold" style="text-align: center; color:#666;">
                     Token belum dibuat

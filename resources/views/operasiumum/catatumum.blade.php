@@ -1,6 +1,6 @@
 <x-layout></x-layout>
 
-<div class="p-4 sm:ml-64 mt-8">
+<div class="p-4 sm:ml-64 mt-9">
     <div class="flex justify-center">
         <div
             class="block max-w-sm p-6 bg-yellow-300 border rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-full">
