@@ -17,6 +17,7 @@ use App\Http\Controllers\OperasiRutinController;
 use App\Http\Controllers\UbahPasswordController;
 use App\Http\Controllers\KlaimPelanggaranController;
 use App\Http\Controllers\PenindakanHarianController;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/login', [SesiController::class, 'index'])->name('login');
 
@@ -24,6 +25,7 @@ Route::get('/login', [SesiController::class, 'index'])->name('login');
 Route::middleware(['guest'])->group(function () {
     Route::get('/login', [SesiController::class, 'index'])->name('login');
     Route::post('/login', [SesiController::class, 'login']);
+    
 });
 Route::get('/home', function () {
     return redirect('/admin');
@@ -67,8 +69,14 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/filter-by-date-ajax', [CatatController::class, 'filterByDateAjax'])->name('filter.date.ajax');
 
 Route::get('/', function () {
+    if (Auth::check()) {
+        // Jika sudah login, arahkan ke dashboard
+        return redirect('/dashboard');
+    }
+    // Jika belum login, tampilkan landing page
     return view('landingpage');
 });
+
 
 Route::get('/kirim-kritik-saran', [KritikSaranController::class, 'index'])->name('kritiksaran');
 Route::post('/kirim-kritik-saran/submit', [KritikSaranController::class, 'submit'])->name('kritiksaran.submit');
