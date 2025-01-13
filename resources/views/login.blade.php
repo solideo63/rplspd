@@ -33,18 +33,19 @@
         <div class="bg-yellow-300 w-3/4 lg:w-1/3 rounded-lg shadow-lg -mt-4 z-0">
             <div class="p-6 sm:mx-auto sm:w-full sm:max-w-sm">
                 <!-- Error Message -->
-                @if($errors->has('login') || $errors->any())
-                <div id="errorMessage" class="p-4 mb-4 text-sm text-red-800 bg-red-50 rounded-lg shadow" role="alert">
-                    @if($errors->has('login'))
-                    {{ $errors->first('login') }}
-                    @else
-                    <ul>
-                        @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                    @endif
-                </div>
+                @if ($errors->has('login') || $errors->any())
+                    <div id="errorMessage" class="p-4 mb-4 text-sm text-red-800 bg-red-50 rounded-lg shadow"
+                        role="alert">
+                        @if ($errors->has('login'))
+                            {{ $errors->first('login') }}
+                        @else
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    </div>
                 @endif
 
                 <form class="space-y-4" action="" method="POST">
@@ -62,7 +63,8 @@
                     <div>
                         <label for="password" class="block text-xs font-bold text-white">Password</label>
                         <div class="mt-1 pb-8">
-                            <input type="password" name="password" id="password" autocomplete="current-password" required
+                            <input type="password" name="password" id="password" autocomplete="current-password"
+                                required
                                 class="block w-full rounded-md bg-slate-100 px-[8px] py-[4px] text-[14px] text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:ring focus:ring-indigo-300 focus:outline-none">
                         </div>
                     </div>
@@ -70,7 +72,7 @@
                     <!-- Submit Button -->
                     <div class="flex justify-end">
                         <button href="/dashboard" type="submit"
-                            class="flex justify-center items-center rounded-xl bg-indigo-500 px-6 py-1.5 text-xs font-semibold text-white shadow hover:bg-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            class="flex justify-center items-center rounded-xl bg-indigo-600 px-6 py-1.5 text-xs font-semibold text-white shadow hover:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                             Login
                         </button>
                     </div>

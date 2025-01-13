@@ -1,6 +1,6 @@
 <x-layout>{{ $title }}</x-layout>
 
-<div class="p-4 sm:ml-64 mt4">
+<div class="p-4 sm:ml-64 mt-9">
     <h2 class="text-3xl font-bold dark:text-white">FAQ</h2>
     <br>
     @foreach ($faqs as $faq)
