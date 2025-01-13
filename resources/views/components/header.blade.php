@@ -31,7 +31,7 @@
                                 class="relative inline-flex items-center text-sm font-medium text-center text-gray-500 hover:text-gray-900 focus:outline-none dark:hover:text-white dark:text-gray-400"
                                 type="button">
                                 <!-- Ikon -->
-                                <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true"
+                                <svg class="w-7 h-7 text-white dark:text-white" aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                     viewBox="0 0 24 24">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
