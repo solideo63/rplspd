@@ -20,7 +20,7 @@ class KlaimPelanggaranController extends Controller
     public function index()
     {
         // Mengambil semua data dari tabel operasi_rutin
-        $data = PenindakanHarian::orderBy('created_at', 'desc')->paginate(15);
+        $data = PenindakanHarian::orderBy('created_at', 'desc')->paginate(30);
 
         // Mengirim data ke view
         return view('klaim-pelanggaran', compact('data'));
@@ -159,7 +159,7 @@ class KlaimPelanggaranController extends Controller
         }
 
         // Ambil data hasil filter
-        $data = $query->get();
+        $data = $query->orderBy('created_at', 'desc')->paginate(30);
 
         // Kirim data ke view
         return view('klaim-pelanggaran', compact('data'));
