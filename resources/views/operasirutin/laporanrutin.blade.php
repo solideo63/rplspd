@@ -271,11 +271,11 @@
                                         @if ($row->updated_at->diffInMinutes(now()) < 60)
                                             <span
                                                 class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-1 py-0.5 rounded dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300">UPDATED</span>
-                                            <div class="text-xs text-gray-500 mt-1">
-                                                <small>Terakhir diupdate:
-                                                    {{ $row->updated_at->timezone('Asia/Jakarta')->format('d-m-Y H:i') }}</small>
-                                            </div>
                                         @endif
+                                        <div class="text-xs text-gray-500 mt-1">
+                                            <small>Terakhir diupdate:
+                                                {{ $row->updated_at->timezone('Asia/Jakarta')->format('d-m-Y H:i') }}</small>
+                                        </div>
                                     @endif
                                 </td>
                                 <td class="px-6 py-4">{{ $row->nim }}</td>
