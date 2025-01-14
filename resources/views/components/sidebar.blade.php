@@ -79,18 +79,18 @@
                             </svg>
                         </button>
                         <ul id="dropdown-pelaporan"
-                            class="{{ request()->is('laporan-rutin', 'laporan-umum', 'laporan-harian') ? '' : 'hidden' }} py-2 space-y-2">
+                            class="{{ request()->fullUrlIs('*/laporan-rutin*') || request()->fullUrlIs('*/laporan-umum*') || request()->fullUrlIs('*/laporan-harian*') ? '' : 'hidden' }}  py-2 space-y-2">
                             <li>
-                                <x-sidebarcomp href="{{ route('laporanrutin') }}" :active="request()->is('laporan-rutin')">Operasi
+                                <x-sidebarcomp href="{{ route('laporanrutin') }}" :active="request()->fullUrlIs('*/laporan-rutin*')">Operasi
                                     Rutin</x-sidebarcomp>
                             </li>
                             <li>
-                                <x-sidebarcomp href="{{ route('laporanumum') }}" :active="request()->is('laporan-umum')">Operasi
+                                <x-sidebarcomp href="{{ route('laporanumum') }}" :active="request()->fullUrlIs('*/laporan-umum*')">Operasi
                                     Umum</x-sidebarcomp>
                             </li>
                             @if (Auth::user()->role == 'spd')
                                 <li>
-                                    <x-sidebarcomp href="{{ route('laporanharian') }}" :active="request()->is('laporan-harian')">Penindakan
+                                    <x-sidebarcomp href="{{ route('laporanharian') }}" :active="request()->fullUrlIs('*/laporan-harian*')">Penindakan
                                         Harian</x-sidebarcomp>
                                 </li>
                             @endif
