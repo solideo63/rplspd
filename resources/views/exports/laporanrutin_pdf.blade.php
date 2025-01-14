@@ -195,7 +195,7 @@
         <p style="padding-left: 40px;">-Laporan absensi peserta apel</p>
         <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Demikian berita acara Inspeksi Kedisiplinan ini
             kami buat untuk
-            selankutnya
+            selanjutnya
             dijadikan sebagai laporan dan pertanggungjawaban.</p>
     </main>
 

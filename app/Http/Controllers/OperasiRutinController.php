@@ -23,7 +23,9 @@ class OperasiRutinController extends Controller
     public function index()
     {
         // Mengambil semua data dari tabel operasi_rutin
-        $data = OperasiRutin::orderBy('created_at', 'desc')->paginate(30);
+        $data = OperasiRutin::orderBy('updated_at', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->paginate(30);
 
         // Mengirim data ke view
         return view('operasirutin.laporanrutin', compact('data'));
