@@ -271,7 +271,7 @@
                                     <!-- Format: Hari, dd-mm-yyyy (contoh: Monday, 27-12-2024) -->
                                     @if (!$row->updated_at || $row->updated_at == $row->created_at)
                                         <!-- Tampilkan badge "Baru ditambahkan" hanya jika belum diupdate dan kurang dari 1 jam -->
-                                        @if ($row->created_at->diffInMinutes(now()) < 60)
+                                        @if ($row->created_at->subHours(7)->diffInMinutes(now()) < 60)
                                             <span
                                                 class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-1 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">NEW</span>
                                             <div class="text-xs text-gray-500 mt-1">
