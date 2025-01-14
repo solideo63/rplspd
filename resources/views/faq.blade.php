@@ -4,7 +4,7 @@
     <h2 class="text-3xl font-bold dark:text-white">FAQ</h2>
     <br>
     @foreach ($faqs as $faq)
-        <div style="width: 70%;">
+        <div style="width: 100%;">
             <div class="bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6 w-full">
                 <div class="flex justify-between border-gray-200 border-b dark:border-gray-700 pb-3">
                     <dl>

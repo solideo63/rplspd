@@ -35,25 +35,28 @@
         <div class="bg-yellow-300 w-3/4 lg:w-1/3 rounded-lg shadow-lg -mt-4 z-0">
             <div class="p-6 sm:mx-auto sm:w-full sm:max-w-sm">
                 <!-- Error Message -->
-                @if($errors->has('login') || $errors->any())
-                <div id="errorMessage" class="p-4 mb-4 text-sm text-red-800 bg-red-50 rounded-lg shadow" role="alert">
-                    @if($errors->has('login'))
-                    {{ $errors->first('login') }}
-                    @else
-                    <ul>
-                        @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                    @endif
-                </div>
+                @if ($errors->has('login') || $errors->any())
+                    <div id="errorMessage" class="p-4 mb-4 text-sm text-red-800 bg-red-50 rounded-lg shadow"
+                        role="alert">
+                        @if ($errors->has('login'))
+                            {{ $errors->first('login') }}
+                        @else
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    </div>
                 @endif
 
                 <!-- Pesan berhasil ubah password -->
                 @if (session('success'))
-                    <div class="p-4 mb-4 text-sm text-green-800 bg-green-50 rounded-lg shadow" role="alert">
+                    <div id="successMessage" class="p-4 mb-4 text-sm text-green-800 bg-green-50 rounded-lg shadow"
+                        role="alert">
                         <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
+                                fill="currentColor">
                                 <path fill-rule="evenodd" clip-rule="evenodd" />
                             </svg>
                             <span>{{ session('success') }}</span>
@@ -76,7 +79,8 @@
                     <div>
                         <label for="password" class="block text-xs font-bold text-white">Password</label>
                         <div class="mt-1 pb-8 relative">
-                            <input type="password" name="password" id="password" autocomplete="current-password" required
+                            <input type="password" name="password" id="password" autocomplete="current-password"
+                                required
                                 class="block w-full rounded-md bg-slate-100 px-[8px] py-[4px] text-[14px] text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:ring focus:ring-indigo-300 focus:outline-none">
                             <!-- Toggle password visibility with Font Awesome Eye Icon -->
                             <button type="button" id="togglePassword" class="absolute right-2 top-2">
@@ -109,6 +113,16 @@
             }
         }, 3000);
 
+        // Hapus elemen pesan sukses setelah 3 detik
+        setTimeout(() => {
+            const successMessage = document.getElementById('successMessage');
+            if (successMessage) {
+                successMessage.style.transition = 'opacity 0.5s ease';
+                successMessage.style.opacity = '0'; // Fade out effect
+                setTimeout(() => successMessage.remove(), 500); // Remove element after fade-out
+            }
+        }, 3000);
+
         document.getElementById('togglePassword').addEventListener('click', function() {
             const passwordField = document.getElementById('password');
             const type = passwordField.type === 'password' ? 'text' : 'password';
@@ -127,3 +141,4 @@
 </body>
 
 </html>
+s
