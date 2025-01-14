@@ -49,6 +49,18 @@
                 </div>
                 @endif
 
+                <!-- Pesan berhasil ubah password -->
+                @if (session('success'))
+                    <div class="p-4 mb-4 text-sm text-green-800 bg-green-50 rounded-lg shadow" role="alert">
+                        <div class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" clip-rule="evenodd" />
+                            </svg>
+                            <span>{{ session('success') }}</span>
+                        </div>
+                    </div>
+                @endif
+
                 <form class="space-y-4" action="" method="POST">
                     @csrf
                     <!-- Username -->

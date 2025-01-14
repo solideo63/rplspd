@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\Hash;
 
 class UbahPasswordController extends Controller
 {
-    function index()
+    public function index()
     {
         return view('ubahpassword');
     }
 
-    function ubahPassword(request $request)
+    public function ubahPassword(Request $request)
     {
         $request->validate(
             [
@@ -33,7 +33,10 @@ class UbahPasswordController extends Controller
         if (Hash::check($request->password, $user->password)) {
             $user->password = Hash::make($request->newpassword);
             $user->save();
-            return redirect('/logout')->with('success', 'Password berhasil diubah!');
+
+            Auth::logout(); // Logout user setelah password berhasil diubah
+
+            return redirect('/login')->with('success', 'Password berhasil diubah! Silakan login kembali.');
         } else {
             return back()->withErrors(['password' => 'Password lama salah!'])->withInput();
         }
