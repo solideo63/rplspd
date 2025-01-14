@@ -19,9 +19,8 @@ class OperasiUmumController extends Controller
     public function index()
     {
         // Mengambil data dari tabel dengan pagination
-        $data = OperasiUmum::orderBy('updated_at', 'desc')
-            ->orderBy('created_at', 'desc')
-            ->paginate(30); // 10 item per halaman
+        $data = OperasiUmum::orderBy('created_at', 'desc')
+            ->paginate(30);
 
         // Mengirim data ke view
         return view('operasiumum.laporanumum', compact('data'));
