@@ -33,7 +33,7 @@ class UbahPasswordController extends Controller
         if (Hash::check($request->password, $user->password)) {
             $user->password = Hash::make($request->newpassword);
             $user->save();
-            return redirect('/dashboard')->with('success', 'Password berhasil diubah!');
+            return redirect('/logout')->with('success', 'Password berhasil diubah!');
         } else {
             return back()->withErrors(['password' => 'Password lama salah!'])->withInput();
         }
