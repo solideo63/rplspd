@@ -1,5 +1,29 @@
 <x-layout></x-layout>
 
+<style>
+    .custom-alert {
+        position: fixed;
+        top: 40px;
+        left: 50%;
+        /* Posisi horizontal di tengah */
+        transform: translateX(-50%);
+        /* Pindahkan setengah dari lebar elemen */
+        z-index: 1050;
+        /* Pastikan di atas elemen lain */
+        padding: 15px;
+        background-color: #d1e7dd;
+        color: #0f5132;
+        border: 1px solid #badbcc;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        max-width: 90%;
+        /* Sesuaikan dengan lebar layar, maksimal 90% */
+        text-align: center;
+        box-sizing: border-box;
+        /* Pastikan padding dihitung dalam lebar elemen */
+    }
+</style>
+
 <div class="p-4 sm:ml-64 mt-9">
     <div class="flex justify-center">
         <div
@@ -12,31 +36,27 @@
 
             {{-- Notifikasi Sukses --}}
             @if (session('success'))
-                <div id="success-message"
-                    class="flex items-center p-4 mb-4 text-sm text-green-800 bg-green-50 rounded-lg dark:bg-green-800 dark:text-green-200 border border-green-300 shadow">
-                    <svg class="w-5 h-5 mr-3" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd"
-                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707a1 1 0 00-1.414-1.414L9 11.586 7.707 10.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                            clip-rule="evenodd"></path>
-                    </svg>
-                    <span>{{ session('success') }}</span>
+                <div id="successAlert" class="custom-alert">
+                    {{ session('success') }}
                 </div>
-                <script>
-                    // Menghilangkan notifikasi setelah 3 detik
-                    setTimeout(() => {
-                        document.getElementById('success-message').classList.add('opacity-0', 'transition-opacity',
-                            'duration-500');
-                        setTimeout(() => document.getElementById('success-message').remove(), 500);
-                    }, 3000);
-                </script>
             @endif
+
+            <script>
+                // Menghilangkan pesan setelah 3 detik
+                setTimeout(() => {
+                    const alertBox = document.getElementById('successAlert');
+                    if (alertBox) {
+                        alertBox.style.opacity = '0';
+                        setTimeout(() => alertBox.remove(), 500); // Hapus elemen setelah animasi
+                    }
+                }, 3000);
+            </script>
 
             {{-- Notifikasi Error --}}
             @if ($errors->any())
                 <div id="error-message"
                     class="flex items-center p-4 mb-4 text-sm text-red-800 bg-red-50 rounded-lg dark:bg-red-800 dark:text-red-200 border border-red-300 shadow">
-                    <svg class="w-5 h-5 mr-3" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20">
+                    <svg class="w-5 h-5 mr-3" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                         <path fill-rule="evenodd"
                             d="M10 18a8 8 0 100-16 8 8 0 000 16zm-3.707-5.707a1 1 0 011.414-1.414L9 10.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-2-2z"
                             clip-rule="evenodd"></path>
@@ -159,8 +179,8 @@
                 </div>
                 <div class="flex justify-end">
                     <button type="submit"
-                        class="text-white bg-blue-800 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                        Submit
+                        class="text-white bg-blue-700 hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                        Kirim
                     </button>
                 </div>
             </form>

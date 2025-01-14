@@ -92,7 +92,7 @@
                     <!-- Submit Button -->
                     <div class="flex justify-end">
                         <button href="/dashboard" type="submit"
-                            class="flex justify-center items-center rounded-xl bg-indigo-500 px-6 py-1.5 text-xs font-semibold text-white shadow hover:bg-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            class="flex justify-center items-center rounded-xl bg-blues-700 px-6 py-1.5 text-xs font-semibold text-white shadow hover:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                             Login
                         </button>
                     </div>

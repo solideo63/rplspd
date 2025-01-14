@@ -37,14 +37,15 @@
             <div class="p-6 sm:mx-auto sm:w-full sm:max-w-sm">
 
                 <!-- Peringatan Kesalahan Input Password -->
-                @if($errors->any())
-                <div class="p-4 mt-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                    <ul>
-                        @foreach($errors->all() as $item)
-                        <li>{{$item}}</li>
-                        @endforeach
-                    </ul>
-                </div>
+                @if ($errors->any())
+                    <div class="p-4 mt-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+                        role="alert">
+                        <ul>
+                            @foreach ($errors->all() as $item)
+                                <li>{{ $item }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
                 @endif
 
                 <form class="space-y-4" action="" method="POST">
@@ -54,11 +55,7 @@
                     <div>
                         <label for="password" class="block text-xs font-bold text-white pt-8 pb-1">Password Lama</label>
                         <div class="mt-1 relative">
-                            <input
-                                type="password"
-                                name="password"
-                                id="password"
-                                autocomplete="current-password"
+                            <input type="password" name="password" id="password" autocomplete="current-password"
                                 required
                                 class="block w-full rounded-md bg-slate-100 px-[8px] py-[4px] text-[14px] text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:ring focus:ring-indigo-300 focus:outline-none">
                             <button type="button" id="togglePassword1" class="absolute right-2 top-2">
@@ -71,11 +68,7 @@
                     <div>
                         <label for="newpassword" class="block text-xs font-bold text-white">Password Baru</label>
                         <div class="mt-1 relative">
-                            <input
-                                type="password"
-                                name="newpassword"
-                                id="newpassword"
-                                autocomplete="current-password"
+                            <input type="password" name="newpassword" id="newpassword" autocomplete="current-password"
                                 required
                                 class="block w-full rounded-md bg-slate-100 px-[8px] py-[4px] text-[14px] text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:ring focus:ring-indigo-300 focus:outline-none">
                             <button type="button" id="togglePassword2" class="absolute right-2 top-2">
@@ -86,13 +79,10 @@
 
                     <!-- Konfirmasi Password Baru-->
                     <div>
-                        <label for="cnewpassword" class="block text-xs font-bold text-white">Konfirmasi Password Baru</label>
+                        <label for="cnewpassword" class="block text-xs font-bold text-white">Konfirmasi Password
+                            Baru</label>
                         <div class="mt-1 relative pb-8">
-                            <input
-                                type="password"
-                                name="cnewpassword"
-                                id="cnewpassword"
-                                autocomplete="current-password"
+                            <input type="password" name="cnewpassword" id="cnewpassword" autocomplete="current-password"
                                 required
                                 class="block w-full rounded-md bg-slate-100 px-[8px] py-[4px] text-[14px] text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:ring focus:ring-indigo-300 focus:outline-none">
 
@@ -104,9 +94,8 @@
 
                     <!-- Submit Button (Kecil dan di pojok kanan) -->
                     <div class="flex justify-end">
-                        <button
-                            type="submit"
-                            class="flex justify-center items-center rounded-xl bg-blue-900 px-6 py-1.5 text-xs font-semibold text-white shadow hover:bg-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        <button type="submit"
+                            class="flex justify-center items-center rounded-xl bg-blue-700 px-6 py-1.5 text-xs font-semibold text-white shadow hover:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                             Ubah
                         </button>
                     </div>

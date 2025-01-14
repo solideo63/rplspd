@@ -98,8 +98,8 @@ class PenindakanHarianController extends Controller
         app(EmailController::class)->sendEmail($request); // Pastikan fungsi sendEmail sudah benar
 
         // Redirect ke halaman view catat.blade.php dengan pesan sukses
-        return redirect()->route('catat.harian') // Pastikan Anda sudah mendefinisikan route ini
-            ->with('success', 'Data berhasil ditambahkan');
+        session()->flash('success', 'Data berhasil ditambahkan');
+        return redirect()->route('catat.harian'); // Pastikan Anda sudah mendefinisikan route ini
     }
 
     /**
