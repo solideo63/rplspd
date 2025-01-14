@@ -116,12 +116,8 @@
                                                 class="inline-flex items-center px-4 py-2 text-sm font-semibold text-center text-white bg-yellow-300 rounded-lg hover:bg-yellow-400 focus:ring-4 focus:outline-none focus:ring-yellow-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Ganti
                                                 Password</a>
                                             <a href="/logout"
-<<<<<<< HEAD
                                                 class="py-2 px-4 ms-2 text-sm font-semibold text-center text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Logout</a>
-=======
-                                                class="py-2 px-4 ms-2 text-sm font-semibold text-center text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-yellow-300 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Log
-                                                Out</a>
->>>>>>> 3078c381f3bd9c5eba62171a9dc65333ee4dbc1b
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
