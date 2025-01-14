@@ -4,9 +4,11 @@
 <style>
     .custom-alert {
         position: fixed;
-        top: 20px;
-        left: 40%;
-        /* right: 50px; */
+        top: 40px;
+        left: 50%;
+        /* Posisi horizontal di tengah */
+        transform: translateX(-50%);
+        /* Pindahkan setengah dari lebar elemen */
         z-index: 1050;
         /* Pastikan di atas elemen lain */
         padding: 15px;
@@ -15,6 +17,11 @@
         border: 1px solid #badbcc;
         border-radius: 5px;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        max-width: 100%;
+        /* Sesuaikan dengan lebar layar, maksimal 90% */
+        text-align: center;
+        box-sizing: border-box;
+        /* Pastikan padding dihitung dalam lebar elemen */
     }
 </style>
 

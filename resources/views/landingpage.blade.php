@@ -40,6 +40,28 @@
         animation: floatUp 0.5s ease-out forwards;
         /* Durasi lebih lambat untuk gambar */
     }
+
+    .custom-alert {
+        position: fixed;
+        top: 40px;
+        left: 50%;
+        /* Posisi horizontal di tengah */
+        transform: translateX(-50%);
+        /* Pindahkan setengah dari lebar elemen */
+        z-index: 1050;
+        /* Pastikan di atas elemen lain */
+        padding: 15px;
+        background-color: #d1e7dd;
+        color: #0f5132;
+        border: 1px solid #badbcc;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        max-width: 90%;
+        /* Sesuaikan dengan lebar layar, maksimal 90% */
+        text-align: center;
+        box-sizing: border-box;
+        /* Pastikan padding dihitung dalam lebar elemen */
+    }
 </style>
 
 <div class="ml-4 mr-4">
@@ -48,6 +70,24 @@
         <h3 class="text-3xl font-bold tracking-tight mb-6 float-up-text">Sistem Pencatatan dan Pelaporan Pelanggaran SPD
         </h3>
         <br><br><br>
+
+        {{-- Notifikasi Sukses --}}
+        @if (session('success'))
+            <div id="successAlert" class="custom-alert">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        <script>
+            // Menghilangkan pesan setelah 3 detik
+            setTimeout(() => {
+                const alertBox = document.getElementById('successAlert');
+                if (alertBox) {
+                    alertBox.style.opacity = '0';
+                    setTimeout(() => alertBox.remove(), 500); // Hapus elemen setelah animasi
+                }
+            }, 3000);
+        </script>
 
         <h4 class="text-2xl font-bold tracking-tight mb-6 float-up-text" style="text-align: center;">Kenalan dengan SPD
         </h4>

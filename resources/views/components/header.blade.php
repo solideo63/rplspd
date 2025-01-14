@@ -108,27 +108,15 @@
                                         <h5 class="mb-1 text-xl font-semibold text-center text-gray-900 dark:text-white">
                                             {{ Auth::user()->name }}</h5>
                                         <!-- Nama dengan font-semibold dan teks rata tengah -->
-                                        <span
-                                            class="text-sm text-gray-500 dark:text-gray-400 text-center">{{ Auth::user()->username }}</span>
-                                        <!-- Username rata tengah -->
-
-                                        <!-- Status Badge -->
-
-                                        <!-- @if (Auth::user()->status_badge == 'sudah')
-    <h5 class="mb-1 text-m font-medium dark:text-white" style="color:green">Badge sudah kembali</h5>
-@elseif(Auth::user()->status_badge == 'belum')
-    <h5 class="mb-1 text-m font-medium dark:text-white" style="color:red">Badge belum kembali</h5>
-@else
-    <h5 class="mb-1 text-m font-medium dark:text-white" style="color:red">Badge sudah di BAAK</h5>
-    @endif -->
+                                        <span class="text-sm text-gray-500 dark:text-gray-400 text-center">NAS:
+                                            {{ Auth::user()->username }}</span>
 
                                         <div class="flex mt-4 md:mt-6">
                                             <a href="/ubah-password"
                                                 class="inline-flex items-center px-4 py-2 text-sm font-semibold text-center text-white bg-yellow-300 rounded-lg hover:bg-yellow-400 focus:ring-4 focus:outline-none focus:ring-yellow-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Ganti
                                                 Password</a>
                                             <a href="/logout"
-                                                class="py-2 px-4 ms-2 text-sm font-semibold text-center text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Log
-                                                Out</a>
+                                                class="py-2 px-4 ms-2 text-sm font-semibold text-center text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Logout</a>
                                         </div>
                                     </div>
                                 </div>
@@ -141,9 +129,9 @@
                     <!-- Cek apakah pengguna belum login -->
                     @if (Auth::guest())
                         <div class="flex items-center lg:order-2">
-                            <a href="/login"style="background-color: #FCBE11;"
-                                class="text-white hover:opacity-90 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none">
-                                Log in </a>
+                            <a href="/login"
+                                class="text-white bg-yellow-300 hover:bg-yellow-400 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none">
+                                Masuk</a>
                         </div>
                     @endif
                 </div>

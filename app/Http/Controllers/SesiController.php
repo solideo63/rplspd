@@ -47,6 +47,7 @@ class SesiController extends Controller
     function logout()
     {
         Auth::logout();
+        session()->flash('success', 'Berhasil Logout.');
         return redirect('');
     }
 }
