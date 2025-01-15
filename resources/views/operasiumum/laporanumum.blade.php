@@ -193,10 +193,9 @@
                                         stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6" />
                                 </svg>
                             </div>
-                            <button type="button" style="background-color: #9F2A32;"
-                                onclick="window.location.href='{{ route('laporanumum') }}'"
+                            <button type="button" onclick="window.location.href='{{ route('laporanumum') }}'"
                                 class="block p-2
-                                ps-10 text-sm w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4
+                                ps-10 text-sm w-auto text-white bg-red-800 hover:bg-red-900 focus:ring-4
                                 focus:outline-none focus:ring-blue-300 font-medium rounded-lg dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"">Hapus
                                 Filter </button>
                         </div>
