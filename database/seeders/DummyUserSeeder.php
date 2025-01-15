@@ -51,22 +51,10 @@ class DummyUserSeeder extends Seeder
                 'password' => bcrypt('bEYVZgD2')
             ],
             [
-                'name' => 'Baiq Qonita Firjatullah',
-                'username' => '22100187',
-                'role' => 'spd',
-                'password' => bcrypt('ec52MuAy')
-            ],
-            [
                 'name' => 'Celvin Keyla Alidra',
                 'username' => '22100188',
                 'role' => 'spd',
                 'password' => bcrypt('fsXPp2Zz')
-            ],
-            [
-                'name' => 'Dyah Puspitasari',
-                'username' => '22100189',
-                'role' => 'spd',
-                'password' => bcrypt('5FndaTfR')
             ],
             [
                 'name' => 'I Kadek Purna Widyarta',
@@ -81,18 +69,6 @@ class DummyUserSeeder extends Seeder
                 'password' => bcrypt('S3YGLpkf')
             ],
             [
-                'name' => 'Miftahur Rahim',
-                'username' => '22100192',
-                'role' => 'spd',
-                'password' => bcrypt('Rwc2fap6')
-            ],
-            [
-                'name' => 'Modesty Ulya Mora',
-                'username' => '22100193',
-                'role' => 'spd',
-                'password' => bcrypt('j8QcVDnB')
-            ],
-            [
                 'name' => 'Muhammad Afnan Alfian',
                 'username' => '22100194',
                 'role' => 'spd',
@@ -105,12 +81,6 @@ class DummyUserSeeder extends Seeder
                 'password' => bcrypt('DAu5FCcL')
             ],
             [
-                'name' => 'Reka Irfinalia B',
-                'username' => '22100196',
-                'role' => 'spd',
-                'password' => bcrypt('UY9fAwfb')
-            ],
-            [
                 'name' => 'Ricky Ardiyansyah Saputra',
                 'username' => '22100197',
                 'role' => 'spd',
@@ -121,12 +91,6 @@ class DummyUserSeeder extends Seeder
                 'username' => '22100198',
                 'role' => 'spd',
                 'password' => bcrypt('hrq7DafV')
-            ],
-            [
-                'name' => 'Ronaldo Keristanta Ginting',
-                'username' => '22100199',
-                'role' => 'spd',
-                'password' => bcrypt('vzSby8AT')
             ],
             [
                 'name' => 'Shafira Husna',
@@ -169,12 +133,6 @@ class DummyUserSeeder extends Seeder
                 'username' => '23110206',
                 'role' => 'spd',
                 'password' => bcrypt('yYuEH6vb')
-            ],
-            [
-                'name' => 'Anjelita Nabila Putri',
-                'username' => '23110207',
-                'role' => 'spd',
-                'password' => bcrypt('aJbH3C93')
             ],
             [
                 'name' => 'Arikhza Saputri',
