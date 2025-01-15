@@ -66,10 +66,12 @@
 
 <div class="ml-4 mr-4">
     <div class="p-4 sm:ml-64 mt-7">
-        <h1 class="text-5xl font-bold tracking-tight mb-4 float-up-text">Selamat datang di <span>SIMPPEL SPD</span>!</h1>
-        <h3 class="text-3xl font-bold tracking-tight mb-6 float-up-text">Sistem Pencatatan dan Pelaporan Pelanggaran SPD
+        <h1 class="text-5xl text-center font-bold tracking-tight mb-4 float-up-text">Selamat datang di <span>SIMPPEL
+                SPD</span>!</h1>
+        <h3 class="text-3xl text-center font-bold tracking-tight mb-4 float-up-text">Sistem Pencatatan dan Pelaporan
+            Pelanggaran SPD
         </h3>
-        <br><br><br>
+        <br>
 
         {{-- Notifikasi Sukses --}}
         @if (session('success'))

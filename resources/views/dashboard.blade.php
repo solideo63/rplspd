@@ -276,11 +276,11 @@
 
             let greetingMessage = "Selamat datang";
 
-            if (hours >= 5 && hours < 12) {
+            if (hours >= 5 && hours < 10) {
                 greetingMessage = "Selamat Pagi";
-            } else if (hours >= 12 && hours < 14) {
+            } else if (hours >= 11 && hours < 15) {
                 greetingMessage = "Selamat Siang";
-            } else if (hours >= 14 && hours < 18) {
+            } else if (hours >= 15 && hours < 18) {
                 greetingMessage = "Selamat Sore";
             } else {
                 greetingMessage = "Selamat Malam";
