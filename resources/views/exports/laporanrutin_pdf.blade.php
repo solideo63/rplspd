@@ -223,7 +223,7 @@
                     <th>KELAS</th>
                     <th>NIM</th>
                     <th>NAMA</th>
-                    <th>TINGKAT</th>
+                    {{-- <th>TINGKAT</th> --}}
                     <th>PELANGGARAN</th>
                 </tr>
             </thead>
@@ -233,7 +233,7 @@
                         <td>{{ $item->kelas }}</td>
                         <td>{{ $item->nim }}</td>
                         <td>{{ $item->nama_mahasiswa }}</td>
-                        <td>{{ $item->tingkat }}</td>
+                        {{-- <td>{{ $item->tingkat }}</td> --}}
                         <td>{{ $item->pelanggaran }}</td>
                     </tr>
                 @endforeach

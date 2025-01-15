@@ -108,8 +108,10 @@
                                         <h5 class="mb-1 text-xl font-semibold text-center text-gray-900 dark:text-white">
                                             {{ Auth::user()->name }}</h5>
                                         <!-- Nama dengan font-semibold dan teks rata tengah -->
-                                        <span class="text-sm text-gray-500 dark:text-gray-400 text-center">NAS:
-                                            {{ Auth::user()->username }}</span>
+                                        @if (Auth::user()->role == 'spd')
+                                            <span class="text-sm text-gray-500 dark:text-gray-400 text-center">NAS:
+                                                {{ Auth::user()->username }}</span>
+                                        @endif
 
                                         <div class="flex mt-4 md:mt-6">
                                             <a href="/ubah-password"

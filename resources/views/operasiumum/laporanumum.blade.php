@@ -258,7 +258,9 @@
                             <th scope="col" class="px-6 py-3">Tingkat</th>
                             <th scope="col" class="px-6 py-3">Pelanggaran</th>
                             <th scope="col" class="px-6 py-3">Nama Pencatat</th>
-                            <th scope="col" class="px-6 py-3 text-center">Aksi</th>
+                            @if (Auth::user()->role == 'spd')
+                                <th scope="col" class="px-6 py-3 text-center">Aksi</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>

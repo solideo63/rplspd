@@ -281,28 +281,30 @@
                                 <td class="px-6 py-4 text-center">{{ $row->tingkat }}</td>
                                 <td class="px-6 py-4">{{ $row->pelanggaran }}</td>
                                 <td class="px-6 py-4">{{ $row->nama_pencatat }}</td>
-                                <td class="px-6 py-4 flex">
+                                <td class="px-6 py-4 text-center">
                                     <!-- Edit Button with only icon -->
                                     <a href="{{ route('enter-token', $row->id) }}"
                                         class="flex items-center justify-center text-white bg-yellow-300 hover:bg-yellow-400 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm p-2 transition-all ease-in-out duration-200 transform hover:scale-105 active:scale-95 mr-2">
-                                        <i class="fas fa-file-invoice"></i><!-- Ikon edit -->
+                                        <i class="fas fa-file-invoice"></i> <!-- Ikon edit -->
+                                        <span class="ml-2">Klaim Pelanggaran</span>
                                     </a>
                                     {{-- <a href="{{ route('catatedit.harian', $row->id) }}"
                                             class="flex items-center justify-center text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm p-2 transition-all ease-in-out duration-200 transform hover:scale-105 active:scale-95 mr-2">
                                             <i class="fas fa-edit"></i> <!-- Ikon edit -->
-                                        </a>
+                                        </a> --}}
 
-                                        <!-- Hapus Button with only icon -->
-                                        <form action="{{ route('delete.harian', $row->id) }}" method="POST"
-                                            class="inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit"
-                                                onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Ini?')"
-                                                class="flex items-center justify-center text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm p-2 transition-all ease-in-out duration-200 transform hover:scale-105 active:scale-95">
-                                                <i class="fas fa-trash-alt"></i> <!-- Ikon trash (hapus) -->
-                                            </button>
-                                        </form> --}}
+                                    <!-- Hapus Button with only icon -->
+                                    <form action="{{ route('delete.harian', $row->id) }}" method="POST"
+                                        class="inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Ini?')"
+                                            class="flex items-center justify-center text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm p-2 transition-all ease-in-out duration-200 transform hover:scale-105 active:scale-95">
+                                            <i class="fas fa-trash-alt"></i> <!-- Ikon trash (hapus) -->
+                                            <span class="ml-2">Hapus Pelanggaran</span>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         @empty

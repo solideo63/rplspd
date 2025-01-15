@@ -19,9 +19,9 @@
 <div class="footer">
     <p>⚜ SATYA DHARMA SISWA ⚜</p>
     <p>➖Official Account 📢 ➖</p>
-    <p> Instagram : @spdstis</p>
-    <p> X : @spdstis</p>
-    <p> Surel : spd@stis.ac.id</p>
+    <p style="margin: 0;"> Instagram : @spdstis</p>
+    <p style="margin: 0;"> X : @spdstis</p>
+    <p style="margin: 0;"> Surel : spd@stis.ac.id</p>
     <p> ➖➖➖➖➖➖➖➖➖➖ </p>
-    <p>SIMPPEL SPD (Sistem Pencatatan dan Pelaporan Pelanggaran) SPD </p>
+    <p>SIMPPEL (Sistem Pencatatan dan Pelaporan Pelanggaran)</p>
 </div>

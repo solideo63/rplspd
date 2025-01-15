@@ -74,7 +74,7 @@
             <!-- Submit Button -->
             <div class="flex justify-end">
                 <button type="submit"
-                    class="rounded-lg bg-blue-600 px-6 py-3 text-sm font-medium text-white shadow-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                    class="rounded-lg bg-blue-700 px-6 py-3 text-sm font-medium text-white shadow-md hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                     Kirim
                 </button>
             </div>
