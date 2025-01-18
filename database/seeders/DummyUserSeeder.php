@@ -415,6 +415,12 @@ class DummyUserSeeder extends Seeder
                 'username' => '54321',
                 'role' => 'pemonitor',
                 'password' => bcrypt('54321')
+            ],
+            [
+                'name' => 'SPD',
+                'username' => '102030',
+                'role' => 'spd',
+                'password' => bcrypt('spd')
             ]
 
         ];

@@ -132,7 +132,7 @@ class KlaimPelanggaranController extends Controller
 
             $klaimPelanggaran->delete();
 
-            return redirect()->route('klaim-pelanggaran')->with('success', 'Data berhasil dihapus');
+            return redirect()->route('klaim-pelanggaran');
         } catch (Exception $e) {
             // Menangani kesalahan jika terjadi exception
             return redirect()->route('laporanharian')->with('error', 'Data gagal dihapus: ' . $e->getMessage());

@@ -200,12 +200,47 @@
                     </select>
                 </div>
                 <div class="flex justify-end">
-                    <button type="submit" onclick="return confirm('Apakah Anda Yakin Akan Mengedit Ini?')"
-                        class="text-white bg-blue-700
-                        hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-700 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                        Kirim Perubahan
+                    <button type="button" id="confirmButton"
+                        class="text-white bg-blue-700 hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-700 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                        Simpan perubahan
                     </button>
                 </div>
+
+                {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
+                <script>
+                    document.getElementById('confirmButton').addEventListener('click', function(e) {
+                        Swal.fire({
+                            title: 'Apakah Anda Yakin?',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Ya, simpan perubahan',
+                            cancelButtonText: 'Batal'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                const form = document.querySelector('form');
+                                if (form) {
+                                    // Submit form
+                                    form.submit();
+
+                                    // Tampilkan notifikasi berhasil setelah submit
+                                    Swal.fire({
+                                        title: 'Berhasil!',
+                                        text: 'Perubahan telah disimpan.',
+                                        icon: 'success',
+                                        timer: 2000, // Durasi popup
+                                        showConfirmButton: false
+                                    }).then(() => {
+                                        // Alihkan ke halaman tabel laporan rutin (ganti URL sesuai kebutuhan)
+                                        window.location.href = '/laporan-rutin';
+                                    });
+                                }
+                            }
+                        });
+                    });
+                </script>
+
             </form>
         </div>
     </div>
@@ -213,6 +248,7 @@
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
     $(document).ready(function() {

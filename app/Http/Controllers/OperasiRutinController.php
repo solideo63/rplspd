@@ -229,7 +229,7 @@ class OperasiRutinController extends Controller
         // dd($operasiRutin->fresh());
 
         // Redirect ke halaman edit dengan pesan sukses
-        return redirect()->route('laporanrutin', $id)->with('success', 'Data berhasil diperbarui');
+        return redirect()->route('laporanrutin', $id);
     }
 
     /**
@@ -249,7 +249,7 @@ class OperasiRutinController extends Controller
 
             $operasiRutin->delete();
 
-            return redirect()->route('laporanrutin')->with('success', 'Data berhasil dihapus');
+            return redirect()->route('laporanrutin');
         } catch (Exception $e) {
             // Menangani kesalahan jika terjadi exception
             return redirect()->route('laporanrutin')->with('error', 'Data gagal dihapus: ' . $e->getMessage());

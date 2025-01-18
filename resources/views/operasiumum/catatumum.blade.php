@@ -79,7 +79,8 @@
 
 
             {{-- Form --}}
-            <form class="max-w-sm mx-auto pt-6" action="{{ route('operasi-umum.store') }}" method="POST">
+            <form class="max-w-sm mx-auto pt-6" action="{{ route('operasi-umum.store') }}" method="POST"
+                id="yourForm">
                 @csrf
                 <div class="mb-5">
                     <label for="nim"
@@ -184,12 +185,38 @@
                     </button>
                 </div>
             </form>
+
+            <script>
+                document.getElementById('yourForm').addEventListener('submit', function(e) {
+                    e.preventDefault(); // Mencegah pengiriman form secara langsung
+
+                    // Tampilkan notifikasi konfirmasi "Apakah Anda Yakin?"
+                    Swal.fire({
+                        title: 'Apakah Anda Yakin?',
+                        text: 'Data yang Anda kirim tidak dapat diubah setelah pengiriman!',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Ya, Kirim!',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Jika konfirmasi diterima, kirim form secara langsung
+                            this.submit(); // Kirim form setelah konfirmasi
+                        }
+                    });
+                });
+            </script>
+            </form>
         </div>
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
     $(document).ready(function() {
         $('#nim').on('input', function() {

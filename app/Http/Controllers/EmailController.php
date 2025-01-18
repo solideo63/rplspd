@@ -42,8 +42,7 @@ class EmailController extends Controller
             Mail::send('emails.pelanggaran', $data, function ($message) use ($email) {
                 $message->to($email)->subject('!! PENCATATAN PELANGGARAN !!');
             });
-
-            return back()->with('success', 'Email berhasil dikirim ke ' . $email);
+            // return back()->with('success', 'Email berhasil dikirim ke ' . $email);
         } catch (\Exception $e) {
             return back()->with('error', 'Gagal mengirim email: ' . $e->getMessage());
         }

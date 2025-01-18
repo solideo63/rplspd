@@ -216,7 +216,7 @@ class OperasiUmumController extends Controller
         app(EmailController::class)->sendEmail($request);
 
         // Redirect ke halaman edit dengan pesan sukses
-        return redirect()->route('laporanumum', $id)->with('success', 'Data berhasil diperbarui');
+        return redirect()->route('laporanumum', $id);
     }
 
     /**
@@ -233,7 +233,7 @@ class OperasiUmumController extends Controller
 
             $operasiUmum->delete();
 
-            return redirect()->route('laporanumum')->with('success', 'Data berhasil dihapus');
+            return redirect()->route('laporanumum');
         } catch (Exception $e) {
             // Menangani kesalahan jika terjadi exception
             return redirect()->route('laporanumum')->with('error', 'Data gagal dihapus: ' . $e->getMessage());

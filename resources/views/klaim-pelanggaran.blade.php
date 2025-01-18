@@ -1,5 +1,75 @@
 <x-layout> </x-layout>
 
+<style>
+    /* Garis pembatas untuk tabel */
+    table {
+        border-collapse: collapse;
+        /* Hilangkan jarak antar border */
+        width: 100%;
+        /* Pastikan tabel memenuhi lebar */
+    }
+
+    table thead th,
+    table tbody td {
+        border: 1px solid #d1d5db;
+        /* Warna garis pembatas abu-abu */
+        padding: 12px;
+        /* Beri jarak antar isi */
+        text-align: center;
+        /* Isi rata kiri */
+    }
+
+    /* Sticky positioning untuk kolom tertentu */
+    table thead th.sticky,
+    table tbody td.sticky {
+        position: sticky;
+        z-index: 10;
+    }
+
+    table thead th.sticky.left-0,
+    table tbody td.sticky.left-0 {
+        left: 0;
+        background-color: #f9fafb;
+        /* Warna latar belakang header */
+        border-right: 1px solid #d1d5db;
+        /* Tambahkan border kanan */
+    }
+
+    table thead th.sticky.right-0,
+    table tbody td.sticky.right-0 {
+        right: 0;
+        background-color: #f9fafb;
+        /* Warna latar belakang header */
+        border-left: 1px solid #d1d5db;
+        /* Tambahkan border kiri */
+    }
+
+    /* Background untuk sticky kolom pada isi tabel */
+    table tbody td.sticky.left-0 {
+        background-color: #ffffff;
+        /* Warna latar belakang isi */
+        border-right: 1px solid #d1d5db;
+        /* Tambahkan border kanan */
+    }
+
+    table tbody td.sticky.right-0 {
+        background-color: #ffffff;
+        /* Warna latar belakang isi */
+        border-left: 1px solid #d1d5db;
+        /* Tambahkan border kiri */
+    }
+
+    /* Responsif untuk layar kecil */
+    @media screen and (max-width: 768px) {
+
+        table tbody td,
+        table thead th {
+            white-space: nowrap;
+            /* Isi tetap dalam satu baris */
+        }
+    }
+</style>
+
 <script>
     function handleSearch(penindakan_harian) {
         const query = penindakan_harian.target.value.trim().toLowerCase(); // Input pencarian
@@ -168,46 +238,50 @@
                     </script>
                 @endif
 
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                    id="export-table" class="datatable-table">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" class="px-6 py-3">Hari/Tanggal</th>
-                            <th scope="col" class="px-6 py-3">NIM</th>
-                            <th scope="col" class="px-6 py-3">Nama Mahasiswa</th>
-                            <th scope="col" class="px-6 py-3">Kelas</th>
-                            <th scope="col" class="px-6 py-3">Tingkat</th>
-                            <th scope="col" class="px-6 py-3">Pelanggaran</th>
-                            <th scope="col" class="px-6 py-3">Nama Pencatat</th>
-                            <th scope="col" class="px-6 py-3 text-center">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($data as $row)
-                            <tr
-                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    <!-- Menampilkan hari beserta tanggal untuk created_at -->
-                                    {{ $row->created_at ? $row->created_at->format('l, d-m-Y') : 'N/A' }}
-                                    <!-- Format: Hari, dd-mm-yyyy (contoh: Monday, 27-12-2024) -->
+                <div class="overflow-x-auto relative">
+                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        id="export-table" class="datatable-table">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-center">Hari/Tanggal</th>
+                                <th scope="col" class="px-6 py-3 text-center">NIM</th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-center sticky left-0 bg-gray-50 dark:bg-gray-700 z-10">Nama
+                                    Mahasiswa</th>
+                                <th scope="col" class="px-6 py-3 text-center">Kelas</th>
+                                <th scope="col" class="px-6 py-3 text-center">Tingkat</th>
+                                <th scope="col" class="px-6 py-3 text-center">Pelanggaran</th>
+                                <th scope="col" class="px-6 py-3 text-center">Nama Pencatat</th>
+                                <th scope="col" class="px-6 py-3 text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($data as $row)
+                                <tr
+                                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <td class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        <!-- Menampilkan hari beserta tanggal untuk created_at -->
+                                        {{ $row->created_at ? $row->created_at->format('l, d-m-Y') : 'N/A' }}
+                                        <!-- Format: Hari, dd-mm-yyyy (contoh: Monday, 27-12-2024) -->
 
-                                    @if ($row->updated_at && $row->updated_at != $row->created_at)
-                                        <!-- Jika sudah diupdate, tampilkan informasi terakhir update dengan menyesuaikan zona waktu -->
-                                        <div class="text-xs text-gray-500 mt-1">
-                                            <small>Terakhir diupdate:
-                                                {{ $row->updated_at->timezone('Asia/Jakarta')->format('d-m-Y H:i') }}</small>
-                                        </div>
-                                    @endif
-                                </td>
-                                <td class="px-6 py-4">{{ $row->nim }}</td>
-                                <td class="px-6 py-4">{{ $row->nama_mahasiswa }}</td>
-                                <td class="px-6 py-4">{{ $row->kelas }}</td>
-                                <td class="px-6 py-4 text-center">{{ $row->tingkat }}</td>
-                                <td class="px-6 py-4">{{ $row->pelanggaran }}</td>
-                                <td class="px-6 py-4">{{ $row->nama_pencatat }}</td>
-                                @if (Auth::user()->role == 'spd' && Auth::user()->name == $row->nama_pencatat)
-                                    <td class="px-6 py-4 flex">
-                                        {{-- <!-- Edit Button with only icon -->
+                                        @if ($row->updated_at && $row->updated_at != $row->created_at)
+                                            <!-- Jika sudah diupdate, tampilkan informasi terakhir update dengan menyesuaikan zona waktu -->
+                                            <div class="text-xs text-gray-500 mt-1">
+                                                <small>Terakhir diupdate:
+                                                    {{ $row->updated_at->timezone('Asia/Jakarta')->format('d-m-Y H:i') }}</small>
+                                            </div>
+                                        @endif
+                                    </td>
+                                    <td class="px-6 py-4">{{ $row->nim }}</td>
+                                    <td class="px-6 py-4 sticky left-0 bg-white dark:bg-gray-800 z-10">
+                                        {{ $row->nama_mahasiswa }}</td>
+                                    <td class="px-6 py-4">{{ $row->kelas }}</td>
+                                    <td class="px-6 py-4 text-center">{{ $row->tingkat }}</td>
+                                    <td class="px-6 py-4">{{ $row->pelanggaran }}</td>
+                                    <td class="px-6 py-4">{{ $row->nama_pencatat }}</td>
+                                    @if (Auth::user()->role == 'spd' && Auth::user()->name == $row->nama_pencatat)
+                                        <td class="px-6 py-3 flex">
+                                            {{-- <!-- Edit Button with only icon -->
                                         <a href="{{ route('enter-token', $row->id) }}"
                                             class="flex items-center justify-center text-white bg-yellow-300 hover:bg-yellow-400 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm p-2 transition-all ease-in-out duration-200 transform hover:scale-105 active:scale-95 mr-2">
                                             <i class="fas fa-file-invoice"></i><!-- Ikon edit -->
@@ -217,28 +291,62 @@
                                             <i class="fas fa-edit"></i> <!-- Ikon edit -->
                                         </a> --}}
 
-                                        <!-- Hapus Button with only icon -->
-                                        <form action="{{ route('delete.harian', $row->id) }}" method="POST"
-                                            class="inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit"
-                                                onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Ini?')"
-                                                class="flex items-center justify-center text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm p-2 transition-all ease-in-out duration-200 transform hover:scale-105 active:scale-95">
-                                                <i class="fas fa-trash-alt"></i> <!-- Ikon trash (hapus) -->
-                                                <span class="ml-2">Hapus Pelanggaran</span>
-                                            </button>
-                                        </form>
-                                    </td>
-                                @endif
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="7" class="px-6 py-4 text-center">No data available</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                                            <!-- Hapus Button with only icon -->
+                                            <form action="{{ route('delete.harian', $row->id) }}" method="POST"
+                                                class="inline" id="deleteForm-{{ $row->id }}">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button" onclick="confirmDelete('{{ $row->id }}')"
+                                                    class="flex items-center justify-center text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm p-2 transition-all ease-in-out duration-200 transform hover:scale-105 active:scale-95">
+                                                    <i class="fas fa-trash-alt"></i> <!-- Ikon trash (hapus) -->
+                                                </button>
+                                            </form>
+                                        </td>
+
+                                        <script>
+                                            function confirmDelete(id) {
+                                                Swal.fire({
+                                                    title: 'Apakah Anda Yakin?',
+                                                    text: 'Data yang dihapus tidak dapat dikembalikan!',
+                                                    icon: 'warning',
+                                                    showCancelButton: true,
+                                                    confirmButtonColor: '#d33',
+                                                    cancelButtonColor: '#3085d6',
+                                                    confirmButtonText: 'Ya, hapus!',
+                                                    cancelButtonText: 'Batal'
+                                                }).then((result) => {
+                                                    if (result.isConfirmed) {
+                                                        // Submit form programmatically
+                                                        const form = document.getElementById(`deleteForm-${id}`);
+                                                        if (form) {
+                                                            form.submit();
+
+                                                            // Tampilkan notifikasi sukses setelah form disubmit
+                                                            Swal.fire({
+                                                                title: 'Berhasil!',
+                                                                text: 'Data telah dihapus.',
+                                                                icon: 'success',
+                                                                timer: 2000, // Durasi popup
+                                                                showConfirmButton: false
+                                                            }).then(() => {
+                                                                // Reload halaman untuk memperbarui tabel
+                                                                window.location.reload();
+                                                            });
+                                                        }
+                                                    }
+                                                });
+                                            }
+                                        </script>
+                                    @endif
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="px-6 py-4 text-center">No data available</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -250,3 +358,4 @@
 <x-footer></x-footer>
 <script src="{{ asset('js/export.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

@@ -6477,7 +6477,7 @@ class DummySeederMahasiswa extends Seeder
             ],
             [
                 'nim' => '222212632',
-                'nama' => 'HAFIZH SHAH FIRDAUS',
+                'nama' => 'HAFIZH SHAH FIRDAUS',
                 'kelas' => '2KS1',
             ],
             [
