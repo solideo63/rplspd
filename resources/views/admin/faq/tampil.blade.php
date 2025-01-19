@@ -24,13 +24,37 @@
                             class="flex items-center justify-center text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm p-2 transition-all ease-in-out duration-200 transform hover:scale-105 active:scale-95 mb-2">
                             <i class="fas fa-edit"></i> <!-- Ikon edit -->
                         </a>
-                        <form action="{{ route('admin.delete.faq', $row->id) }}" method="post">
+                        <form action="{{ route('admin.delete.faq', $row->id) }}" method="POST" class="inline"
+                            id="deleteForm-{{ $row->id }}">
                             @csrf
-                            <button type="submit" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Ini?')"
+                            @method('DELETE') <!-- Ubah menjadi DELETE -->
+                            <button type="button" onclick="confirmDelete('{{ $row->id }}')"
                                 class="flex items-center justify-center text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm p-2 transition-all ease-in-out duration-200 transform hover:scale-105 active:scale-95">
                                 <i class="fas fa-trash-alt"></i> <!-- Ikon trash (hapus) -->
                             </button>
                         </form>
+                        <script>
+                            function confirmDelete(id) {
+                                Swal.fire({
+                                    title: 'Apakah Anda Yakin?',
+                                    text: 'Data yang dihapus tidak dapat dikembalikan!',
+                                    icon: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#d33',
+                                    cancelButtonColor: '#3085d6',
+                                    confirmButtonText: 'Ya, hapus!',
+                                    cancelButtonText: 'Batal'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        // Submit form programmatically
+                                        const form = document.getElementById(`deleteForm-${id}`);
+                                        if (form) {
+                                            form.submit();
+                                        }
+                                    }
+                                });
+                            }
+                        </script>
                     </td>
                 </tr>
             @empty
@@ -43,3 +67,4 @@
 </div>
 
 <x-footer></x-footer>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

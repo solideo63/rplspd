@@ -36,11 +36,11 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/login', [SesiController::class, 'login']);
     Route::get('/kirim-kritik-saran', [KritikSaranController::class, 'index'])->name('kritiksaran');
     Route::post('/kirim-kritik-saran/submit', [KritikSaranController::class, 'submit'])->name('kritiksaran.submit');
-    Route::get('/peraturan', [PeraturanController::class, 'tampil'])->name('tampil.peraturan');    
+    Route::get('/peraturan', [PeraturanController::class, 'tampil'])->name('tampil.peraturan');
 });
 
 //Route::get('/home', function () {
-  //  return redirect('/admin');
+//  return redirect('/admin');
 //});
 
 // hanya bisa diakses yang login (login sebagai apapun)
@@ -74,7 +74,7 @@ Route::get('/admin-faq/tambah', [FaqController::class, 'admin_tambah'])->middlew
 Route::post('/admin-faq/submit', [FaqController::class, 'admin_submit'])->middleware('admin')->name('admin.submit.faq');
 Route::get('/admin-faq/edit/{id}', [FaqController::class, 'admin_edit'])->middleware('admin')->name('admin.edit.faq');
 Route::post('/admin-faq/update/{id}', [FaqController::class, 'admin_update'])->middleware('admin')->name('admin.update.faq');
-Route::post('/admin-faq/delete/{id}', [FaqController::class, 'admin_delete'])->middleware('admin')->name('admin.delete.faq');
+Route::delete('/admin-faq/delete/{id}', [FaqController::class, 'admin_delete'])->middleware('admin')->name('admin.delete.faq');
 
 // Route manage peraturan (admin)
 Route::get('/admin-peraturan', [PeraturanController::class, 'admin_tampil'])->middleware('admin')->name('admin.tampil.peraturan');
@@ -82,7 +82,7 @@ Route::get('/admin-peraturan/tambah', [PeraturanController::class, 'admin_tambah
 Route::post('/admin-peraturan/submit', [PeraturanController::class, 'admin_submit'])->middleware('admin')->name('admin.submit.peraturan');
 Route::get('/admin-peraturan/edit/{id}', [PeraturanController::class, 'admin_edit'])->middleware('admin')->name('admin.edit.peraturan');
 Route::post('/admin-peraturan/update/{id}', [PeraturanController::class, 'admin_update'])->middleware('admin')->name('admin.update.peraturan');
-Route::post('/admin-peraturan/delete/{id}', [PeraturanController::class, 'admin_delete'])->middleware('admin')->name('admin.delete.peraturan');
+Route::delete('/admin-peraturan/delete/{id}', [PeraturanController::class, 'admin_delete'])->middleware('admin')->name('admin.delete.peraturan');
 
 // filter data dengan ajax bisa dilakukan pada menu laporan (oleh spd atau pemonitor)
 Route::get('/filter-by-date-ajax', [CatatController::class, 'filterByDateAjax'])->middleware('laporan')->name('filter.date.ajax');
@@ -144,7 +144,7 @@ Route::delete('/delete-harian/{id}', [KlaimPelanggaranController::class, 'destro
 
 
 //Route::get('/landing', function () {
-  //  return view('landingpage');
+//  return view('landingpage');
 //});
 
 

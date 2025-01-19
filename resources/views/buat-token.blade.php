@@ -9,9 +9,9 @@
             <div id="wadah-token"
                 class="max-w-sm p-6 bg-yellow-100 rounded-lg dark:bg-gray-800 dark:border-gray-700 w-full justify-center">
 
-                <h1 class="text-xl font-bold" style="text-align: center; color:#666;">
+                {{-- <h1 class="text-xl font-bold" style="text-align: center; color:#666;">
                     Token belum dibuat
-                </h1>
+                </h1> --}}
 
             </div>
             <div class="flex justify-end mt-4">
@@ -23,32 +23,6 @@
         </div>
     </div>
 </div>
-
-<!-- Untuk token dipencet dulu baru muncul -->
-<!-- <script>
-    function buatToken() {
-        fetch('/generate-token')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Gagal membuat token');
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Menampilkan token di dalam wadah-token
-                const wadahToken = document.getElementById('wadah-token');
-                wadahToken.innerHTML = `
-                    <h1 class="text-xl font-bold" style="text-align: center; color:#666;">
-                        <span style="color: #666;">${data.token}</span>
-                    </h1>
-                `;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Terjadi kesalahan. Silakan coba lagi.');
-            });
-    }
-</script> -->
 
 <script>
     function buatToken() {
@@ -64,7 +38,14 @@
 
                 if (data.status === 'exists') {
                     // Jika token sudah ada
-                    alert(data.message);
+                    Swal.fire({
+                        title: "Token Sudah Ada!",
+                        html: `Token hari ini adalah: <strong>${data.token}</strong>`,
+                        // text: data.message,
+                        icon: "info",
+                        confirmButtonText: "OK",
+                        confirmButtonColor: "#3085d6"
+                    });
                     wadahToken.innerHTML = `
                         <h1 class="text-xl font-bold" style="text-align: center; color:#666;">
                             <span style="color: #666;">${data.token}</span>
@@ -72,7 +53,14 @@
                     `;
                 } else if (data.status === 'created') {
                     // Jika token berhasil dibuat
-                    alert(data.message);
+                    Swal.fire({
+                        title: "Berhasil!",
+                        html: `Token baru telah dibuat: <strong>${data.token}</strong>`,
+                        // text: data.message,
+                        icon: "success",
+                        confirmButtonText: "OK",
+                        confirmButtonColor: "#3085d6"
+                    });
                     wadahToken.innerHTML = `
                         <h1 class="text-xl font-bold" style="text-align: center; color:#666;">
                             <span style="color: #666;">${data.token}</span>
@@ -82,55 +70,15 @@
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Terjadi kesalahan. Silakan coba lagi.');
+                Swal.fire({
+                    title: "Error!",
+                    text: "Terjadi kesalahan. Silakan coba lagi.",
+                    icon: "error",
+                    confirmButtonText: "OK",
+                    confirmButtonColor: "#d33"
+                });
             });
     }
 </script>
-
-<!-- Untuk token baru masuk halaman langsung muncul -->
-<!-- <script>
-    function buatToken() {
-        fetch('/generate-token')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Gagal membuat token');
-                }
-                return response.json();
-            })
-            .then(data => {
-                const wadahToken = document.getElementById('wadah-token');
-                wadahToken.innerHTML = `
-                    <h1 class="text-xl font-bold" style="text-align: center; color:#666;">
-                        <span style="color: #666;">${data.token}</span>
-                    </h1>
-                `;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Terjadi kesalahan. Silakan coba lagi.');
-            });
-    }
-    document.addEventListener('DOMContentLoaded', () => {
-        fetch('/generate-token')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Gagal memuat token');
-                }
-                return response.json();
-            })
-            .then(data => {
-                const wadahToken = document.getElementById('wadah-token');
-                wadahToken.innerHTML = `
-                    <h1 class="text-xl font-bold" style="text-align: center; color:#666;">
-                        <span style="color: #666;">${data.token}</span>
-                    </h1>
-                `;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    });
-</script> -->
-
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <x-footer></x-footer>

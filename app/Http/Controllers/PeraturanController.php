@@ -9,11 +9,11 @@ class PeraturanController extends Controller
 {
     //public function index()
     //{
-      //  $faqs = faq::all();
-        //return view('faq', [
-          //  'title' => 'FAQ',
-            //'faqs' => $faqs
-        //]);
+    //  $faqs = faq::all();
+    //return view('faq', [
+    //  'title' => 'FAQ',
+    //'faqs' => $faqs
+    //]);
     //}
 
     public function admin_tampil()
@@ -45,7 +45,7 @@ class PeraturanController extends Controller
         return view('admin.peraturan.edit', compact('data'));
     }
 
-    public function admin_update(Request $request,$id)
+    public function admin_update(Request $request, $id)
     {
         $peraturan = peraturan::find($id);
         $peraturan->nama = $request->nama;
@@ -59,8 +59,13 @@ class PeraturanController extends Controller
     public function admin_delete($id)
     {
         $data = peraturan::find($id);
+
+        if (!$data) {
+            return redirect()->route('admin.tampil.peraturan')->with('error', 'Data tidak ditemukan!');
+        }
+
         $data->delete();
-        return redirect()->route('admin.tampil.peraturan');
+        return redirect()->route('admin.tampil.peraturan')->with('success', 'Data berhasil dihapus!');
     }
 
     public function tampil()

@@ -44,21 +44,25 @@ class FaqController extends Controller
         return view('admin.faq.edit', compact('data'));
     }
 
-    public function admin_update(Request $request,$id)
+    public function admin_update(Request $request, $id)
     {
         $faq = faq::find($id);
         $faq->tanya = $request->tanya;
         $faq->jawab = $request->jawab;
         $faq->update();
 
-        return redirect()->route('admin.tampil.faq');
+        return redirect()->route('admin.tampil.faq')->with('success', 'Data berhasil diupdate');
     }
 
     public function admin_delete($id)
     {
-        $data = faq::find($id);
+        $data = Faq::find($id);
+
+        if (!$data) {
+            return redirect()->route('admin.tampil.faq')->with('error', 'Data tidak ditemukan!');
+        }
+
         $data->delete();
-        return redirect()->route('admin.tampil.faq');
+        return redirect()->route('admin.tampil.faq')->with('success', 'Data berhasil dihapus!');
     }
 }
-
