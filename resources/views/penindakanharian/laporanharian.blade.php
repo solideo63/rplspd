@@ -359,8 +359,9 @@
                                     <td class="px-6 py-3 flex">
                                         <!-- Edit Button with only icon -->
                                         <a href="{{ route('enter-token', $row->id) }}"
-                                            class="flex items-center justify-center text-white bg-yellow-300 hover:bg-yellow-400 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm p-2 transition-all ease-in-out duration-200 transform hover:scale-105 active:scale-95 mr-2">
-                                            <i class="fas fa-file-invoice"></i><!-- Ikon edit -->
+                                            class="flex items-center justify-center text-white bg-yellow-300 hover:bg-yellow-400 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-semibold rounded-lg text-sm px-4 py-2 transition-transform duration-200 transform hover:scale-105 active:scale-95 mr-2">
+                                            <!--<i class="fas fa-file-invoice mr-2"></i> <!-- Ikon edit -->
+                                            Klaim Pelanggaran
                                         </a>
                                         {{-- <a href="{{ route('catatedit.harian', $row->id) }}"
                                             class="flex items-center justify-center text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm p-2 transition-all ease-in-out duration-200 transform hover:scale-105 active:scale-95 mr-2">

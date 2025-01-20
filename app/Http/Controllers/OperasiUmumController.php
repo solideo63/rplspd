@@ -213,7 +213,7 @@ class OperasiUmumController extends Controller
             'updated_at' => $timestamp,
         ]);
 
-        app(EmailController::class)->sendEmail($request);
+        app(EmailController::class)->sendEmailUpdate($request);
 
         // Redirect ke halaman edit dengan pesan sukses
         return redirect()->route('laporanumum', $id);

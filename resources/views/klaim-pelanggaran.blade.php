@@ -297,8 +297,8 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="button" onclick="confirmDelete('{{ $row->id }}')"
-                                                    class="flex items-center justify-center text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm p-2 transition-all ease-in-out duration-200 transform hover:scale-105 active:scale-95">
-                                                    <i class="fas fa-trash-alt"></i> <!-- Ikon trash (hapus) -->
+                                                    class="flex items-center justify-center text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-semibold rounded-lg text-sm px-4 py-2 transition-transform duration-200 transform hover:scale-105 active:scale-95 mr-2">
+                                                    Hapus Pelanggaran
                                                 </button>
                                             </form>
                                         </td>

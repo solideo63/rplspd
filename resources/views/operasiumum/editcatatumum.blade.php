@@ -61,141 +61,34 @@
                 <div class="mb-5">
                     <label for="nim"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">NIM</label>
-                    <input type="text" id="nim" name="nim" required
+                    <input type="text" id="nim" name="nim" readonly
                         value="{{ old('nim', $operasiUmum->nim ?? '') }}"
                         class="shadow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 </div>
                 <div class="mb-5">
                     <label for="nama_mahasiswa"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Mahasiswa</label>
-                    <input type="text" id="nama_mahasiswa" name="nama_mahasiswa" required disabled
+                    <input type="text" id="nama_mahasiswa" name="nama_mahasiswa" readonly
                         value="{{ old('nama_mahasiswa', $operasiUmum->nama_mahasiswa ?? '') }}"
                         class="shadow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 </div>
                 <div class="mb-5">
                     <label for="kelas"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kelas</label>
-                    <select id="kelas" name="kelas" required disabled
+                    <input type="text" id="kelas" name="kelas" readonly
+                        value="{{ old('kelas', $operasiUmum->kelas ?? '') }}"
                         class="shadow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option value="" disabled hidden>Pilih Kelas...</option>
-                        <option value="1D31"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '1D31' ? 'selected' : '' }}>1D31</option>
-                        <option value="1D32"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '1D32' ? 'selected' : '' }}>1D32</option>
-                        <option value="1KS1"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '1KS1' ? 'selected' : '' }}>1KS1</option>
-                        <option value="1KS2"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '1KS2' ? 'selected' : '' }}>1KS2</option>
-                        <option value="1KS3"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '1KS3' ? 'selected' : '' }}>1KS3</option>
-                        <option value="1KS4"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '1KS4' ? 'selected' : '' }}>1KS4</option>
-                        <option value="1ST1"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '1ST1' ? 'selected' : '' }}>1ST1</option>
-                        <option value="1ST2"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '1ST2' ? 'selected' : '' }}>1ST2</option>
-                        <option value="1ST3"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '1ST3' ? 'selected' : '' }}>1ST3</option>
-                        <option value="1ST4"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '1ST4' ? 'selected' : '' }}>1ST4</option>
-                        <option value="2D31"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '2D31' ? 'selected' : '' }}>2D31</option>
-                        <option value="2D32"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '2D32' ? 'selected' : '' }}>2D32</option>
-                        <option value="2D33"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '2D33' ? 'selected' : '' }}>2D33</option>
-                        <option value="2KS1"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '2KS1' ? 'selected' : '' }}>2KS1</option>
-                        <option value="2KS2"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '2KS2' ? 'selected' : '' }}>2KS2</option>
-                        <option value="2KS3"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '2KS3' ? 'selected' : '' }}>2KS3</option>
-                        <option value="2KS4"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '2KS4' ? 'selected' : '' }}>2KS4</option>
-                        <option value="2ST1"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '2ST1' ? 'selected' : '' }}>2ST1</option>
-                        <option value="2ST2"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '2ST2' ? 'selected' : '' }}>2ST2</option>
-                        <option value="2ST3"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '2ST3' ? 'selected' : '' }}>2ST3</option>
-                        <option value="2ST4"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '2ST4' ? 'selected' : '' }}>2ST4</option>
-                        <option value="2ST5"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '2ST5' ? 'selected' : '' }}>2ST5</option>
-                        <option value="2ST6"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '2ST6' ? 'selected' : '' }}>2ST6</option>
-                        <option value="2ST7"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '2ST7' ? 'selected' : '' }}>2ST7</option>
-                        <option value="3D31"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '3D31' ? 'selected' : '' }}>3D31</option>
-                        <option value="3D32"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '3D32' ? 'selected' : '' }}>3D32</option>
-                        <option value="3D33"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '3D33' ? 'selected' : '' }}>3D33</option>
-                        <option value="3SD1"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '3SD1' ? 'selected' : '' }}>3SD1</option>
-                        <option value="3SD2"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '3SD2' ? 'selected' : '' }}>3SD2</option>
-                        <option value="3SE1"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '3SE1' ? 'selected' : '' }}>3SE1</option>
-                        <option value="3SE2"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '3SE2' ? 'selected' : '' }}>3SE2</option>
-                        <option value="3SE3"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '3SE3' ? 'selected' : '' }}>3SE3</option>
-                        <option value="3SE4"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '3SE4' ? 'selected' : '' }}>3SE4</option>
-                        <option value="3SK1"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '3SK1' ? 'selected' : '' }}>3SK1</option>
-                        <option value="3SK2"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '3SK2' ? 'selected' : '' }}>3SK2</option>
-                        <option value="3SK3"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '3SK3' ? 'selected' : '' }}>3SK3</option>
-                        <option value="3SK4"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '3SK3' ? 'selected' : '' }}>3SK4</option>
-                        <option value="3SI1"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '3SI1' ? 'selected' : '' }}>3SI1</option>
-                        <option value="3SI2"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '3SI2' ? 'selected' : '' }}>3SI2</option>
-                        <option value="4SD1"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '4SD1' ? 'selected' : '' }}>4SD1</option>
-                        <option value="4SD2"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '4SD2' ? 'selected' : '' }}>4SD2</option>
-                        <option value="4SD3"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '4SD3' ? 'selected' : '' }}>4SD3</option>
-                        <option value="4SE1"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '4SE1' ? 'selected' : '' }}>4SE1</option>
-                        <option value="4SE2"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '4SE2' ? 'selected' : '' }}>4SE2</option>
-                        <option value="4SE3"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '4SE3' ? 'selected' : '' }}>4SE3</option>
-                        <option value="4SI1"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '4SI1' ? 'selected' : '' }}>4SI1</option>
-                        <option value="4SI2"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '4SI2' ? 'selected' : '' }}>4SI2</option>
-                        <option value="4SI3"
-                            {{ old('kelas', $operasiUmum->kelas ?? '') == '4SI3' ? 'selected' : '' }}>4SI3</option>
-                    </select>
                 </div>
                 {{-- <input type="hidden" name="tingkat" value="{{ $tingkat }}"> --}}
                 <div class="mb-5">
                     <label for="tingkat"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tingkat</label>
-                    <select id="tingkat" name="tingkat" required disabled
+                    <input type="text" id="tingkat" name="tingkat" readonly
+                        value="{{ old('kelas', $operasiUmum->tingkat ?? '') }}"
                         class="shadow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option value="" disabled hidden>Pilih Tingkat...</option>
-                        <option value="1"
-                            {{ old('tingkat', $operasiUmum->tingkat ?? '') == '1' ? 'selected' : '' }}>1</option>
-                        <option value="2"
-                            {{ old('tingkat', $operasiUmum->tingkat ?? '') == '2' ? 'selected' : '' }}>2</option>
-                        <option value="3"
-                            {{ old('tingkat', $operasiUmum->tingkat ?? '') == '3' ? 'selected' : '' }}>3</option>
-                        <option value="4"
-                            {{ old('tingkat', $operasiUmum->tingkat ?? '') == '4' ? 'selected' : '' }}>4</option>
-                    </select>
                 </div>
                 <div class="mb-5">
-                    <label for="pelanggaran"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jenis
+                    <label for="pelanggaran" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jenis
                         Pelanggaran</label>
                     <select
                         class="pelanggaran shadow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

@@ -116,7 +116,7 @@ class OperasiRutinController extends Controller
         app(EmailController::class)->sendEmail($request); // Pastikan fungsi sendEmail sudah benar
 
         // Redirect ke halaman view catat.blade.php dengan pesan sukses
-        session()->flash('success', 'Data berhasil ditambahkan');
+        session()->flash('success', 'Data berhasil ditambahkan.');
         return redirect()->route('catat'); // Pastikan Anda sudah mendefinisikan route ini
     }
 
@@ -222,10 +222,12 @@ class OperasiRutinController extends Controller
             'tingkat' => $tingkat, // Hanya memperbarui tingkat
             'pelanggaran' => $namaPelanggaran, // Memastikan pelanggaran tetap sesuai dengan kode yang dipilih
             'nama_pencatat' => $pencatat,
+
+
             'updated_at' => $timestamp,
         ]);
 
-        app(EmailController::class)->sendEmail($request);
+        app(EmailController::class)->sendEmailUpdate($request);
         // dd($operasiRutin->fresh());
 
         // Redirect ke halaman edit dengan pesan sukses

@@ -115,12 +115,37 @@
 
                                         <div class="flex mt-4 md:mt-6">
                                             <a href="/ubah-password"
-                                                class="inline-flex items-center px-4 py-2 text-sm font-semibold text-center text-white bg-yellow-300 rounded-lg hover:bg-yellow-400 focus:ring-4 focus:outline-none focus:ring-yellow-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Ganti
-                                                Password</a>
-                                            <a href="/logout"
-                                                class="py-2 px-4 ms-2 text-sm font-semibold text-center text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Logout</a>
+                                                class="inline-flex items-center px-4 py-2 text-sm font-semibold text-center text-white bg-yellow-300 rounded-lg hover:bg-yellow-400 focus:ring-4 focus:outline-none focus:ring-yellow-300"
+                                                style="margin-right: 10px;">Ganti Password
+                                            </a>
+                                            <a id="logoutButton"
+                                                class="inline-flex items-center px-4 py-2 text-sm font-semibold text-center text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100"
+                                                style="cursor: pointer;">Logout
                                             </a>
                                         </div>
+
+                                        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                                        <script>
+                                            document.getElementById('logoutButton').addEventListener('click', function(e) {
+                                                e.preventDefault(); // Mencegah aksi default tombol logout
+
+                                                // Tampilkan SweetAlert
+                                                Swal.fire({
+                                                    title: 'Logout Berhasil!',
+                                                    // text: 'Anda telah berhasil keluar.',
+                                                    icon: 'success',
+                                                    timer: 3000, // SweetAlert tetap muncul selama 2 detik
+                                                    showConfirmButton: false, // Tidak ada tombol "OK"
+                                                    allowOutsideClick: false, // Mencegah klik di luar untuk menutup
+                                                    allowEscapeKey: false, // Mencegah popup ditutup dengan tombol ESC
+                                                    didOpen: () => {
+                                                        // Redirect ke halaman logout saat SweetAlert terbuka
+                                                        window.location.href = "/logout";
+                                                    }
+                                                });
+                                            });
+                                        </script>
+
                                     </div>
                                 </div>
                                 <div data-popper-arrow></div>
