@@ -89,13 +89,13 @@
                 <div class="mb-5">
                     <label for="nama_mahasiswa"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Mahasiswa</label>
-                    <input type="text" id="nama_mahasiswa" name="nama_mahasiswa" readonly
+                    <input type="text" id="nama_mahasiswa" name="nama_mahasiswa" readonly disabled
                         class="shadow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 </div>
                 <div class="mb-5">
                     <label for="kelas"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kelas</label>
-                    <select id="kelas" name="kelas" readonly
+                    <select id="kelas" name="kelas" readonly disabled
                         class="shadow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option value="" disabled selected>Pilih Kelas...</option>
                         <option value="1D31">1D31</option>

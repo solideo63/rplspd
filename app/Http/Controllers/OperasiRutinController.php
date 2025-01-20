@@ -269,6 +269,7 @@ class OperasiRutinController extends Controller
 
         // Filter data berdasarkan tanggal
         $data = OperasiRutin::whereDate('created_at', $tanggal)
+            ->where('tingkat', $tingkat) // Menambahkan filter berdasarkan tingkat
             ->orderBy('created_at', 'desc') // Mengurutkan berdasarkan tanggal secara descending
             ->get();
         if ($format === 'excel') {
