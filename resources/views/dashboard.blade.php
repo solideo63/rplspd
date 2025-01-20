@@ -1,7 +1,7 @@
 <x-layout>{{ $title }}</x-layout>
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
-<style>
+{{-- <style>
     .custom-alert {
         position: fixed;
         top: 40px;
@@ -23,15 +23,15 @@
         box-sizing: border-box;
         /* Pastikan padding dihitung dalam lebar elemen */
     }
-</style>
+</style> --}}
 
-@if (session('success'))
+{{-- @if (session('success'))
     <div id="successAlert" class="custom-alert">
         {{ session('success') }}
     </div>
-@endif
+@endif --}}
 
-<script>
+{{-- <script>
     // Menghilangkan pesan setelah 3 detik
     setTimeout(() => {
         const alertBox = document.getElementById('successAlert');
@@ -40,7 +40,7 @@
             setTimeout(() => alertBox.remove(), 500); // Hapus elemen setelah animasi
         }
     }, 3000);
-</script>
+</script> --}}
 
 <div class="p-4 sm:ml-64 mt-5">
     <!-- Container untuk Greeting dan Quotes -->
@@ -292,6 +292,23 @@
         // Panggil fungsi updateGreeting saat halaman dimuat
         updateGreeting();
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            @if (session('success'))
+                Swal.fire({
+                    title: '{{ session('success') }}',
+                    // text: '{{ session('success') }}', // Pesan dari session flash
+                    icon: 'success',
+                    timer: 2000, // Popup otomatis hilang dalam 3 detik
+                    showConfirmButton: false, // Tidak ada tombol "OK"
+                    allowOutsideClick: false, // Tidak bisa klik di luar
+                    allowEscapeKey: false // Tidak bisa tutup dengan ESC
+                });
+            @endif
+        });
+    </script>
+
 
 </div>
 

@@ -31,7 +31,7 @@ class SesiController extends Controller
         ];
 
         if (Auth::attempt($infologin)) {
-            session()->flash('success', 'Login berhasil! Selamat datang di dashboard.');
+            session()->flash('success', 'Login berhasil!');
             // Redirect ke dashboard jika login berhasil
             return redirect('dashboard');
         } else {
