@@ -123,6 +123,9 @@
         $('#nim').on('input', function() {
             const nim = $(this).val();
 
+            // Hapus pesan error sebelumnya
+            $('#nim-error').remove();
+
             if (nim.length === 9) { // Validasi NIM hanya jika panjangnya 9 karakter
                 $.ajax({
                     url: '{{ route('get.mahasiswa') }}',
@@ -139,12 +142,18 @@
                             $('#nama_mahasiswa').val('');
                             $('#kelas').val('');
                             $('#tingkat').val('');
+                            $('#nim').after(
+                                '<span id="nim-error" style="color: red; font-size: 12px;">Data tidak ditemukan atau tingkat tidak sesuai</span>'
+                            );
                         }
                     },
                     error: function() {
                         $('#nama_mahasiswa').val('');
                         $('#kelas').val('');
                         $('#tingkat').val('');
+                        $('#nim').after(
+                            '<span id="nim-error" style="color: red; font-size: 12px;">Data tidak ditemukan atau tingkat tidak sesuai</span>'
+                        );
                     }
                 });
             } else {

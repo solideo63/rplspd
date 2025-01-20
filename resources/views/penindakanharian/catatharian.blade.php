@@ -123,6 +123,9 @@
         $('#nim').on('input', function() {
             const nim = $(this).val();
 
+            // Hapus pesan error sebelumnya
+            $('#nim-error').remove();
+
             if (nim.length === 9) { // Validasi NIM hanya jika panjangnya 9 karakter
                 $.ajax({
                     url: '{{ route('get.mahasiswa') }}',
