@@ -15,6 +15,7 @@ return new class extends Migration
             $table->string('nim');
             $table->string('nama');
             $table->string('kelas');
+            $table->string('tahun_akademik');
             $table->timestamps();
         });
     }

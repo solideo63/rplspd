@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 use Carbon\Carbon;
+use App\Models\Mahasiswa;
 use App\Models\Pelanggaran;
 use Illuminate\Http\Request;
 use App\Models\PenindakanHarian;
@@ -20,10 +21,26 @@ class PenindakanHarianController extends Controller
      */
     public function index()
     {
-        // Mengambil semua data dari tabel operasi_rutin
-        $data = PenindakanHarian::orderBy('created_at', 'desc')->paginate(30);
+        $data = PenindakanHarian::join('mahasiswas', function ($join) {
+            $join->on('penindakan_harian.nim', '=', 'mahasiswas.nim')
+                ->on('penindakan_harian.tahun_akademik', '=', 'mahasiswas.tahun_akademik');
+        })
+            ->where('penindakan_harian.status_pelanggaran', '!=', 'Dibatalkan') // Filter status "Dibatalkan"
+            ->select(
+                'penindakan_harian.created_at as tanggal',
+                'penindakan_harian.created_at',
+                'penindakan_harian.updated_at',
+                'penindakan_harian.nim',
+                'mahasiswas.nama',
+                'mahasiswas.kelas',
+                'penindakan_harian.pelanggaran',
+                'penindakan_harian.nama_pencatat',
+                'penindakan_harian.status_pelanggaran',
+                'penindakan_harian.id'
+            )
+            ->orderBy('penindakan_harian.created_at', 'desc')
+            ->paginate(30);
 
-        // Mengirim data ke view
         return view('penindakanharian.laporanharian', compact('data'));
     }
 
@@ -44,62 +61,52 @@ class PenindakanHarianController extends Controller
     {
         $request->validate([
             'nim' => 'required|regex:/^[0-9]{9}$/', // NIM harus 9 digit angka
-            'nama_mahasiswa' => 'required|string|max:255',
-            'kelas' => 'required|string',
             'pelanggaran' => 'required',
-            'tingkat' => 'required|integer',
         ]);
 
-        // Tambahkan nama pencatat dari session login
+        $mahasiswa = Mahasiswa::where('nim', $request->nim)
+            ->where('tahun_akademik', $request->tahun_akademik)
+            ->first();
 
-        $nim = $request->nim;
-        $nama = $request->nama_mahasiswa;
-        $kelas = $request->kelas;
+        if (!$mahasiswa) {
+            return response()->json(['message' => 'Mahasiswa tidak ditemukan'], 404);
+        }
+
         $pelanggaran = $request->pelanggaran;
-        $tingkat = $request->tingkat;
         $pencatat = Auth::user()->name;
+        $tahunAkademik = $request->input('tahun_akademik');
 
         $data = [];
-
-        // Menggunakan Carbon untuk mendapatkan waktu lokal sesuai zona waktu Asia/Jakarta
-        $timestamp = Carbon::now('Asia/Jakarta'); // Menetapkan waktu sesuai dengan zona waktu Jakarta
 
         if (is_array($pelanggaran)) {
             foreach ($pelanggaran as $kode) {
                 $namaPelanggaran = Pelanggaran::where('kodePelanggaran', $kode)->value('namaPelanggaran') ?? 'Unknown'; // Ambil nama pelanggaran
                 array_push($data, [
-                    'nim' => $nim,
-                    'nama_mahasiswa' => $nama,
-                    'kelas' => $kelas,
-                    'tingkat' => $tingkat,
+                    'nim' => $mahasiswa->nim,
                     'pelanggaran' => $namaPelanggaran,
                     'nama_pencatat' => $pencatat,
-                    'created_at' => $timestamp, // Gunakan timestamp sesuai zona waktu lokal
+                    'created_at' => now(),
+                    'tahun_akademik' => $tahunAkademik,
+                    'status_pelanggaran' => 'Ditambahkan'
                 ]);
             }
         } else {
-            $namaPelanggaran = Pelanggaran::where('kodePelanggaran', $pelanggaran)->value('namaPelanggaran') ?? 'Unknown'; // Ambil nama pelanggaran
+            $namaPelanggaran = Pelanggaran::where('kodePelanggaran', $pelanggaran)->value('namaPelanggaran') ?? 'Unknown';
             array_push($data, [
-                'nim' => $nim,
-                'nama_mahasiswa' => $nama,
-                'kelas' => $kelas,
-                'tingkat' => $tingkat,
+                'nim' => $mahasiswa->nim,
                 'pelanggaran' => $namaPelanggaran,
                 'nama_pencatat' => $pencatat,
-                'created_at' => $timestamp, // Gunakan timestamp sesuai zona waktu lokal
+                'created_at' => now(),
+                'tahun_akademik' => $tahunAkademik,
+                'status_pelanggaran' => 'Ditambahkan'
             ]);
         }
 
         PenindakanHarian::insert($data);
-        // Simpan data ke database menggunakan Eloquent
-        // $operasiRutin = OperasiRutin::create($data); // Pastikan model OperasiRutin memiliki $fillable yang sesuai
+        app(EmailController::class)->sendEmail($request);
 
-        // Setelah menyimpan data, panggil EmailController untuk mengirim email
-        app(EmailController::class)->sendEmail($request); // Pastikan fungsi sendEmail sudah benar
-
-        // Redirect ke halaman view catat.blade.php dengan pesan sukses
         session()->flash('success', 'Data berhasil ditambahkan');
-        return redirect()->route('catat.harian'); // Pastikan Anda sudah mendefinisikan route ini
+        return redirect()->route('catat.harian');
     }
 
     /**
@@ -124,16 +131,20 @@ class PenindakanHarianController extends Controller
      */
     public function edit($id)
     {
-        // Ambil data operasi rutin yang sesuai dengan ID
-        $penindakanHarian = PenindakanHarian::findOrFail($id);
+        $penindakanHarian = PenindakanHarian::select(
+            'penindakan_harian.*',
+            'mahasiswas.nama',
+            'mahasiswas.kelas'
+        )
+            ->join('mahasiswas', function ($join) {
+                $join->on('penindakan_harian.nim', '=', 'mahasiswas.nim')
+                    ->on('penindakan_harian.tahun_akademik', '=', 'mahasiswas.tahun_akademik'); // Join berdasarkan NIM dan tahun akademik
+            })
+            ->where('penindakan_harian.id', $id) // Filter berdasarkan ID operasi_rutin
+            ->firstOrFail();
 
-        // Ambil semua data pelanggaran
         $pelanggarans = Pelanggaran::all();
-
         $selectedPelanggaran = $penindakanHarian->pelanggaran;
-
-        // dd($selectedPelanggaran);
-        // Kirim data ke view untuk ditampilkan dalam form
         return view('penindakanharian.editcatatharian', compact('operasiUmum', 'pelanggarans', 'selectedPelanggaran'));
     }
 
@@ -142,33 +153,29 @@ class PenindakanHarianController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Validasi input dari form
         $request->validate([
-            'nim' => 'required|regex:/^[0-9]{9}$/', // NIM harus 9 digit angka
-            'nama_mahasiswa' => 'required|string|max:255',
-            'kelas' => 'required|string',
-            'pelanggaran' => 'required', // Pelanggaran harus berupa kode pelanggaran tunggal
-            'tingkat' => 'required|integer',
+            'nim' => 'required|regex:/^[0-9]{9}$/',
+            'pelanggaran' => 'required',
         ]);
 
         $pelanggarans = Pelanggaran::all();
 
-        // Cari data OperasiRutin berdasarkan ID
-        $penindakanHarian = PenindakanHarian::find($id);
+        // Mencari data OperasiRutin berdasarkan ID
+        $penindakanHarian = PenindakanHarian::where('id', $id)->firstOrFail();
 
-        if (!$penindakanHarian) {
-            return redirect()->route('catatedit.harian', $id)->with('error', 'Data tidak ditemukan');
+        // Cek apakah mahasiswa dengan NIM dan tahun akademik sesuai ada
+        $mahasiswa = Mahasiswa::where('nim', $request->nim)
+            ->where('tahun_akademik', $penindakanHarian->tahun_akademik)
+            ->first();
+
+        if (!$mahasiswa) {
+            return redirect()->route('catatedit', $id)->with('error', 'Mahasiswa tidak ditemukan atau tidak sesuai dengan tahun akademik');
         }
 
-        // Ambil data dari request
-        $nim = $request->nim;
-        $nama = $request->nama_mahasiswa;
-        $kelas = $request->kelas;
-        $kodePelanggaran = $request->pelanggaran; // Kode pelanggaran tunggal
-        $tingkat = $request->tingkat;
+        $kodePelanggaran = $request->pelanggaran;
         $pencatat = Auth::user()->name;
+        $tahunAkademik = $request->input('tahun_akademik', $penindakanHarian->tahun_akademik);
 
-        // Jika pelanggaran berupa kodePelanggaran
         $namaPelanggaran = null;
 
         // Cek apakah $kodePelanggaran adalah namaPelanggaran
@@ -182,17 +189,14 @@ class PenindakanHarianController extends Controller
             $namaPelanggaran = Pelanggaran::where('kodePelanggaran', $kodePelanggaran)->value('namaPelanggaran') ?? 'Unknown';
         }
 
-        $timestamp = Carbon::now('Asia/Jakarta'); // Menetapkan waktu sesuai dengan zona waktu Jakarta
-
         // Update data di database
         $penindakanHarian->update([
-            'nim' => $nim,
-            'nama_mahasiswa' => $nama,
-            'kelas' => $kelas,
-            'tingkat' => $tingkat, // Hanya memperbarui tingkat
-            'pelanggaran' => $namaPelanggaran, // Memastikan pelanggaran tetap sesuai dengan kode yang dipilih
+            'nim' => $mahasiswa->nim,
+            'pelanggaran' => $namaPelanggaran, // Update pelanggaran sesuai dengan data yang diterima
             'nama_pencatat' => $pencatat,
-            'updated_at' => $timestamp,
+            'updated_at' => now(), // Update timestamp
+            'tahun_akademik' => $tahunAkademik,
+            'status_pelanggaran' => 'Diperbarui'
         ]);
 
         app(EmailController::class)->sendEmail($request);
@@ -209,40 +213,62 @@ class PenindakanHarianController extends Controller
         try {
             $penindakanHarian = PenindakanHarian::find($id);
 
+            // Jika data tidak ditemukan, kembalikan respon dengan status 404
             if (!$penindakanHarian) {
                 return response()->json(['message' => 'Data tidak ditemukan'], 404);
             }
 
-            $penindakanHarian->delete();
+            // Update status menjadi "dibatalkan"
+            $penindakanHarian->update([
+                'status_pelanggaran' => 'Dibatalkan', // Pastikan kolom ini ada di tabel
+                'updated_at' => now() // Perbarui waktu terakhir diupdate
+            ]);
 
             return redirect()->route('laporanharian')->with('success', 'Data berhasil dihapus');
         } catch (Exception $e) {
-            // Menangani kesalahan jika terjadi exception
             return redirect()->route('laporanharian')->with('error', 'Data gagal dihapus: ' . $e->getMessage());
         }
     }
 
     public function filter(Request $request)
     {
-        // Ambil query builder untuk OperasiRutin
-        $query = PenindakanHarian::query();
+        // Ambil query builder untuk OperasiRutin dengan join ke tabel Mahasiswa
+        $query = PenindakanHarian::join('mahasiswas', function ($join) {
+            $join->on('penindakan_harian.nim', '=', 'mahasiswas.nim')
+                ->on('penindakan_harian.tahun_akademik', '=', 'mahasiswas.tahun_akademik');
+        });
+
+        // Tambahkan filter untuk mengabaikan data dengan status "dibatalkan"
+        $query->where('penindakan_harian.status_pelanggaran', '!=', 'dibatalkan');
 
         // Filter berdasarkan tanggal jika parameter 'tanggal' ada dan tidak kosong
         if ($request->has('tanggal') && $request->tanggal != '') {
-            $query->whereDate('created_at', $request->tanggal);
+            $query->whereDate('penindakan_harian.created_at', $request->tanggal);
         }
 
-        // Filter berdasarkan tingkat jika parameter 'tingkat' ada dan tidak kosong
+        // Filter berdasarkan tingkat (mengambil inisial kelas)
         if ($request->has('tingkat') && $request->tingkat != '') {
-            $query->where('tingkat', $request->tingkat);
+            $query->whereRaw('LEFT(mahasiswas.kelas, 1) = ?', [$request->tingkat]);
         }
 
+        // Filter berdasarkan nama mahasiswa
         if ($request->has('nama') && $request->nama != '') {
-            $query->where('nama_mahasiswa', 'like', '%' . $request->nama . '%');
+            $query->where('mahasiswas.nama', 'like', '%' . $request->nama . '%');
         }
 
-        // Ambil data hasil filter
-        $data = $query->orderBy('created_at', 'desc')->paginate(30);
+        $data = $query->select(
+            'penindakan_harian.created_at as tanggal',
+            'penindakan_harian.created_at',
+            'penindakan_harian.updated_at',
+            'penindakan_harian.nim',
+            'mahasiswas.nama',
+            'mahasiswas.kelas',
+            'penindakan_harian.pelanggaran',
+            'penindakan_harian.nama_pencatat',
+            'penindakan_harian.id'
+        )
+            ->orderBy('penindakan_harian.created_at', 'desc')
+            ->paginate(30);
 
         // Kirim data ke view
         return view('penindakanharian.laporanharian', compact('data'));
@@ -252,10 +278,14 @@ class PenindakanHarianController extends Controller
     {
         $tanggal = $request->input('tanggal');
 
-        // Filter data berdasarkan tanggal
-        $data = PenindakanHarian::whereDate('created_at', $tanggal)
-            ->orderBy('created_at', 'desc') // Mengurutkan berdasarkan tanggal secara descending
-            ->get();
+        $data = PenindakanHarian::join('mahasiswas', function ($join) {
+            $join->on('penindakan_harian.nim', '=', 'mahasiswas.nim')
+                ->on('penindakan_harian.tahun_akademik', '=', 'mahasiswas.tahun_akademik'); // Syarat NIM dan tahun akademik harus sama
+        })
+            ->whereDate('penindakan_harian.created_at', $tanggal) // Filter berdasarkan tanggal
+            ->where('penindakan_harian.status_pelanggaran', '!=', 'dibatalkan') // Mengabaikan data dengan status dibatalkan
+            ->orderBy('penindakan_harian.created_at', 'desc') // Mengurutkan berdasarkan tanggal secara descending
+            ->get(['penindakan_harian.*', 'mahasiswas.kelas', 'mahasiswas.nama']); // Memilih kolom yang diperlukan
 
         if ($format === 'excel') {
             return Excel::download(new PenindakanHarianExport($data, $tanggal), "laporan_penindakan_harian_{$tanggal}.xlsx");

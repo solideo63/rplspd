@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Exception;
-use Carbon\Carbon;
+use App\Models\Mahasiswa;
 use App\Models\OperasiUmum;
 use App\Models\Pelanggaran;
 use Illuminate\Http\Request;
@@ -18,8 +18,24 @@ class OperasiUmumController extends Controller
      */
     public function index()
     {
-        // Mengambil data dari tabel dengan pagination
-        $data = OperasiUmum::orderBy('created_at', 'desc')
+        $data = OperasiUmum::join('mahasiswas', function ($join) {
+            $join->on('operasi_umums.nim', '=', 'mahasiswas.nim')
+                ->on('operasi_umums.tahun_akademik', '=', 'mahasiswas.tahun_akademik');
+        })
+            ->where('operasi_umums.status_pelanggaran', '!=', 'Dibatalkan') // Filter status "Dibatalkan"
+            ->select(
+                'operasi_umums.created_at as tanggal',
+                'operasi_umums.created_at',
+                'operasi_umums.updated_at',
+                'operasi_umums.nim',
+                'mahasiswas.nama',
+                'mahasiswas.kelas',
+                'operasi_umums.pelanggaran',
+                'operasi_umums.nama_pencatat',
+                'operasi_umums.status_pelanggaran',
+                'operasi_umums.id'
+            )
+            ->orderBy('operasi_umums.created_at', 'desc')
             ->paginate(30);
 
         // Mengirim data ke view
@@ -36,105 +52,56 @@ class OperasiUmumController extends Controller
         return view('operasiumum.catatumum', compact('pelanggarans'));
     }
 
-    public function showForm(Request $request)
-    {
-        $pelanggarans = Pelanggaran::all();
-
-        // Jika tidak berada di halaman showForm dan session tingkat ada, maka hapus session tingkat
-        if (!request()->routeIs('catat')) {
-            session()->forget('tingkat');
-        }
-
-        // Ambil nilai tingkat dari query string atau session
-        $tingkat = $request->query('tingkat') ?? session('tingkat');
-
-        // Jika tingkat ada di query string, simpan di session
-        if ($tingkat) {
-            session(['tingkat' => $tingkat]);
-        }
-        return view('operasiumum.catatumum', compact('pelanggarans', 'tingkat'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
             'nim' => 'required|regex:/^[0-9]{9}$/', // NIM harus 9 digit angka
-            'nama_mahasiswa' => 'required|string|max:255',
-            'kelas' => 'required|string',
             'pelanggaran' => 'required',
-            'tingkat' => 'required|integer',
         ]);
 
-        // Tambahkan nama pencatat dari session login
+        $mahasiswa = Mahasiswa::where('nim', $request->nim)
+            ->where('tahun_akademik', $request->tahun_akademik)
+            ->first();
 
-        $nim = $request->nim;
-        $nama = $request->nama_mahasiswa;
-        $kelas = $request->kelas;
+        if (!$mahasiswa) {
+            return response()->json(['message' => 'Mahasiswa tidak ditemukan'], 404);
+        }
+
         $pelanggaran = $request->pelanggaran;
-        $tingkat = $request->tingkat;
         $pencatat = Auth::user()->name;
+        $tahunAkademik = $request->input('tahun_akademik');
 
         $data = [];
-
-        // Menggunakan Carbon untuk mendapatkan waktu lokal sesuai zona waktu Asia/Jakarta
-        $timestamp = Carbon::now('Asia/Jakarta'); // Menetapkan waktu sesuai dengan zona waktu Jakarta
 
         if (is_array($pelanggaran)) {
             foreach ($pelanggaran as $kode) {
                 $namaPelanggaran = Pelanggaran::where('kodePelanggaran', $kode)->value('namaPelanggaran') ?? 'Unknown'; // Ambil nama pelanggaran
                 array_push($data, [
-                    'nim' => $nim,
-                    'nama_mahasiswa' => $nama,
-                    'kelas' => $kelas,
-                    'tingkat' => $tingkat,
+                    'nim' => $mahasiswa->nim,
                     'pelanggaran' => $namaPelanggaran,
                     'nama_pencatat' => $pencatat,
-                    'created_at' => $timestamp, // Gunakan timestamp sesuai zona waktu lokal
+                    'created_at' => now(),
+                    'tahun_akademik' => $tahunAkademik,
+                    'status_pelanggaran' => 'Ditambahkan'
                 ]);
             }
         } else {
-            $namaPelanggaran = Pelanggaran::where('kodePelanggaran', $pelanggaran)->value('namaPelanggaran') ?? 'Unknown'; // Ambil nama pelanggaran
+            $namaPelanggaran = Pelanggaran::where('kodePelanggaran', $pelanggaran)->value('namaPelanggaran') ?? 'Unknown';
             array_push($data, [
-                'nim' => $nim,
-                'nama_mahasiswa' => $nama,
-                'kelas' => $kelas,
-                'tingkat' => $tingkat,
+                'nim' => $mahasiswa->nim,
                 'pelanggaran' => $namaPelanggaran,
                 'nama_pencatat' => $pencatat,
-                'created_at' => $timestamp, // Gunakan timestamp sesuai zona waktu lokal
+                'created_at' => now(),
+                'tahun_akademik' => $tahunAkademik,
+                'status_pelanggaran' => 'Ditambahkan'
             ]);
         }
 
         OperasiUmum::insert($data);
-        // Simpan data ke database menggunakan Eloquent
-        // $operasiRutin = OperasiRutin::create($data); // Pastikan model OperasiRutin memiliki $fillable yang sesuai
+        app(EmailController::class)->sendEmail($request);
 
-        // Setelah menyimpan data, panggil EmailController untuk mengirim email
-        app(EmailController::class)->sendEmail($request); // Pastikan fungsi sendEmail sudah benar
-
-        // Redirect ke halaman view catat.blade.php dengan pesan sukses
         session()->flash('success', 'Data berhasil ditambahkan');
-        return redirect()->route('catat.umum'); // Pastikan Anda sudah mendefinisikan route ini
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show($id)
-    {
-        $operasiUmum = OperasiUmum::find($id);
-
-        if (!$operasiUmum) {
-            return response()->json(['message' => 'Data tidak ditemukan'], 404);
-        }
-
-        return response()->json([
-            'message' => 'Data berhasil ditemukan',
-            'data' => $operasiUmum
-        ]);
+        return redirect()->route('catat.umum');
     }
 
     /**
@@ -142,16 +109,20 @@ class OperasiUmumController extends Controller
      */
     public function edit($id)
     {
-        // Ambil data operasi rutin yang sesuai dengan ID
-        $operasiUmum = OperasiUmum::findOrFail($id);
+        $operasiUmum = OperasiUmum::select(
+            'operasi_umums.*',
+            'mahasiswas.nama',
+            'mahasiswas.kelas'
+        )
+            ->join('mahasiswas', function ($join) {
+                $join->on('operasi_umums.nim', '=', 'mahasiswas.nim')
+                    ->on('operasi_umums.tahun_akademik', '=', 'mahasiswas.tahun_akademik'); // Join berdasarkan NIM dan tahun akademik
+            })
+            ->where('operasi_umums.id', $id) // Filter berdasarkan ID operasi_rutin
+            ->firstOrFail();
 
-        // Ambil semua data pelanggaran
         $pelanggarans = Pelanggaran::all();
-
         $selectedPelanggaran = $operasiUmum->pelanggaran;
-
-        // dd($selectedPelanggaran);
-        // Kirim data ke view untuk ditampilkan dalam form
         return view('operasiumum.editcatatumum', compact('operasiUmum', 'pelanggarans', 'selectedPelanggaran'));
     }
 
@@ -160,33 +131,29 @@ class OperasiUmumController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Validasi input dari form
         $request->validate([
-            'nim' => 'required|regex:/^[0-9]{9}$/', // NIM harus 9 digit angka
-            'nama_mahasiswa' => 'required|string|max:255',
-            'kelas' => 'required|string',
-            'pelanggaran' => 'required', // Pelanggaran harus berupa kode pelanggaran tunggal
-            'tingkat' => 'required|integer',
+            'nim' => 'required|regex:/^[0-9]{9}$/',
+            'pelanggaran' => 'required',
         ]);
 
         $pelanggarans = Pelanggaran::all();
 
-        // Cari data OperasiRutin berdasarkan ID
-        $operasiUmum = OperasiUmum::find($id);
+        // Mencari data OperasiRutin berdasarkan ID
+        $operasiUmum = OperasiUmum::where('id', $id)->firstOrFail();
 
-        if (!$operasiUmum) {
-            return redirect()->route('catatedit.umum', $id)->with('error', 'Data tidak ditemukan');
+        // Cek apakah mahasiswa dengan NIM dan tahun akademik sesuai ada
+        $mahasiswa = Mahasiswa::where('nim', $request->nim)
+            ->where('tahun_akademik', $operasiUmum->tahun_akademik)
+            ->first();
+
+        if (!$mahasiswa) {
+            return redirect()->route('catatedit', $id)->with('error', 'Mahasiswa tidak ditemukan atau tidak sesuai dengan tahun akademik');
         }
 
-        // Ambil data dari request
-        $nim = $request->nim;
-        $nama = $request->nama_mahasiswa;
-        $kelas = $request->kelas;
-        $kodePelanggaran = $request->pelanggaran; // Kode pelanggaran tunggal
-        $tingkat = $request->tingkat;
+        $kodePelanggaran = $request->pelanggaran;
         $pencatat = Auth::user()->name;
+        $tahunAkademik = $request->input('tahun_akademik', $operasiUmum->tahun_akademik);
 
-        // Jika pelanggaran berupa kodePelanggaran
         $namaPelanggaran = null;
 
         // Cek apakah $kodePelanggaran adalah namaPelanggaran
@@ -200,22 +167,17 @@ class OperasiUmumController extends Controller
             $namaPelanggaran = Pelanggaran::where('kodePelanggaran', $kodePelanggaran)->value('namaPelanggaran') ?? 'Unknown';
         }
 
-        $timestamp = Carbon::now('Asia/Jakarta'); // Menetapkan waktu sesuai dengan zona waktu Jakarta
-
         // Update data di database
         $operasiUmum->update([
-            'nim' => $nim,
-            'nama_mahasiswa' => $nama,
-            'kelas' => $kelas,
-            'tingkat' => $tingkat, // Hanya memperbarui tingkat
-            'pelanggaran' => $namaPelanggaran, // Memastikan pelanggaran tetap sesuai dengan kode yang dipilih
+            'nim' => $mahasiswa->nim,
+            'pelanggaran' => $namaPelanggaran, // Update pelanggaran sesuai dengan data yang diterima
             'nama_pencatat' => $pencatat,
-            'updated_at' => $timestamp,
+            'updated_at' => now(), // Update timestamp
+            'tahun_akademik' => $tahunAkademik,
+            'status_pelanggaran' => 'Diperbarui'
         ]);
 
         app(EmailController::class)->sendEmailUpdate($request);
-
-        // Redirect ke halaman edit dengan pesan sukses
         return redirect()->route('laporanumum', $id);
     }
 
@@ -225,13 +187,19 @@ class OperasiUmumController extends Controller
     public function destroy($id)
     {
         try {
+            // Cari data berdasarkan ID
             $operasiUmum = OperasiUmum::find($id);
 
+            // Jika data tidak ditemukan, kembalikan respon dengan status 404
             if (!$operasiUmum) {
                 return response()->json(['message' => 'Data tidak ditemukan'], 404);
             }
 
-            $operasiUmum->delete();
+            // Update status menjadi "dibatalkan"
+            $operasiUmum->update([
+                'status_pelanggaran' => 'Dibatalkan', // Pastikan kolom ini ada di tabel
+                'updated_at' => now() // Perbarui waktu terakhir diupdate
+            ]);
 
             return redirect()->route('laporanumum');
         } catch (Exception $e) {
@@ -242,25 +210,43 @@ class OperasiUmumController extends Controller
 
     public function filter(Request $request)
     {
-        // Ambil query builder untuk OperasiRutin
-        $query = OperasiUmum::query();
+        // Ambil query builder untuk OperasiRutin dengan join ke tabel Mahasiswa
+        $query = OperasiUmum::join('mahasiswas', function ($join) {
+            $join->on('operasi_umums.nim', '=', 'mahasiswas.nim')
+                ->on('operasi_umums.tahun_akademik', '=', 'mahasiswas.tahun_akademik');
+        });
+
+        // Tambahkan filter untuk mengabaikan data dengan status "dibatalkan"
+        $query->where('operasi_umums.status_pelanggaran', '!=', 'dibatalkan');
 
         // Filter berdasarkan tanggal jika parameter 'tanggal' ada dan tidak kosong
         if ($request->has('tanggal') && $request->tanggal != '') {
-            $query->whereDate('created_at', $request->tanggal);
+            $query->whereDate('operasi_umums.created_at', $request->tanggal);
         }
 
-        // Filter berdasarkan tingkat jika parameter 'tingkat' ada dan tidak kosong
+        // Filter berdasarkan tingkat (mengambil inisial kelas)
         if ($request->has('tingkat') && $request->tingkat != '') {
-            $query->where('tingkat', $request->tingkat);
+            $query->whereRaw('LEFT(mahasiswas.kelas, 1) = ?', [$request->tingkat]);
         }
 
+        // Filter berdasarkan nama mahasiswa
         if ($request->has('nama') && $request->nama != '') {
-            $query->where('nama_mahasiswa', 'like', '%' . $request->nama . '%');
+            $query->where('mahasiswas.nama', 'like', '%' . $request->nama . '%');
         }
 
-        // Hasil query dengan pagination
-        $data = $query->orderBy('created_at', 'desc')->paginate(30); // 10 item per halaman
+        $data = $query->select(
+            'operasi_umums.created_at as tanggal',
+            'operasi_umums.created_at',
+            'operasi_umums.updated_at',
+            'operasi_umums.nim',
+            'mahasiswas.nama',
+            'mahasiswas.kelas',
+            'operasi_umums.pelanggaran',
+            'operasi_umums.nama_pencatat',
+            'operasi_umums.id'
+        )
+            ->orderBy('operasi_umums.created_at', 'desc')
+            ->paginate(30);
 
         return view('operasiumum.laporanumum', compact('data'));
     }
@@ -269,10 +255,14 @@ class OperasiUmumController extends Controller
     {
         $tanggal = $request->input('tanggal');
 
-        // Filter data berdasarkan tanggal
-        $data = OperasiUmum::whereDate('created_at', $tanggal)
-            ->orderBy('created_at', 'desc') // Mengurutkan berdasarkan tanggal secara descending
-            ->get();
+        $data = OperasiUmum::join('mahasiswas', function ($join) {
+            $join->on('operasi_umums.nim', '=', 'mahasiswas.nim')
+                ->on('operasi_umums.tahun_akademik', '=', 'mahasiswas.tahun_akademik'); // Syarat NIM dan tahun akademik harus sama
+        })
+            ->whereDate('operasi_umums.created_at', $tanggal) // Filter berdasarkan tanggal
+            ->where('operasi_umums.status_pelanggaran', '!=', 'dibatalkan') // Mengabaikan data dengan status dibatalkan
+            ->orderBy('operasi_umums.created_at', 'desc') // Mengurutkan berdasarkan tanggal secara descending
+            ->get(['operasi_umums.*', 'mahasiswas.kelas', 'mahasiswas.nama']); // Memilih kolom yang diperlukan
 
         if ($format === 'excel') {
             return Excel::download(new OperasiUmumExport($data, $tanggal), "laporan_operasi_umum_{$tanggal}.xlsx");

@@ -17,6 +17,7 @@ class Mahasiswa extends Model
         'nim',
         'nama',
         'kelas',
+        'tahun_akademik'
     ];
 
     // Format default untuk timestamps (jika diperlukan custom)

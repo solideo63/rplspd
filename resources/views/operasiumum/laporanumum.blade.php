@@ -322,17 +322,17 @@
                         id="export-table" class="datatable-table">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
-                                <th scope="col" class="px-6 py-3 text-center">Hari/Tanggal</th>
-                                <th scope="col" class="px-6 py-3 text-center">NIM</th>
+                                <th scope="col" class="px-4 py-3 text-center">Hari/Tanggal</th>
+                                <th scope="col" class="px-4 py-3 text-center">NIM</th>
                                 <th scope="col"
-                                    class="px-6 py-3 text-center sticky left-0 bg-gray-50 dark:bg-gray-700 z-10">
+                                    class="py-3 text-center sticky left-0 bg-gray-50 dark:bg-gray-700 z-10">
                                     Nama Mahasiswa</th>
-                                <th scope="col" class="px-6 py-3 text-center">Kelas</th>
-                                <th scope="col" class="px-6 py-3 text-center">Tingkat</th>
-                                <th scope="col" class="px-6 py-3 text-center">Pelanggaran</th>
-                                <th scope="col" class="px-6 py-3 text-center">Nama Pencatat</th>
+                                <th scope="col" class="px-4 py-3 text-center">Kelas</th>
+                                {{-- <th scope="col" class="px-4 py-3 text-center">Tingkat</th> --}}
+                                <th scope="col" class="px-4 py-3 text-center">Pelanggaran</th>
+                                <th scope="col" class="px-4 py-3 text-center">Nama Pencatat</th>
                                 @if (Auth::user()->role == 'spd')
-                                    <th scope="col" class="px-6 py-3 text-center">
+                                    <th scope="col" class="px-4 py-3 text-center">
                                         Aksi</th>
                                 @endif
                             </tr>
@@ -341,49 +341,46 @@
                             @forelse($data as $row)
                                 <tr
                                     class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <td class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         <!-- Menampilkan hari beserta tanggal untuk created_at -->
-                                        {{ $row->created_at ? $row->created_at->translatedFormat('l, d-m-Y') : 'N/A' }}
+                                        {{ $row->tanggal ? \Carbon\Carbon::parse($row->tanggal)->translatedFormat('l, d-m-Y') : 'N/A' }}
                                         <!-- Format: Hari, dd-mm-yyyy (contoh: Monday, 27-12-2024) -->
-                                        @if (!$row->updated_at || $row->updated_at == $row->created_at)
-                                            <!-- Tampilkan badge "Baru ditambahkan" hanya jika belum diupdate dan kurang dari 1 jam -->
-                                            @if ($row->created_at->subHours(7)->diffInMinutes(now()) < 60)
+
+                                        @if ($row->updated_at && $row->updated_at != $row->created_at)
+                                            <!-- Tampilkan badge "Baru diperbarui" hanya jika updated_at berbeda dengan created_at -->
+                                            <span
+                                                class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-1 py-0.5 rounded dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300">UPDATED</span>
+                                            <div class="text-xs text-gray-500 mt-1">
+                                                <small>Terakhir diupdate:
+                                                    {{ \Carbon\Carbon::parse($row->updated_at)->format('d-m-Y H:i') }}</small>
+                                            </div>
+                                        @elseif (!$row->updated_at || $row->updated_at == $row->created_at)
+                                            <!-- Tampilkan badge "NEW" hanya jika belum diupdate -->
+                                            @if (\Carbon\Carbon::parse($row->created_at)->diffInMinutes(now()) < 30)
                                                 <span
                                                     class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-1 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">NEW</span>
                                                 <div class="text-xs text-gray-500 mt-1">
                                                     <small>Ditambahkan:
-                                                        {{ $row->created_at->format('d-m-Y H:i') }}</small>
+                                                        {{ \Carbon\Carbon::parse($row->created_at)->format('d-m-Y H:i') }}</small>
                                                 </div>
                                             @endif
                                         @endif
-                                        @if ($row->updated_at && $row->updated_at != $row->created_at)
-                                            <!-- Tampilkan badge "Baru diperbarui" hanya jika kurang dari 1 jam -->
-                                            @if ($row->updated_at->diffInMinutes(now()) < 60)
-                                                <span
-                                                    class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-1 py-0.5 rounded dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300">UPDATED</span>
-                                            @endif
-                                            <div class="text-xs text-gray-500 mt-1">
-                                                <small>Terakhir diupdate:
-                                                    {{ $row->updated_at->timezone('Asia/Jakarta')->format('d-m-Y H:i') }}</small>
-                                            </div>
-                                        @endif
                                     </td>
-                                    <td class="px-6 py-4">{{ $row->nim }}</td>
-                                    <td class="px-6 py-4 sticky left-0 bg-white dark:bg-gray-800 z-10">
-                                        {{ $row->nama_mahasiswa }}</td>
-                                    <td class="px-6 py-4">{{ $row->kelas }}</td>
-                                    <td class="px-6 py-4 text-center">{{ $row->tingkat }}</td>
-                                    <td class="px-6 py-4">{{ $row->pelanggaran }}</td>
-                                    <td class="px-6 py-4">{{ $row->nama_pencatat }}</td>
+                                    <td class="px-4 py-3">{{ $row->nim }}</td>
+                                    <td class="px-4 py-3 sticky left-0 bg-white dark:bg-gray-800 z-10">
+                                        {{ $row->nama }}</td>
+                                    <td class="px-4 py-3">{{ $row->kelas }}</td>
+                                    {{-- <td class="px-4 py-3 text-center">{{ $row->tingkat }}</td> --}}
+                                    <td class="px-4 py-3">{{ $row->pelanggaran }}</td>
+                                    <td class="px-4 py-3">{{ $row->nama_pencatat }}</td>
                                     @if (Auth::user()->role == 'spd' && Auth::user()->name == $row->nama_pencatat)
-                                        <td class="px-6 py-3 flex">
+                                        <td class="py-5 flex">
                                             <!-- Tombol Edit -->
                                             <a href="{{ route('catatedit.umum', $row->id) }}"
                                                 class="flex items-center text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm p-2 mr-2">
                                                 <i class="fas fa-edit"></i>
                                             </a>
 
-                                            <!-- Hapus Button with only icon -->
                                             <!-- Tombol Hapus -->
                                             <form action="{{ route('delete.umum', $row->id) }}" method="POST"
                                                 class="inline" id="deleteForm-{{ $row->id }}">

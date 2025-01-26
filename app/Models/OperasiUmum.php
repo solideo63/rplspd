@@ -16,13 +16,16 @@ class OperasiUmum extends Model
     // Kolom yang dapat diisi (mass assignable)
     protected $fillable = [
         'nim',
-        'nama_mahasiswa',
-        'kelas',
+        'tahun_akademik',
+        // 'nama_mahasiswa',
+        // 'kelas',
         'pelanggaran',
         'nama_pencatat',
+        'tahun_akademik',
+        'status_pelanggaran'
     ];
 
-    protected $hidden = ['id', 'created_at', 'updated_at', 'nama_pencatat'];
+    protected $hidden = ['id', 'created_at', 'updated_at', 'nama_pencatat', 'status_pelanggaran', 'tahun_akademik'];
 
     // Format default untuk timestamps (jika diperlukan custom)
     protected $casts = [

@@ -71,7 +71,7 @@
                     <label for="nama_mahasiswa"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Mahasiswa</label>
                     <input type="text" id="nama_mahasiswa" name="nama_mahasiswa" readonly
-                        value="{{ old('nama_mahasiswa', $operasiRutin->nama_mahasiswa ?? '') }}"
+                        value="{{ old('nama_mahasiswa', $operasiRutin->nama ?? '') }}"
                         class="shadow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 </div>
 
@@ -82,9 +82,9 @@
                         value="{{ old('kelas', $operasiRutin->kelas ?? '') }}"
                         class="shadow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 </div>
-                {{-- <input disabled type="hidden" name="tingkat" value="{{ $tingkat }}"> --}}
-                <input type="hidden" id="tingkat" name="tingkat"
-                    value="{{ old('tingkat', $operasiRutin->tingkat ?? '') }}">
+
+                {{-- <input type="hidden" id="tingkat" name="tingkat"
+                    value="{{ old('tingkat', $operasiRutin->tingkat ?? '') }}"> --}}
 
                 <div class="mb-5">
                     <label for="pelanggaran" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jenis
@@ -100,6 +100,8 @@
                         @endforeach
                     </select>
                 </div>
+                <input type="hidden" id="tahun_akademik" name="tahun_akademik"
+                    value="{{ old('tahun_akademik', $operasiRutin->tahun_akademik ?? '') }}">
                 <div class="flex justify-end">
                     <button type="button" id="confirmButton"
                         class="text-white bg-blue-700 hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-700 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
@@ -153,68 +155,21 @@
 
 <script>
     $(document).ready(function() {
-        $('#nim').on('input', function() {
-            const nim = $(this).val();
-
-            // Hapus pesan error sebelumnya
-            $('#nim-error').remove();
-
-            if (nim.length === 9) { // Validasi NIM hanya jika panjangnya 9 karakter
-                $.ajax({
-                    url: '{{ route('get.mahasiswarutin') }}',
-                    type: 'GET',
-                    data: {
-                        nim: nim
-                    },
-                    success: function(response) {
-                        if (response) {
-                            // Isi data jika ditemukan
-                            $('#nama_mahasiswa').val(response.nama);
-                            $('#kelas').val(response.kelas);
-                            $('#tingkat').val(response.tingkat);
-                        } else {
-                            // Kosongkan data dan tampilkan pesan error
-                            $('#nama_mahasiswa').val('');
-                            $('#kelas').val('');
-                            $('#tingkat').val('');
-                            $('#nim').after(
-                                '<span id="nim-error" style="color: red; font-size: 12px;">Data tidak ditemukan atau tingkat tidak sesuai</span>'
-                            );
-                        }
-                    },
-                    error: function() {
-                        // Kosongkan data dan tampilkan pesan error
-                        $('#nama_mahasiswa').val('');
-                        $('#kelas').val('');
-                        $('#tingkat').val('');
-                        $('#nim').after(
-                            '<span id="nim-error" style="color: red; font-size: 12px;">Data tidak ditemukan atau tingkat tidak sesuai</span>'
-                        );
-                    }
-                });
-            } else {
-                // Kosongkan data jika NIM kurang dari 9 karakter
-                $('#nama_mahasiswa').val('');
-                $('#kelas').val('');
-                $('#tingkat').val('');
-            }
-        });
-        // Inisialisasi Select2 dengan multiple
+        // Inisialisasi Select2 untuk pelanggaran
         $('#pelanggaran').select2({
             theme: "classic",
             allowClear: true,
             minimumInputLength: 1,
             ajax: {
-                url: "{{ route('pelanggaran.edit') }}",
+                url: "{{ route('pelanggaran.edit') }}", // Endpoint untuk mendapatkan data pelanggaran
                 dataType: 'json',
                 processResults: function(data) {
-                    console.log(data);
                     return {
                         results: $.map(data, function(item) {
                             return {
                                 id: item.kodePelanggaran,
                                 text: item.namaPelanggaran
-                            }
+                            };
                         })
                     };
                 }

@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\SesiController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\CatatController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\TokenController;
 use App\Http\Controllers\DashboardController;
@@ -85,7 +84,7 @@ Route::post('/admin-peraturan/update/{id}', [PeraturanController::class, 'admin_
 Route::delete('/admin-peraturan/delete/{id}', [PeraturanController::class, 'admin_delete'])->middleware('admin')->name('admin.delete.peraturan');
 
 // filter data dengan ajax bisa dilakukan pada menu laporan (oleh spd atau pemonitor)
-Route::get('/filter-by-date-ajax', [CatatController::class, 'filterByDateAjax'])->middleware('laporan')->name('filter.date.ajax');
+// Route::get('/filter-by-date-ajax', [CatatController::class, 'filterByDateAjax'])->middleware('laporan')->name('filter.date.ajax');
 
 // Melihat kritik saran hanya bisa oleh spd
 Route::get('/kritik-saran', [KritikSaranController::class, 'view'])->middleware('spd')->name('lihatkritiksaran');
@@ -135,11 +134,12 @@ Route::post('/penindakan-harian', [PenindakanHarianController::class, 'store'])-
 Route::get('/laporan-harian', [PenindakanHarianController::class, 'index'])->middleware('spd')->name('laporanharian');
 Route::get('/laporan-harian/filter', [PenindakanHarianController::class, 'filter'])->middleware('spd')->name('penindakan-harian.filter');
 Route::get('/laporan-harian/download/{format}', [PenindakanHarianController::class, 'downloadFilteredData'])->middleware('spd')->name('penindakan-harian.download');
+Route::delete('/delete-harian/{id}', [PenindakanHarianController::class, 'destroy'])->middleware('spd')->name('delete.harian');
 
 // Route Klaim Pelanggaran untuk SPD
 Route::get('/klaim-pelanggaran', [KlaimPelanggaranController::class, 'index'])->middleware('spd')->name('klaim-pelanggaran');
 Route::get('/klaim-pelanggaran/filter', [KlaimPelanggaranController::class, 'filter'])->middleware('spd')->name('klaim-pelanggaran.filter');
-Route::delete('/delete-harian/{id}', [KlaimPelanggaranController::class, 'destroy'])->middleware('spd')->name('delete.harian');
+
 
 
 

@@ -19,10 +19,26 @@ class KlaimPelanggaranController extends Controller
      */
     public function index()
     {
-        // Mengambil semua data dari tabel operasi_rutin
-        $data = PenindakanHarian::orderBy('created_at', 'desc')->paginate(30);
+        $data = PenindakanHarian::join('mahasiswas', function ($join) {
+            $join->on('penindakan_harian.nim', '=', 'mahasiswas.nim')
+                ->on('penindakan_harian.tahun_akademik', '=', 'mahasiswas.tahun_akademik');
+        })
+            ->where('penindakan_harian.status_pelanggaran', '!=', 'Dibatalkan') // Filter status "Dibatalkan"
+            ->select(
+                'penindakan_harian.created_at as tanggal',
+                'penindakan_harian.created_at',
+                'penindakan_harian.updated_at',
+                'penindakan_harian.nim',
+                'mahasiswas.nama',
+                'mahasiswas.kelas',
+                'penindakan_harian.pelanggaran',
+                'penindakan_harian.nama_pencatat',
+                'penindakan_harian.status_pelanggaran',
+                'penindakan_harian.id'
+            )
+            ->orderBy('penindakan_harian.created_at', 'desc')
+            ->paginate(30);
 
-        // Mengirim data ke view
         return view('klaim-pelanggaran', compact('data'));
     }
 

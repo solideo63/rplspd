@@ -232,7 +232,7 @@
                     <tr>
                         <td>{{ $item->kelas }}</td>
                         <td>{{ $item->nim }}</td>
-                        <td>{{ $item->nama_mahasiswa }}</td>
+                        <td>{{ $item->nama }}</td>
                         {{-- <td>{{ $item->tingkat }}</td> --}}
                         <td>{{ $item->pelanggaran }}</td>
                     </tr>

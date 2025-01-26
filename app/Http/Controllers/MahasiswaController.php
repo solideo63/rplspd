@@ -7,47 +7,47 @@ use Illuminate\Http\Request;
 
 class MahasiswaController extends Controller
 {
-    public function getMahasiswaRutin(Request $request)
-    {
+    // public function getMahasiswaRutin(Request $request)
+    // {
 
-        $nim = $request->input('nim');
-        $sessionTingkat = session('tingkat'); // Ambil tingkat dari sesi pengguna (bisa null)
+    //     $nim = $request->input('nim');
+    //     $sessionTingkat = session('tingkat'); // Ambil tingkat dari sesi pengguna (bisa null)
 
-        // Cari mahasiswa berdasarkan NIM
-        $mahasiswa = Mahasiswa::where('nim', $nim)->first();
+    //     // Cari mahasiswa berdasarkan NIM
+    //     $mahasiswa = Mahasiswa::where('nim', $nim)->first();
 
-        if ($mahasiswa) {
-            // Tentukan tingkat berdasarkan kelas (contoh: karakter pertama dari kelas)
-            $mahasiswaTingkat = substr($mahasiswa->kelas, 0, 1);
+    //     if ($mahasiswa) {
+    //         // Tentukan tingkat berdasarkan kelas (contoh: karakter pertama dari kelas)
+    //         $mahasiswaTingkat = substr($mahasiswa->kelas, 0, 1);
 
-            // Validasi hanya jika session tingkat tersedia
-            if ($sessionTingkat === null || $mahasiswaTingkat == $sessionTingkat) {
-                return response()->json([
-                    'nama' => $mahasiswa->nama,
-                    'kelas' => $mahasiswa->kelas,
-                    'tingkat' => $mahasiswaTingkat,
-                ]);
-            } else {
-                // Jika tingkat tidak sesuai, kembalikan error 404
-                return response()->json([
-                    'message' => 'Tingkat tidak sesuai dengan sesi.',
-                ], 404);
-            }
-        } else {
-            // Jika mahasiswa tidak ditemukan, kembalikan error 404
-            return response()->json([
-                'message' => 'Mahasiswa tidak ditemukan.',
-            ], 404);
-        }
-    }
+    //         // Validasi hanya jika session tingkat tersedia
+    //         if ($sessionTingkat === null || $mahasiswaTingkat == $sessionTingkat) {
+    //             return response()->json([
+    //                 'nama' => $mahasiswa->nama,
+    //                 'kelas' => $mahasiswa->kelas,
+    //                 'tingkat' => $mahasiswaTingkat,
+    //             ]);
+    //         } else {
+    //             // Jika tingkat tidak sesuai, kembalikan error 404
+    //             return response()->json([
+    //                 'message' => 'Tingkat tidak sesuai dengan sesi.',
+    //             ], 404);
+    //         }
+    //     } else {
+    //         // Jika mahasiswa tidak ditemukan, kembalikan error 404
+    //         return response()->json([
+    //             'message' => 'Mahasiswa tidak ditemukan.',
+    //         ], 404);
+    //     }
+    // }
     public function getMahasiswa(Request $request)
     {
-        if (session()->has('tingkat')) {
-            session()->forget('tingkat'); // Hapus sesi tingkat
-        }
+        // if (session()->has('tingkat')) {
+        //     session()->forget('tingkat'); // Hapus sesi tingkat
+        // }
 
         $nim = $request->input('nim');
-        $sessionTingkat = session('tingkat'); // Ambil tingkat dari sesi pengguna (bisa null)
+        // $sessionTingkat = session('tingkat'); // Ambil tingkat dari sesi pengguna (bisa null)
 
         // Cari mahasiswa berdasarkan NIM
         $mahasiswa = Mahasiswa::where('nim', $nim)->first();
@@ -57,18 +57,18 @@ class MahasiswaController extends Controller
             $mahasiswaTingkat = substr($mahasiswa->kelas, 0, 1);
 
             // Validasi hanya jika session tingkat tersedia
-            if ($sessionTingkat === null || $mahasiswaTingkat == $sessionTingkat) {
-                return response()->json([
-                    'nama' => $mahasiswa->nama,
-                    'kelas' => $mahasiswa->kelas,
-                    'tingkat' => $mahasiswaTingkat,
-                ]);
-            } else {
-                // Jika tingkat tidak sesuai, kembalikan error 404
-                return response()->json([
-                    'message' => 'Tingkat tidak sesuai dengan sesi.',
-                ], 404);
-            }
+            // if ($sessionTingkat === null || $mahasiswaTingkat == $sessionTingkat) {
+            return response()->json([
+                'nama' => $mahasiswa->nama,
+                'kelas' => $mahasiswa->kelas,
+                'tingkat' => $mahasiswaTingkat,
+            ]);
+            // } else {
+            //     // Jika tingkat tidak sesuai, kembalikan error 404
+            //     return response()->json([
+            //         'message' => 'Tingkat tidak sesuai dengan sesi.',
+            //     ], 404);
+            // }
         } else {
             // Jika mahasiswa tidak ditemukan, kembalikan error 404
             return response()->json([

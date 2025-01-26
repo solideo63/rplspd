@@ -31,12 +31,12 @@
                     <input type="text" id="kelas" name="kelas" readonly
                         class="shadow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 </div>
-                <div class="mb-5">
+                {{-- <div class="mb-5">
                     <label for="tingkat"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tingkat</label>
                     <input type="text" id="tingkat" name="tingkat" readonly
                         class="shadow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                </div>
+                </div> --}}
                 <div class="mb-5">
                     <label for="pelanggaran"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pelanggaran</label>
@@ -52,6 +52,7 @@
                         @endforeach
                     </select>
                 </div>
+                <input type="hidden" id="tahun_akademik" name="tahun_akademik">
                 <div class="flex justify-end">
                     <button type="submit"
                         class="text-white bg-blue-700 hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
@@ -135,28 +136,32 @@
                     },
                     success: function(response) {
                         if (response) {
+                            // Isi data jika data ditemukan
                             $('#nama_mahasiswa').val(response.nama);
                             $('#kelas').val(response.kelas);
                             $('#tingkat').val(response.tingkat);
                         } else {
+                            // Kosongkan data dan tampilkan pesan error jika data tidak ditemukan
                             $('#nama_mahasiswa').val('');
                             $('#kelas').val('');
                             $('#tingkat').val('');
                             $('#nim').after(
-                                '<span id="nim-error" style="color: red; font-size: 12px;">Data tidak ditemukan atau tingkat tidak sesuai</span>'
+                                '<span id="nim-error" style="color: red; font-size: 12px;">Data tidak ditemukan</span>'
                             );
                         }
                     },
                     error: function() {
+                        // Kosongkan data dan tampilkan pesan error jika terjadi kesalahan
                         $('#nama_mahasiswa').val('');
                         $('#kelas').val('');
                         $('#tingkat').val('');
                         $('#nim').after(
-                            '<span id="nim-error" style="color: red; font-size: 12px;">Data tidak ditemukan atau tingkat tidak sesuai</span>'
+                            '<span id="nim-error" style="color: red; font-size: 12px;">Terjadi kesalahan saat mengambil data</span>'
                         );
                     }
                 });
             } else {
+                // Kosongkan data jika NIM kurang dari 9 karakter
                 $('#nama_mahasiswa').val('');
                 $('#kelas').val('');
                 $('#tingkat').val('');
@@ -183,6 +188,24 @@
                 }
             }
         });
+
+        function getTahunAkademik() {
+            const currentDate = new Date();
+            const currentYear = currentDate.getFullYear();
+            const currentMonth = currentDate.getMonth() + 1; // Januari = 0, jadi tambahkan 1
+
+            let tahunAkademik = '';
+            if (currentMonth >= 8) { // Jika bulan >= Agustus
+                tahunAkademik = `${currentYear}/${currentYear + 1}`;
+            } else { // Jika bulan < Agustus
+                tahunAkademik = `${currentYear - 1}/${currentYear}`;
+            }
+
+            return tahunAkademik;
+        }
+
+        // Set nilai tahun akademik di input
+        $('#tahun_akademik').val(getTahunAkademik());
     });
 </script>
 

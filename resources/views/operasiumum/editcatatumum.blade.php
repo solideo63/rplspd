@@ -69,7 +69,7 @@
                     <label for="nama_mahasiswa"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Mahasiswa</label>
                     <input type="text" id="nama_mahasiswa" name="nama_mahasiswa" readonly
-                        value="{{ old('nama_mahasiswa', $operasiUmum->nama_mahasiswa ?? '') }}"
+                        value="{{ old('nama_mahasiswa', $operasiUmum->nama ?? '') }}"
                         class="shadow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 </div>
                 <div class="mb-5">
@@ -79,14 +79,13 @@
                         value="{{ old('kelas', $operasiUmum->kelas ?? '') }}"
                         class="shadow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 </div>
-                {{-- <input type="hidden" name="tingkat" value="{{ $tingkat }}"> --}}
-                <div class="mb-5">
+                {{-- <div class="mb-5">
                     <label for="tingkat"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tingkat</label>
                     <input type="text" id="tingkat" name="tingkat" readonly
                         value="{{ old('kelas', $operasiUmum->tingkat ?? '') }}"
                         class="shadow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                </div>
+                </div> --}}
                 <div class="mb-5">
                     <label for="pelanggaran" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jenis
                         Pelanggaran</label>
@@ -101,6 +100,8 @@
                         @endforeach
                     </select>
                 </div>
+                <input type="hidden" id="tahun_akademik" name="tahun_akademik"
+                    value="{{ old('tahun_akademik', $operasiUmum->tahun_akademik ?? '') }}">
                 <div class="flex justify-end">
                     <button type="button" id="confirmButton"
                         class="text-white bg-blue-700 hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-700 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
@@ -154,40 +155,6 @@
 
 <script>
     $(document).ready(function() {
-        $('#nim').on('input', function() {
-            const nim = $(this).val();
-
-            if (nim.length === 9) { // Validasi NIM hanya jika panjangnya 9 karakter
-                $.ajax({
-                    url: '{{ route('get.mahasiswa') }}',
-                    type: 'GET',
-                    data: {
-                        nim: nim
-                    },
-                    success: function(response) {
-                        if (response) {
-                            $('#nama_mahasiswa').val(response.nama);
-                            $('#kelas').val(response.kelas);
-                            $('#tingkat').val(response.tingkat);
-                        } else {
-                            $('#nama_mahasiswa').val('');
-                            $('#kelas').val('');
-                            $('#tingkat').val('');
-                        }
-                    },
-                    error: function() {
-                        $('#nama_mahasiswa').val('');
-                        $('#kelas').val('');
-                        $('#tingkat').val('');
-                    }
-                });
-            } else {
-                $('#nama_mahasiswa').val('');
-                $('#kelas').val('');
-                $('#tingkat').val('');
-            }
-        });
-
         // Inisialisasi Select2 dengan multiple
         $('#pelanggaran').select2({
             theme: "classic",
@@ -218,6 +185,5 @@
         }
     });
 </script>
-
 
 <x-footer></x-footer>
