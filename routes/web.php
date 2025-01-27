@@ -44,7 +44,7 @@ Route::middleware(['guest'])->group(function () {
 
 // hanya bisa diakses yang login (login sebagai apapun)
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'index']);
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/logout', [SesiController::class, 'logout']);
     // Ubah Password
     Route::get('/ubah-password', [UbahPasswordController::class, 'index']);

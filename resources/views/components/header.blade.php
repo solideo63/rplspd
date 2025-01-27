@@ -106,7 +106,16 @@
                                             src="https://i.pinimg.com/736x/7b/12/d2/7b12d287221c0adf5b4efcdf326c178f.jpg"
                                             alt="Profile Image" />
                                         <h5 class="mb-1 text-xl font-semibold text-center text-gray-900 dark:text-white">
-                                            {{ Auth::user()->name }}</h5>
+                                            @if (Auth::user()->role === 'admin')
+                                                {{ \App\Models\Admin::where('admin_id', Auth::user()->username)->value('nama_admin') ?? 'Admin Tidak Ditemukan' }}
+                                            @elseif (Auth::user()->role === 'spd')
+                                                {{ \App\Models\SPD::where('nas', Auth::user()->username)->value('nama_anggota') ?? 'Anggota SPD Tidak Ditemukan' }}
+                                            @elseif (Auth::user()->role === 'pemonitor')
+                                                {{ \App\Models\Pemonitor::where('pemonitor_id', Auth::user()->username)->value('nama_pemonitor') ?? 'Pemonitor Tidak Ditemukan' }}
+                                            @else
+                                                Peran tidak dikenali
+                                            @endif
+                                        </h5>
                                         <!-- Nama dengan font-semibold dan teks rata tengah -->
                                         @if (Auth::user()->role == 'spd')
                                             <span class="text-sm text-gray-500 dark:text-gray-400 text-center">NAS:

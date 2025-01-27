@@ -47,7 +47,18 @@
     <div id="greeting-quote-container" class="text-left flex flex-col items-start mb-6">
         <!-- Greeting -->
         <h2 id="greeting" class="text-4xl font-extrabold text-gray-900 dark:text-white mb-2">
-            Selamat datang, {{ Auth::user()->name }}
+            Selamat
+            datang,
+            @if (Auth::user()->role === 'admin')
+                {{ \App\Models\Admin::where('admin_id', Auth::user()->username)->value('nama_admin') ?? 'Admin Tidak Ditemukan' }}
+            @elseif (Auth::user()->role === 'spd')
+                {{ \App\Models\SPD::where('nas', Auth::user()->username)->value('nama_anggota') ?? 'Anggota SPD Tidak Ditemukan' }}
+            @elseif (Auth::user()->role === 'pemonitor')
+                {{ \App\Models\Pemonitor::where('pemonitor_id', Auth::user()->username)->value('nama_pemonitor') ?? 'Pemonitor Tidak Ditemukan' }}
+            @else
+                Peran tidak dikenali
+            @endif
+
         </h2>
         <!-- Quotes -->
         <div id="quote-container" class="text-gray-500">
@@ -286,7 +297,8 @@
                 greetingMessage = "Selamat Malam";
             }
 
-            greetingElement.innerHTML = `${greetingMessage}, {{ Auth::user()->name }}`;
+            greetingElement.innerHTML = `${greetingMessage}, {{ \App\Models\SPD::where('nas', Auth::user()->username)->value('nama_anggota') ?? 'Data tidak ditemukan' }}
+`;
         }
 
         // Panggil fungsi updateGreeting saat halaman dimuat

@@ -17,9 +17,14 @@ class OperasiUmumExport implements FromCollection, WithHeadings, WithCustomStart
     public function __construct($data, $tanggal)
     {
         $this->data = $data->map(function ($item) {
-            unset($item['nama_pencatat']); // Hilangkan kolom Nama Pencatat
-            return $item;
+            return [
+                'NIM' => $item->nim,
+                'Nama Mahasiswa' => $item->nama,
+                'Kelas' => $item->kelas,
+                'Pelanggaran' => $item->pelanggaran,
+            ];
         });
+
         $this->tanggal = $tanggal;
     }
 
@@ -35,7 +40,6 @@ class OperasiUmumExport implements FromCollection, WithHeadings, WithCustomStart
             'NIM',
             'Nama Mahasiswa',
             'Kelas',
-            'Tingkat',
             'Pelanggaran'
         ];
     }

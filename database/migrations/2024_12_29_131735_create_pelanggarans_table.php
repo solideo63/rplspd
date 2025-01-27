@@ -12,7 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pelanggarans', function (Blueprint $table) {
-            $table->id(); // id dengan auto-increment
             $table->string('kodePelanggaran'); // string tidak boleh NULL, tanpa default
             $table->string('namaPelanggaran'); // string tidak boleh NULL, tanpa default
             $table->string('kategoriPelanggaran')->default(''); // string tidak boleh NULL, dengan default kosong

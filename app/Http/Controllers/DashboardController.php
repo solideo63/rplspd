@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
+    public function index()
+    {
+        return view('dashboard', ['title' => 'Dashboard']);
+    }
+
     public function StatDesk(Request $request)
     {
         $filter = $request->query('filter', 'all'); // Default ke 'all'
@@ -31,11 +36,12 @@ class DashboardController extends Controller
         $barChartDataQueries = [];
         foreach ($tables as $table) {
             $query = DB::table($table)
-                ->select('pelanggaran', DB::raw('COUNT(*) as total'))
+                ->join('pelanggarans', "{$table}.pelanggaran", '=', 'pelanggarans.kodePelanggaran') // Join tabel pelanggarans
+                ->select('pelanggarans.namaPelanggaran as pelanggaran', DB::raw('COUNT(*) as total'))
                 ->when($timeConstraint, function ($q) use ($timeConstraint) {
                     return $q->where(...$timeConstraint);
                 })
-                ->groupBy('pelanggaran');
+                ->groupBy('pelanggarans.namaPelanggaran'); // Group berdasarkan nama pelanggaran
             $barChartDataQueries[] = $query;
         }
 
@@ -45,7 +51,8 @@ class DashboardController extends Controller
                 $barChartData = $barChartData->union($query);
             }
 
-            $barChartData = DB::table($barChartData, 'union_table')
+            $barChartData = DB::table(DB::raw("({$barChartData->toSql()}) as union_table"))
+                ->mergeBindings($barChartData)
                 ->select('pelanggaran', DB::raw('SUM(total) as total'))
                 ->groupBy('pelanggaran')
                 ->get();
@@ -57,27 +64,30 @@ class DashboardController extends Controller
         $pieChartDataQueries = [];
         foreach ($tables as $table) {
             $query = DB::table($table)
-                ->select('tingkat', DB::raw('COUNT(*) as total'))
+                ->join('mahasiswas', "{$table}.nim", '=', 'mahasiswas.nim') // Join tabel mahasiswa berdasarkan nim
+                ->select(DB::raw('LEFT(mahasiswas.kelas, 1) as tingkat'), DB::raw('COUNT(*) as total')) // Ambil inisial kelas sebagai tingkat
                 ->when($timeConstraint, function ($q) use ($timeConstraint) {
-                    return $q->where(...$timeConstraint);
+                    return $q->where(...$timeConstraint); // Terapkan filter waktu jika ada
                 })
-                ->groupBy('tingkat');
+                ->groupBy(DB::raw('LEFT(mahasiswas.kelas, 1)')); // Grouping berdasarkan inisial kelas
             $pieChartDataQueries[] = $query;
         }
 
         if (!empty($pieChartDataQueries)) {
             $pieChartData = array_shift($pieChartDataQueries);
             foreach ($pieChartDataQueries as $query) {
-                $pieChartData = $pieChartData->union($query);
+                $pieChartData = $pieChartData->union($query); // Gabungkan query dengan union
             }
 
-            $pieChartData = DB::table($pieChartData, 'union_table')
-                ->select('tingkat', DB::raw('SUM(total) as total'))
-                ->groupBy('tingkat')
+            $pieChartData = DB::table(DB::raw("({$pieChartData->toSql()}) as union_table"))
+                ->mergeBindings($pieChartData)
+                ->select('tingkat', DB::raw('SUM(total) as total')) // Hitung total data setelah union
+                ->groupBy('tingkat') // Group berdasarkan tingkat
                 ->get();
         } else {
-            $pieChartData = collect([]);
+            $pieChartData = collect([]); // Jika tidak ada data, kembalikan koleksi kosong
         }
+
 
         // Koleksi Quotes
         $quotes = [

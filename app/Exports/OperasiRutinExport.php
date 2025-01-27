@@ -18,10 +18,15 @@ class OperasiRutinExport implements FromCollection, WithHeadings, WithCustomStar
     public function __construct($data, $tanggal, $tingkat)
     {
         $this->data = $data->map(function ($item) {
-            unset($item['nama_pencatat']); // Hilangkan kolom Nama Pencatat
-            return $item;
+            return [
+                'NIM' => $item->nim,
+                'Nama Mahasiswa' => $item->nama,
+                'Kelas' => $item->kelas,
+                'Pelanggaran' => $item->pelanggaran,
+            ];
         });
-        $this->tanggal = $tanggal;
+
+        $this->tanggal = $tanggal;;
         $this->tingkat = $tingkat;
     }
 
@@ -37,7 +42,6 @@ class OperasiRutinExport implements FromCollection, WithHeadings, WithCustomStar
             'NIM',
             'Nama Mahasiswa',
             'Kelas',
-            'Tingkat',
             'Pelanggaran'
         ];
     }

@@ -287,7 +287,7 @@
                                     {{-- <td class="px-6 py-4 text-center">{{ $row->tingkat }}</td> --}}
                                     <td class="px-4 py-3">{{ $row->pelanggaran }}</td>
                                     <td class="px-4 py-3">{{ $row->nama_pencatat }}</td>
-                                    @if (Auth::user()->role == 'spd' && Auth::user()->name == $row->nama_pencatat)
+                                    @if (Auth::user()->role == 'spd')
                                         <td class="px-4 py-5 flex">
                                             {{-- <!-- Edit Button with only icon -->
                                         <a href="{{ route('enter-token', $row->id) }}"

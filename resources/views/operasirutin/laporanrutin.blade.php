@@ -330,17 +330,19 @@
                                         {{ $row->tanggal ? \Carbon\Carbon::parse($row->tanggal)->translatedFormat('l, d-m-Y') : 'N/A' }}
                                         <!-- Format: Hari, dd-mm-yyyy (contoh: Monday, 27-12-2024) -->
 
-                                        @if ($row->updated_at && $row->updated_at != $row->created_at)
+                                        @if ($row->status_pelanggaran === 'Diperbarui')
                                             <!-- Tampilkan badge "Baru diperbarui" hanya jika updated_at berbeda dengan created_at -->
-                                            <span
-                                                class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-1 py-0.5 rounded dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300">UPDATED</span>
+                                            @if (\Carbon\Carbon::parse($row->updated_at)->diffInMinutes(now()) < 60)
+                                                <span
+                                                    class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-1 py-0.5 rounded dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300">UPDATED</span>
+                                            @endif
                                             <div class="text-xs text-gray-500 mt-1">
                                                 <small>Terakhir diupdate:
                                                     {{ \Carbon\Carbon::parse($row->updated_at)->format('d-m-Y H:i') }}</small>
                                             </div>
-                                        @elseif (!$row->updated_at || $row->updated_at == $row->created_at)
+                                        @elseif ($row->status_pelanggaran === 'Ditambahkan')
                                             <!-- Tampilkan badge "NEW" hanya jika belum diupdate -->
-                                            @if (\Carbon\Carbon::parse($row->created_at)->diffInMinutes(now()) < 30)
+                                            @if (\Carbon\Carbon::parse($row->created_at)->diffInMinutes(now()) < 60)
                                                 <span
                                                     class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-1 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">NEW</span>
                                                 <div class="text-xs text-gray-500 mt-1">
@@ -357,7 +359,7 @@
                                     {{-- <td class="px-6 py-4 text-center">{{ $row->tingkat }}</td> --}}
                                     <td class="px-4 py-3">{{ $row->pelanggaran }}</td>
                                     <td class="px-4 py-3">{{ $row->nama_pencatat }}</td>
-                                    @if (Auth::user()->role == 'spd' && Auth::user()->name == $row->nama_pencatat)
+                                    @if (Auth::user()->role == 'spd' && \App\Models\SPD::where('nas', Auth::user()->username)->value('nama_anggota'))
                                         <td class="py-5 flex items-center justify-center space-x-2">
                                             <!-- Edit Button -->
                                             <a href="{{ route('catatedit', $row->id) }}"

@@ -2,24 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class KlaimPelanggaran extends Model
+class Pemonitor extends Model
 {
-    /** @use HasFactory<\Database\Factories\PenindakanHarianFactory> */
-    use HasFactory;
-
     // Nama tabel di database
-    protected $table = 'penindakan_harian';
+    protected $table = 'pemonitor';
 
     // Kolom yang dapat diisi (mass assignable)
     protected $fillable = [
-        'nim',
-        'nama_mahasiswa',
-        'kelas',
-        'pelanggaran',
-        'nama_pencatat',
+        'pemonitor_id',
+        'nama_pemonitor',
     ];
 
     // Format default untuk timestamps (jika diperlukan custom)

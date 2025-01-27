@@ -30,10 +30,16 @@ class SesiController extends Controller
             'password' => $request->password
         ];
 
+        // if (Auth::attempt($infologin)) {
+        //     dd('Login berhasil!', Auth::user()); // Lihat data user yang login
+        //     return redirect()->intended('/dashboard');
+        // } else {
+        //     dd('Login gagal'); // Cek apa yang terjadi jika gagal
+        // }
         if (Auth::attempt($infologin)) {
             session()->flash('success', 'Login berhasil!');
             // Redirect ke dashboard jika login berhasil
-            return redirect('dashboard');
+            return redirect()->route('dashboard');
         } else {
             // Redirect kembali ke halaman login dengan pesan kesalahan
             return redirect()
