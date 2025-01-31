@@ -285,11 +285,11 @@
             const now = new Date();
             const hours = now.getHours();
 
-            let greetingMessage = "Selamat datang";
+            let greetingMessage = "";
 
-            if (hours >= 5 && hours < 10) {
+            if (hours >= 5 && hours < 12) {
                 greetingMessage = "Selamat Pagi";
-            } else if (hours >= 11 && hours < 15) {
+            } else if (hours >= 12 && hours < 15) {
                 greetingMessage = "Selamat Siang";
             } else if (hours >= 15 && hours < 18) {
                 greetingMessage = "Selamat Sore";
@@ -311,7 +311,7 @@
                     `{{ \App\Models\Pemonitor::where('pemonitor_id', Auth::user()->username)->value('nama_pemonitor') ?? 'Pemonitor Tidak Ditemukan' }}`;
             }
 
-            document.getElementById("greetingElement").innerHTML = `${greetingMessage}, ${userName}`;
+            greetingElement.innerHTML = `${greetingMessage}, ${userName}`;
         }
 
         // Panggil fungsi updateGreeting saat halaman dimuat
