@@ -297,7 +297,6 @@
                 greetingMessage = "Selamat Malam";
             }
 
-            let greetingMessage = "Halo"; // Sesuaikan dengan logika penentuan greetingMessage
             let userRole = "{{ Auth::user()->role }}";
             let userName = "Peran tidak dikenali"; // Default jika peran tidak ditemukan
 
