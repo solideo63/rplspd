@@ -36,6 +36,15 @@ php artisan db:seed --class=SPDSeeder
 ```
 
 ## Struktur Proyek
+### Folder app
+Struktur folder app digunakan untuk mengelola logika aplikasi. Folder ini terdiri dari banyak-banyak folder di dalamnya dengan fungsi masing-masing. Berikut merupakan penjelasan singkat folder di dalamnya.
+* [Exports]: Berisi logika untuk mengekspor data pelaporan pelanggaran, baik dalam format csv, excel, maupun pdf. 
+* [Http]
+   - Controllers: Berisi logika untuk mengontrol request dan response.
+   - Middleware: Mengelola middle ware dan akses.
+* [Model]: Berisi logika untuk mengatur model yang mewakili database.
+* [View] : Berisi komponen blade yang mengatur komponen UI yang dapat digunakan kembali.
+```
 📦app
  ┣ 📂Exports
  ┃ ┣ 📜OperasiRutinExport.php
@@ -88,7 +97,13 @@ php artisan db:seed --class=SPDSeeder
  ┃ ┃ ┣ 📜Header.php
  ┃ ┃ ┣ 📜Layout.php
  ┃ ┃ ┗ 📜Sidebar.php
-
+ ```
+### Folder database
+Struktur folder database digunakan untuk mengelola logika database aplikasi. Folder ini terdiri dari banyak-banyak folder di dalamnya dengan fungsi masing-masing. Berikut merupakan penjelasan singkat folder di dalamnya.
+* [Factories]: Digunakan untuk membuat data dummy dengan model factory, berguna untuk pengujian dan pengisian awal database. 
+* [Migrations] : Berisi file migration untuk mendefinisikan struktur tabel database.
+* [Seeders]: Digunakan untuk mengisi database dengan data awal atau dummy secara otomatis.
+ ```
 📦database
  ┣ 📂factories
  ┃ ┗ 📜UserFactory.php
@@ -121,7 +136,13 @@ php artisan db:seed --class=SPDSeeder
  ┃ ┣ 📜PemonitorSeeder.php
  ┃ ┗ 📜SPDSeeder.php
  ┗ 📜.gitignore
-
+ ```
+### Folder public
+Struktur folder public merupakan folder utama yang berisi aset publik yang bisa diakses langsung oleh pengguna. Folder ini terdiri dari banyak-banyak folder di dalamnya dengan fungsi masing-masing. Berikut merupakan penjelasan singkat folder di dalamnya.
+* [Build]: Berisi file hasil build dari aplikasi. 
+* [Css] : Berisi Folder untuk file CSS yang digunakan dalam tampilan website.
+* [Img]: Folder yang menyimpan berbagai gambar yang digunakan dalam website.
+ ```
 📦public
  ┣ 📂build
  ┃ ┣ 📂assets
@@ -159,7 +180,14 @@ php artisan db:seed --class=SPDSeeder
  ┣ 📜favicon.ico
  ┣ 📜index.php
  ┗ 📜robots.txt
-
+ ```
+### Folder resources
+Struktur folder resources menunjukkan bahwa proyek yang dikembangkan menggunakan laravel. Folder ini meyimpan sumber daya yang digunakan dalam aplikasi web seperti view (tampilan), css, javascript, dan data. Folder ini terdiri dari banyak-banyak folder di dalamnya dengan fungsi masing-masing. Berikut merupakan penjelasan singkat folder di dalamnya.
+* [Css]: Berisi file CSS utama yang digunakan untuk styling halaman web. 
+* [Data] : Menyimpan data dalam format php.
+* [Js]: Berisi file JavaScript.
+* [Views]: Tempat penyimpanan template tampilan aplikasi menggunakan Blade (.blade.php), templating engine bawaan Laravel.
+ ```
  📦resources
  ┣ 📂css
  ┃ ┗ 📜app.css
@@ -217,9 +245,14 @@ php artisan db:seed --class=SPDSeeder
  ┃ ┣ 📜peraturan.blade.php
  ┃ ┣ 📜ubahpassword.blade.php
  ┃ ┗ 📜viewkritiksaran.blade.php
-
+ ```
+### Folder routes
+Struktur folder routes berisi file-file yang mendefinisikan rute atau jalur akses untuk aplikasi web. Setiap file dalam folder ini memiliki fungsi spesifik dalam menangani permintaan (request) dari pengguna. Folder ini terdiri dari banyak-banyak folder di dalamnya dengan fungsi masing-masing. Berikut merupakan penjelasan singkat folder di dalamnya.
+* [Api]: Berisi rute untuk API yang digunakan untuk menangani permintaan berbasis API, seperti permintaan dari aplikasi mobile atau frontend berbasis JavaScript yang menggunakan AJAX.
+* [Web] : Berisi rute untuk aplikasi berbasis web yang menggunakan Blade template atau tampilan UI lainnya. File ini digunakan untuk mendefinisikan halaman dan fungsionalitas dalam aplikasi Laravel.
+ ```
  📦routes
  ┣ 📜api.php
  ┣ 📜console.php
  ┗ 📜web.php
- 
+ ```
