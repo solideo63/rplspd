@@ -313,11 +313,10 @@
             }
 
             document.getElementById("greetingElement").innerHTML = `${greetingMessage}, ${userName}`;
-            `;
-            }
+        }
 
-            // Panggil fungsi updateGreeting saat halaman dimuat
-            updateGreeting();
+        // Panggil fungsi updateGreeting saat halaman dimuat
+        updateGreeting();
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
