@@ -297,12 +297,27 @@
                 greetingMessage = "Selamat Malam";
             }
 
-            greetingElement.innerHTML = `${greetingMessage}, {{ \App\Models\SPD::where('nas', Auth::user()->username)->value('nama_anggota') ?? 'Data tidak ditemukan' }}
-`;
-        }
+            let greetingMessage = "Halo"; // Sesuaikan dengan logika penentuan greetingMessage
+            let userRole = "{{ Auth::user()->role }}";
+            let userName = "Peran tidak dikenali"; // Default jika peran tidak ditemukan
 
-        // Panggil fungsi updateGreeting saat halaman dimuat
-        updateGreeting();
+            if (userRole === "admin") {
+                userName =
+                    `{{ \App\Models\Admin::where('admin_id', Auth::user()->username)->value('nama_admin') ?? 'Admin Tidak Ditemukan' }}`;
+            } else if (userRole === "spd") {
+                userName =
+                    `{{ \App\Models\SPD::where('nas', Auth::user()->username)->value('nama_anggota') ?? 'Anggota SPD Tidak Ditemukan' }}`;
+            } else if (userRole === "pemonitor") {
+                userName =
+                    `{{ \App\Models\Pemonitor::where('pemonitor_id', Auth::user()->username)->value('nama_pemonitor') ?? 'Pemonitor Tidak Ditemukan' }}`;
+            }
+
+            document.getElementById("greetingElement").innerHTML = `${greetingMessage}, ${userName}`;
+            `;
+            }
+
+            // Panggil fungsi updateGreeting saat halaman dimuat
+            updateGreeting();
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
