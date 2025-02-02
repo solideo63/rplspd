@@ -2,8 +2,8 @@
 SIMPPEL adalah sistem berbasis Laravel yang digunakan oleh SPD untuk mencatat dan melaporkan pelanggaran yang dilakukan oleh mahasiswa di STIS, baik saat operasi rutin (apel), operasi umum (sidak), maupun pelanggaran harian. Sistem ini membantu SPD dalam mengelola data pelanggaran, membuat laporan, dan memberikan informasi yang akurat serta transparan. Selain SPD, pihak-pihak seperti BAAK, UPK, dan Koordinator Keamanan dapat melihat laporan pelanggaran yang dibuat mahasiswa pada website ini. Mahasiswa sebagai tamu yang tidak perlu login dapat melihat peraturan, FAQ, serta mengirim saran kepada SPD baik secara anonim maupun tidak.
 
 ## Dokumen Terkait
-* [Laporan Milestone 4]()
-* [Buku Manual Penggunaan]()
+* [Laporan Akhir Milestone 4](https://drive.google.com/file/d/159ct7B26iEKJ2k9HwHg8t_QyYHnrGVBO/view?usp=sharing)
+* [Buku Manual Penggunaan](https://drive.google.com/file/d/1GluMT-XhJjpViyYNf8u08WwQGwe2D_7W/view?usp=sharing)
 * [Dokumen Alih Hak Sistem](https://drive.google.com/file/d/1Uq9osOrnu0u0-f1HPT-GhERo1FsqVoxY/view?usp=sharing)
 * [Dokumen Berita Acara](https://drive.google.com/file/d/1S7ScD8-jKJmJBfhT95wvIagEBLFV8eBc/view?usp=sharing)
 
